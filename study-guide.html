@@ -28,6 +28,57 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cat-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:5px}
 .cat-desc{font-size:11px;color:#6b7280;line-height:1.5}
 .cat-count{margin-top:12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.practice-test-btn {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #1e3a5f 0%, #162a44 100%);
+    border: 1px solid #3b82f644;
+    border-radius: 12px;
+    padding: 18px 24px;
+    margin-bottom: 32px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.practice-test-btn:hover {
+    transform: translateY(-2px);
+    border-color: #60a5fa;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.btn-icon {
+    font-size: 28px;
+    margin-right: 20px;
+}
+
+.btn-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.btn-title {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.btn-subtitle {
+    color: #93c5fd;
+    font-size: 12px;
+    margin-top: 2px;
+    opacity: 0.8;
+}
+
+.btn-arrow {
+    color: #60a5fa;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+  
 
 /* ── Section view ── */
 #section-view{display:none;max-width:680px;margin:0 auto;padding:0 20px 80px}
@@ -121,9 +172,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <!-- ══════════════════ HUB ══════════════════ -->
 <div id="hub">
   
-  <a href="index.html" class="full-btn" style="text-decoration: none;">
-    📖 View Practice Test
+  <a href="index.html" class="practice-test-btn">
+    <span class="btn-icon">🎯</span>
+    <div class="btn-content">
+        <span class="btn-title">CSLB Practice Test</span>
+        <span class="btn-subtitle">Take a 100-question mixed exam or study by topic</span>
+    </div>
+    <span class="btn-arrow">→</span>
   </a>
+  
   <h2 class="hub-title">Choose a Section</h2>
   <p class="hub-sub">Tap any section to study. Each section covers the key rules, numbers, and concepts you need to pass the Law & Business exam.</p>
   <div class="category-grid">

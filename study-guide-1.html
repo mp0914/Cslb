@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSLB Study Guide — 2026 Edition</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f1117;color:#e8eaf0;min-height:100vh}
+
+/* ── Header ── */
+.header{background:linear-gradient(135deg,#1a1d2e 0%,#0f1117 100%);border-bottom:1px solid #2a2d3e;padding:20px 28px;display:flex;align-items:center;justify-content:space-between}
+.header h1{font-size:18px;font-weight:700;color:#fff}
+.header p{font-size:11px;color:#6b7280;margin-top:2px}
+.badge{background:#1e3a5f;color:#60a5fa;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;border:1px solid #1e40af44;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap}
+
+/* ── Hub ── */
+#hub{max-width:720px;margin:40px auto;padding:0 20px 60px}
+.hub-title{font-size:26px;font-weight:800;color:#fff;margin-bottom:6px}
+.hub-sub{color:#6b7280;font-size:13px;margin-bottom:32px;line-height:1.6}
+.category-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:580px){.category-grid{grid-template-columns:1fr}}
+.cat-card{background:#161925;border:1px solid #2a2d3e;border-radius:12px;padding:20px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden}
+.cat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);opacity:0;transition:opacity .18s}
+.cat-card:hover,.cat-card:active{border-color:#3a3d50;transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.cat-card:hover::before,.cat-card:active::before{opacity:1}
+.cat-icon{font-size:24px;margin-bottom:10px;display:block}
+.cat-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:5px}
+.cat-desc{font-size:11px;color:#6b7280;line-height:1.5}
+.cat-count{margin-top:12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.practice-test-btn {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #1e3a5f 0%, #162a44 100%);
+    border: 1px solid #3b82f644;
+    border-radius: 12px;
+    padding: 18px 24px;
+    margin-bottom: 32px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.practice-test-btn:hover {
+    transform: translateY(-2px);
+    border-color: #60a5fa;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.btn-icon {
+    font-size: 28px;
+    margin-right: 20px;
+}
+
+.btn-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.btn-title {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.btn-subtitle {
+    color: #93c5fd;
+    font-size: 12px;
+    margin-top: 2px;
+    opacity: 0.8;
+}
+
+.btn-arrow {
+    color: #60a5fa;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+  
+
+/* ── Section view ── */
+#section-view{display:none;max-width:680px;margin:0 auto;padding:0 20px 80px}
+.section-meta{display:flex;align-items:center;justify-content:space-between;padding:20px 0 16px}
+.back-btn{background:none;border:1px solid #2a2d3e;color:#9ca3af;padding:7px 13px;border-radius:8px;cursor:pointer;font-size:12px;transition:all .15s}
+.back-btn:hover{color:#fff;border-color:#3a3d50}
+.section-title-bar{display:flex;align-items:center;gap:10px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #2a2d3e}
+.section-icon-lg{font-size:28px}
+.section-title-text h2{font-size:18px;font-weight:800;color:#fff}
+.section-title-text p{font-size:11px;color:#6b7280;margin-top:2px}
+
+/* ── Topic list ── */
+.topic-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.topic-btn{background:#161925;border:1px solid #2a2d3e;border-radius:10px;padding:14px 16px;cursor:pointer;text-align:left;transition:all .15s;display:flex;align-items:center;justify-content:space-between;width:100%}
+.topic-btn:hover,.topic-btn:active{border-color:var(--accent);background:#1a1d2e}
+.topic-btn-left{display:flex;align-items:center;gap:12px}
+.topic-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.topic-btn-name{font-size:14px;font-weight:600;color:#e8eaf0}
+.topic-arrow{font-size:12px;color:#6b7280;transition:transform .15s}
+.topic-btn:hover .topic-arrow{transform:translateX(3px);color:var(--accent)}
+
+/* ── Content view ── */
+#content-view{display:none;max-width:680px;margin:0 auto;padding:0 20px 80px}
+.content-meta{display:flex;align-items:center;justify-content:space-between;padding:20px 0 16px}
+.content-breadcrumb{font-size:11px;color:#6b7280}
+.content-breadcrumb span{color:var(--accent-current,#60a5fa)}
+.content-header{margin-bottom:20px}
+.content-header h2{font-size:20px;font-weight:800;color:#fff;line-height:1.3}
+.content-body{display:flex;flex-direction:column;gap:0}
+
+/* ── Content blocks ── */
+.block-h2{font-size:16px;font-weight:800;color:#fff;margin:28px 0 10px;padding-bottom:8px;border-bottom:1px solid #2a2d3e}
+.block-h2:first-child{margin-top:0}
+.block-h3{font-size:14px;font-weight:700;color:var(--accent-current,#60a5fa);margin:20px 0 8px}
+.block-p{font-size:15px;color:#c9ccd6;line-height:1.65;margin-bottom:10px}
+.block-ul{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;padding-left:0}
+.block-li{font-size:15px;color:#c9ccd6;line-height:1.6;list-style:none;padding-left:20px;position:relative}
+.block-li::before{content:'•';color:var(--accent-current,#60a5fa);position:absolute;left:2px;top:0;font-size:17px;line-height:1.45}
+
+/* ── Callout boxes ── */
+.callout{border-radius:10px;padding:16px;margin:14px 0;border-left:3px solid var(--accent-current,#60a5fa)}
+.callout.blue{background:#0d1f3c;border-color:#3b82f6}
+.callout.green{background:#052e16;border-color:#16a34a}
+.callout.red{background:#2a0a0a;border-color:#dc2626}
+.callout.gold{background:#1c1504;border-color:#ca8a04}
+.callout-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+.callout.blue .callout-title{color:#60a5fa}
+.callout.green .callout-title{color:#4ade80}
+.callout.red .callout-title{color:#f87171}
+.callout.gold .callout-title{color:#fbbf24}
+.callout-body{display:flex;flex-direction:column;gap:6px}
+.callout-item{font-size:14px;line-height:1.6;padding-left:18px;position:relative}
+.callout.blue .callout-item{color:#93c5fd}
+.callout.green .callout-item{color:#86efac}
+.callout.red .callout-item{color:#fca5a5}
+.callout.gold .callout-item{color:#fde68a}
+.callout-item::before{content:'→';position:absolute;left:0;top:0;opacity:.7}
+.callout-item.nobullet{padding-left:0}
+.callout-item.nobullet::before{display:none}
+
+/* ── Tables ── */
+.block-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px;border-radius:8px;overflow:hidden}
+.block-table thead tr{background:#1a1d2e}
+.block-table thead th{padding:10px 12px;text-align:left;font-weight:700;color:#9ca3af;font-size:12px;text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid #2a2d3e}
+.block-table tbody tr{border-bottom:1px solid #1f2235}
+.block-table tbody tr:last-child{border-bottom:none}
+.block-table tbody tr:nth-child(even){background:#0f1117}
+.block-table tbody tr:nth-child(odd){background:#161925}
+.block-table td{padding:10px 12px;color:#c9ccd6;line-height:1.5;vertical-align:top}
+.block-table td:first-child{font-weight:600;color:#e8eaf0}
+.block-table td strong{color:#fff;font-weight:700}
+
+/* ── Nav buttons at bottom of content ── */
+.content-nav{display:flex;gap:10px;margin-top:28px}
+.nav-btn{flex:1;padding:13px;border-radius:10px;border:1px solid #2a2d3e;background:#161925;color:#9ca3af;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;text-align:center}
+.nav-btn:hover{border-color:#3a3d50;color:#fff}
+.nav-btn.primary{background:#1e3a5f;border-color:#1e40af55;color:#60a5fa}
+.nav-btn.primary:hover{background:#1e40af44}
+.nav-btn:disabled{opacity:.3;cursor:default}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>CSLB Study Guide</h1>
+    <p>California Contractors License Law & Reference Book — 2026 Edition</p>
+  </div>
+  <span class="badge">2026</span>
+</div>
+
+<!-- ══════════════════ HUB ══════════════════ -->
+<div id="hub">
+  
+  <a href="index.html" class="practice-test-btn">
+    <span class="btn-icon">🎯</span>
+    <div class="btn-content">
+        <span class="btn-title">CSLB Practice Test</span>
+        <span class="btn-subtitle">Take a 100-question mixed exam or study by topic</span>
+    </div>
+    <span class="btn-arrow">→</span>
+  </a>
+  
+  <h2 class="hub-title">Choose a Section</h2>
+  <p class="hub-sub">Tap any section to study. Each section covers the key rules, numbers, and concepts you need to pass the Law & Business exam.</p>
+  <div class="category-grid">
+
+    <div class="cat-card" style="--accent:#60a5fa" onclick="openSection('cslb')">
+      <span class="cat-icon">🏛️</span>
+      <div class="cat-name">CSLB Overview</div>
+      <div class="cat-desc">History, board structure, mission, SWIFT, and how complaints are processed.</div>
+      <div class="cat-count" style="color:#60a5fa">4 topics</div>
+    </div>
+
+    <div class="cat-card" style="--accent:#a78bfa" onclick="openSection('licensing')">
+      <span class="cat-icon">📋</span>
+      <div class="cat-name">Licensing</div>
+      <div class="cat-desc">Classifications, exemptions, penalties, advertising rules, and display requirements.</div>
+      <div class="cat-count" style="color:#a78bfa">6 topics</div>
+    </div>
+
+    <div class="cat-card" style="--accent:#38bdf8" onclick="openSection('bonds')">
+      <span class="cat-icon">🔐</span>
+      <div class="cat-name">Bonds & Insurance</div>
+      <div class="cat-desc">Bond amounts, beneficiaries, LLC requirements, surety limits, workers' comp.</div>
+      <div class="cat-count" style="color:#38bdf8">5 topics</div>
+    </div>
+
+    <div class="cat-card" style="--accent:#34d399" onclick="openSection('home_improvement')">
+      <span class="cat-icon">🏠</span>
+      <div class="cat-name">Home Improvement</div>
+      <div class="cat-desc">Contracts, down payments, HIS registration, warranties, solar, change orders.</div>
+      <div class="cat-count" style="color:#34d399">7 topics</div>
+    </div>
+
+    <div class="cat-card" style="--accent:#fb923c" onclick="openSection('business')">
+      <span class="cat-icon">📊</span>
+      <div class="cat-name">Business Management</div>
+      <div class="cat-desc">Financial statements, ratios, business forms, bidding, scheduling, risk management.</div>
+      <div class="cat-count" style="color:#fb923c">6 topics</div>
+    </div>
+
+    <div class="cat-card" style="--accent:#f97316" onclick="openSection('liens')">
+      <span class="cat-icon">⚒️</span>
+      <div class="cat-name">Mechanics Liens & Legal</div>
+      <div class="cat-desc">Preliminary notice, filing deadlines, stop notices, dispute resolution options.</div>
+      <div class="cat-count" style="color:#f97316">4 topics</div>
+    </div>
+
+    <div class="cat-card" style="--accent:#f472b6" onclick="openSection('discipline')">
+      <span class="cat-icon">⚖️</span>
+      <div class="cat-name">Disciplinary Actions</div>
+      <div class="cat-desc">Causes for discipline, citation process, penalty ranges, disclosure rules.</div>
+      <div class="cat-count" style="color:#f472b6">5 topics</div>
+    </div>
+
+    <div class="cat-card" style="--accent:#facc15" onclick="openSection('new_laws')">
+      <span class="cat-icon">📰</span>
+      <div class="cat-name">2026 Law Changes</div>
+      <div class="cat-desc">All 7 new bills — what changed and what you must know for the exam.</div>
+      <div class="cat-count" style="color:#facc15">7 topics</div>
+    </div>
+
+    <div class="cat-card" style="--accent:#ef4444" onclick="openSection('safety')">
+      <span class="cat-icon">🦺</span>
+      <div class="cat-name">Construction & Safety</div>
+      <div class="cat-desc">Underground utilities, asbestos rules, water wells, Native American remains.</div>
+      <div class="cat-count" style="color:#ef4444">4 topics</div>
+    </div>
+
+    <div class="cat-card" style="--accent:#c084fc" onclick="openSection('quickref')">
+      <span class="cat-icon">⚡</span>
+      <div class="cat-name">Quick Reference</div>
+      <div class="cat-desc">Every key number, dollar amount, and deadline — drill this before exam day.</div>
+      <div class="cat-count" style="color:#c084fc">3 topics</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════ SECTION VIEW ══════════════════ -->
+<div id="section-view">
+  <div class="section-meta">
+    <button class="back-btn" onclick="goHub()">← Back</button>
+  </div>
+  <div class="section-title-bar">
+    <span class="section-icon-lg" id="sv-icon"></span>
+    <div class="section-title-text">
+      <h2 id="sv-title"></h2>
+      <p id="sv-subtitle"></p>
+    </div>
+  </div>
+  <div class="topic-list" id="sv-topics"></div>
+</div>
+
+<!-- ══════════════════ CONTENT VIEW ══════════════════ -->
+<div id="content-view">
+  <div class="content-meta">
+    <button class="back-btn" id="cv-back">← Back</button>
+    <div class="content-breadcrumb" id="cv-breadcrumb"></div>
+  </div>
+  <div class="content-header">
+    <h2 id="cv-title"></h2>
+  </div>
+  <div class="content-body" id="cv-body"></div>
+  <div class="content-nav">
+    <button class="nav-btn" id="cv-prev" onclick="navTopic(-1)">← Prev</button>
+    <button class="nav-btn" onclick="backToSection()">All Topics</button>
+    <button class="nav-btn primary" id="cv-next" onclick="navTopic(1)">Next →</button>
+  </div>
+</div>
+
+<script>
+// ─── DATA ──────────────────────────────────────────────────────────────────
+const SECTIONS = {
+cslb:{
+  icon:'🏛️', title:'CSLB Overview', subtitle:'Who they are, what they do, and how enforcement works',
+  accent:'#60a5fa',
+  topics:[
+    {name:'History & Board Structure', id:'cslb_history'},
+    {name:'CSLB Mission & Operations', id:'cslb_mission'},
+    {name:'How Complaints Are Processed', id:'cslb_complaints'},
+    {name:'SWIFT & Unlicensed Activity', id:'cslb_swift'},
+  ]
+},
+licensing:{
+  icon:'📋', title:'Licensing Requirements', subtitle:'Who needs a license, exemptions, and what happens without one',
+  accent:'#a78bfa',
+  topics:[
+    {name:'The Three License Classifications', id:'lic_classes'},
+    {name:'Who Needs a License', id:'lic_who'},
+    {name:'Exemptions from Licensing', id:'lic_exempt'},
+    {name:'Penalties for Unlicensed Contracting', id:'lic_penalties'},
+    {name:'License Display & Advertising Rules', id:'lic_display'},
+    {name:'Personnel of Record Rules After Revocation', id:'lic_personnel'},
+  ]
+},
+bonds:{
+  icon:'🔐', title:'Bonds & Insurance', subtitle:'Bond amounts, beneficiaries, LLC requirements, and workers\' comp',
+  accent:'#38bdf8',
+  topics:[
+    {name:'Bond Amounts — All Types', id:'bond_amounts'},
+    {name:'Contractor\'s Bond Rules', id:'bond_rules'},
+    {name:'Bond Beneficiaries & Claim Limits', id:'bond_bene'},
+    {name:'LLC Requirements — Bond & Insurance', id:'bond_llc'},
+    {name:'Workers\' Compensation Requirements', id:'bond_wc'},
+  ]
+},
+home_improvement:{
+  icon:'🏠', title:'Home Improvement', subtitle:'Contracts, salesperson registration, warranties, and 2026 changes',
+  accent:'#34d399',
+  topics:[
+    {name:'What Is Home Improvement?', id:'hi_def'},
+    {name:'Contract Dollar Thresholds', id:'hi_thresholds'},
+    {name:'Required Contract Elements', id:'hi_elements'},
+    {name:'HIS Registration — Complete Rules', id:'hi_his'},
+    {name:'Home Warranties & Joint Control', id:'hi_warranties'},
+    {name:'Change Orders & Fraudulent Acts', id:'hi_changeorders'},
+    {name:'Solar Energy Contracts', id:'hi_solar'},
+  ]
+},
+business:{
+  icon:'📊', title:'Business Management', subtitle:'Financial statements, ratios, business forms, bidding, and risk',
+  accent:'#fb923c',
+  topics:[
+    {name:'Forms of Business Organization', id:'biz_forms'},
+    {name:'The Three Financial Statements', id:'biz_statements'},
+    {name:'Financial Ratios — Formulas & Examples', id:'biz_ratios'},
+    {name:'Financing a Contracting Business', id:'biz_financing'},
+    {name:'Bidding, Estimation & Scheduling', id:'biz_bidding'},
+    {name:'Risk Management & Insurance', id:'biz_risk'},
+  ]
+},
+liens:{
+  icon:'⚒️', title:'Mechanics Liens & Legal', subtitle:'Preliminary notice, filing deadlines, stop notices, and dispute resolution',
+  accent:'#f97316',
+  topics:[
+    {name:'Mechanics Lien vs. Stop Notice', id:'lien_vs'},
+    {name:'Preliminary Notice — Critical First Step', id:'lien_prelim'},
+    {name:'Claim of Lien Deadlines & Filing', id:'lien_deadlines'},
+    {name:'Dispute Resolution Options', id:'lien_disputes'},
+  ]
+},
+discipline:{
+  icon:'⚖️', title:'Disciplinary Actions', subtitle:'What gets your license suspended or revoked — and the process',
+  accent:'#f472b6',
+  topics:[
+    {name:'Complete List of Causes for Discipline', id:'disc_causes'},
+    {name:'Citation Process Step by Step', id:'disc_citation'},
+    {name:'Civil Penalty Ranges (2026)', id:'disc_penalties'},
+    {name:'Letter of Admonishment', id:'disc_admonish'},
+    {name:'Public Disclosure & Reinstatement', id:'disc_disclosure'},
+  ]
+},
+new_laws:{
+  icon:'📰', title:'2026 Law Changes', subtitle:'Every new bill — what changed and what you\'ll be tested on',
+  accent:'#facc15',
+  topics:[
+    {name:'AB 521 — Bond Liability', id:'law_ab521'},
+    {name:'AB 1002 — AG Wage Actions', id:'law_ab1002'},
+    {name:'AB 1327 — HIC Email & Cancellation', id:'law_ab1327'},
+    {name:'SB 291 — Workers\' Comp Penalties', id:'law_sb291'},
+    {name:'SB 456 — Mural Exemption', id:'law_sb456'},
+    {name:'SB 517 — Subcontractor Disclosure', id:'law_sb517'},
+    {name:'SB 779 — Penalty Increases', id:'law_sb779'},
+  ]
+},
+safety:{
+  icon:'🦺', title:'Construction & Safety', subtitle:'Underground utilities, asbestos, water wells, and site regulations',
+  accent:'#ef4444',
+  topics:[
+    {name:'Underground Service Alert (USA)', id:'safe_usa'},
+    {name:'Asbestos Regulations', id:'safe_asbestos'},
+    {name:'Water Wells & Native American Remains', id:'safe_wells'},
+    {name:'Safety Violations & Discipline', id:'safe_discipline'},
+  ]
+},
+quickref:{
+  icon:'⚡', title:'Quick Reference', subtitle:'Drill these numbers, deadlines, and formulas before exam day',
+  accent:'#c084fc',
+  topics:[
+    {name:'Key Dollar Amounts & Numbers', id:'qr_numbers'},
+    {name:'All Deadlines & Time Periods', id:'qr_deadlines'},
+    {name:'Formulas & Legal Concepts', id:'qr_formulas'},
+  ]
+},
+};
+
+// ─── CONTENT ───────────────────────────────────────────────────────────────
+const CONTENT = {
+
+cslb_history: {title:'History & Board Structure', html:`
+<div class="block-h2">CSLB History</div>
+<ul class="block-ul">
+<li class="block-li">Founded in <strong>1929</strong> as the Contractors License Bureau</li>
+<li class="block-li">Originally under the Department of Professional and Vocational Standards</li>
+<li class="block-li">Now part of the <strong>Department of Consumer Affairs</strong></li>
+<li class="block-li">Licenses and regulates contractors in <strong>45 classifications</strong></li>
+<li class="block-li">Approximately <strong>285,000</strong> active contractor licenses in California</li>
+<li class="block-li">Headquarters in Sacramento; field offices statewide</li>
+</ul>
+<div class="block-h2">Board Composition — 15 Members Total</div>
+<table class="block-table"><thead><tr><th>Who Appoints</th><th>How Many</th><th>Type of Members</th></tr></thead><tbody>
+<tr><td>Governor</td><td>11</td><td>9 public + 5 contractors + 1 labor rep (Governor picks 11 total)</td></tr>
+<tr><td>Legislature</td><td>4</td><td>Public members</td></tr>
+</tbody></table>
+<div class="block-h3">Breakdown of the 15 Board Members</div>
+<ul class="block-ul">
+<li class="block-li">9 public members (including 1 building official, 1 senior citizen org representative, 1 labor organization representative)</li>
+<li class="block-li">5 contractor members (representing A, B, and C classifications)</li>
+<li class="block-li">1 labor representative</li>
+</ul>`},
+
+cslb_mission:{title:'CSLB Mission & Operations', html:`
+<div class="block-h2">The Mission</div>
+<div class="callout blue"><div class="callout-title">Official CSLB Mission Statement</div><div class="callout-body"><div class="callout-item nobullet">To protect consumers by regulating the construction industry through policies that promote the health, safety, and general welfare of the public in matters relating to construction, including home improvement.</div></div></div>
+<div class="block-h2">How CSLB Operates</div>
+<ul class="block-ul">
+<li class="block-li">Headquarters processes applications, renewals, license changes, and disciplinary actions</li>
+<li class="block-li">Field offices investigate consumer complaints against contractors</li>
+<li class="block-li">Website: <strong>www.cslb.ca.gov</strong></li>
+<li class="block-li">Phone: <strong>(800) 321-CSLB (2752)</strong> — operates 24 hours per day</li>
+<li class="block-li">Automated line provides license lookup, complaint procedures, office locations, and publication orders</li>
+<li class="block-li">"Find A Licensed Contractor" feature allows searches by classification and zip code</li>
+<li class="block-li">License lookup shows: contact info, license status, CSLB legal actions, classifications, business type, bond and WC insurance info</li>
+</ul>
+<div class="block-h2">Disaster Response</div>
+<ul class="block-ul">
+<li class="block-li">CSLB offers materials at Local Assistance and Disaster Recovery Centers after wildfires, floods, earthquakes, etc.</li>
+<li class="block-li">Disaster Hotline: <strong>(800) 962-1125</strong></li>
+</ul>`},
+
+cslb_complaints:{title:'How Complaints Are Processed', html:`
+<div class="block-h2">Complaints Against Licensed Contractors</div>
+<ul class="block-ul">
+<li class="block-li">Consumer files complaint with CSLB</li>
+<li class="block-li">Field office investigates — may result in citation, accusation, or criminal referral</li>
+<li class="block-li">CSLB must notify the complainant in writing of the action taken and reasons</li>
+<li class="block-li">CSLB must also notify the contractor (if licensed) of the resolution, unless it would jeopardize an investigation</li>
+</ul>
+<div class="block-h2">Complaint Filing Deadlines</div>
+<table class="block-table"><thead><tr><th>Violation Type</th><th>Filing Deadline</th></tr></thead><tbody>
+<tr><td>Patent (obvious) violations</td><td>Within <strong>4 years</strong> of the alleged violation</td></tr>
+<tr><td>Latent structural defects</td><td>Within <strong>10 years</strong> of the alleged violation</td></tr>
+</tbody></table>
+<div class="block-h2">Complaints Against Unlicensed Contractors</div>
+<ul class="block-ul">
+<li class="block-li"><strong>Citation:</strong> Registrar may issue a citation with order of abatement and civil penalty up to $15,000 (under current rules; $1,500 minimum starts July 1, 2026)</li>
+<li class="block-li">If not appealed within 15 working days — becomes a final order</li>
+<li class="block-li"><strong>Criminal Action:</strong> Referral to local district attorney; court may order fine, probation, restitution, or jail</li>
+<li class="block-li"><strong>Injunction:</strong> Registrar may seek court injunction to stop unlicensed activity</li>
+<li class="block-li">Same citation process applies to unregistered HIS; disciplinary action may also be taken against the licensed contractor who employed them</li>
+</ul>`},
+
+cslb_swift:{title:'SWIFT & Unlicensed Activity', html:`
+<div class="callout gold"><div class="callout-title">SWIFT — Statewide Investigative Fraud Team</div><div class="callout-body">
+<div class="callout-item">Part of the Enforcement Division — focuses on the underground economy and unlicensed contractors</div>
+<div class="callout-item">Authority to visit any jobsite <strong>without cause or complaint</strong></div>
+<div class="callout-item">Can ask any contractor to produce proof of licensure in good standing</div>
+<div class="callout-item">Can cite contractors who are not properly licensed on the spot</div>
+</div></div>
+<div class="block-h2">Why Unlicensed Activity Matters</div>
+<ul class="block-ul">
+<li class="block-li">Unlicensed contractors can't sue to collect payment — so they often disappear, leaving homeowners with unfinished work</li>
+<li class="block-li">Unlicensed contractors don't carry required workers' comp — injured workers may sue the homeowner</li>
+<li class="block-li">Homeowners who use unlicensed contractors may not be protected by CSLB</li>
+<li class="block-li">Persons convicted of using unlicensed contractors are considered victims and eligible for restitution</li>
+</ul>
+<div class="block-h2">Registrar's Enforcement Tools</div>
+<ul class="block-ul">
+<li class="block-li">Citations with civil penalties and orders of abatement</li>
+<li class="block-li">Criminal referrals to district attorney</li>
+<li class="block-li">Injunctions through the Attorney General or district attorney</li>
+<li class="block-li">Disconnect orders for telephone services used in illegal advertising (if unlicensed person advertises in directories)</li>
+</ul>`},
+
+lic_classes:{title:'The Three License Classifications', html:`
+<div class="block-h2">Classification Overview</div>
+<table class="block-table"><thead><tr><th>License</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td>"A"</td><td>General Engineering</td><td>Fixed works requiring specialized engineering knowledge: highways, dams, tunnels, sewers, bridges, airports, pipelines, refineries, irrigation, water supply, railroads, levees, earthmoving, etc.</td></tr>
+<tr><td>"B"</td><td>General Building</td><td>Structures requiring <strong>at least two unrelated building trades or crafts</strong>. May take prime contracts for framing/carpentry without the two-trade rule. CANNOT include fire protection systems or C-57 well drilling unless also licensed in those classifications.</td></tr>
+<tr><td>"C"</td><td>Specialty</td><td>43 specialty classifications (C-1 through C-61 with subcategories). Examples: C-8 framing, C-10 electrical, C-20 HVAC, C-36 plumbing, C-39 roofing, C-53 swimming pool. A specialty contractor cannot do work outside their classification without additional licensing.</td></tr>
+</tbody></table>
+<div class="block-h2">Key Rules by Classification</div>
+<div class="block-h3">General Building (B) Contractor</div>
+<ul class="block-ul">
+<li class="block-li">May take a prime contract or subcontract for framing or carpentry alone</li>
+<li class="block-li">For all other trades: project must require at least two unrelated trades, OR contractor must hold the appropriate specialty license, OR must subcontract to properly licensed specialty contractor</li>
+<li class="block-li">Framing and carpentry do NOT count toward the "two unrelated trades" requirement for other work</li>
+</ul>
+<div class="block-h3">Specialty (C) Contractor</div>
+<ul class="block-ul">
+<li class="block-li">Cannot subcontract to more than ONE sub in the same classification on a single project UNLESS the sub employs persons classified as employees OR the specialty contractor is a CBA signatory</li>
+</ul>`},
+
+lic_who:{title:'Who Needs a License', html:`
+<div class="block-h2">The Basic Rule</div>
+<div class="callout blue"><div class="callout-title">You Need a License When...</div><div class="callout-body">
+<div class="callout-item">You contract or bid to perform construction, alteration, repair, or improvement work where the aggregate contract price (labor + materials) is <strong>$1,000 or more</strong></div>
+<div class="callout-item">License must be in <strong>good standing (current and not suspended)</strong> at ALL times during performance — start to finish</div>
+<div class="callout-item">Being licensed at the start but lapsing mid-project = unlicensed contracting</div>
+</div></div>
+<div class="block-h2">Contractor's License Required For</div>
+<ul class="block-ul">
+<li class="block-li">Construction, alteration, improvement, or repair of any building, highway, road, parking lot, excavation, or other structure</li>
+<li class="block-li">Installation of home improvement goods</li>
+<li class="block-li">Anyone advertising as a contractor — even if they would otherwise qualify for an exemption, advertising as a contractor subjects them to the licensing law</li>
+</ul>
+<div class="block-h2">Joint Venture Licenses</div>
+<ul class="block-ul">
+<li class="block-li">Issued to combinations of licensed entities — each member must hold a current, active license</li>
+<li class="block-li"><strong>Automatically suspended by operation of law</strong> if ANY member's license lapses</li>
+<li class="block-li">Two or more licensees acting jointly without a joint venture license = violation</li>
+<li class="block-li">May be issued in any classification in which at least one member is licensed</li>
+</ul>`},
+
+lic_exempt:{title:'Exemptions from Licensing', html:`
+<div class="block-h2">Complete List of Exemptions</div>
+<table class="block-table"><thead><tr><th>Who's Exempt</th><th>Conditions / Limits</th></tr></thead><tbody>
+<tr><td><strong>Small Job</strong></td><td>Aggregate contract price under $1,000, work is casual/minor/inconsequential, no building permit required. DOES NOT apply if person advertises as contractor or employs others to help.</td></tr>
+<tr><td><strong>Owner-Builder — Own Property</strong></td><td>Builds/improves their own property with NO structures intended for sale, work done by owner or direct employees only. OR directly contracts with licensed trades for up to 4 single-family homes for sale per calendar year (no general contractor).</td></tr>
+<tr><td><strong>Principal Residence</strong></td><td>Must have lived there 12 months before completion, work done before sale, not used exemption more than twice in 3 years.</td></tr>
+<tr><td><strong>Licensed Architect / PE</strong></td><td>Acting solely within their professional capacity.</td></tr>
+<tr><td><strong>Employees</strong></td><td>Employees receiving wages as sole compensation — EXCEPT home improvement salespersons.</td></tr>
+<tr><td><strong>Oil / Gas Well Operations</strong></td><td>Construction incidental to petroleum/gas well operations — by the owner or lessee.</td></tr>
+<tr><td><strong>Public Utilities</strong></td><td>Construction, maintenance, and development work incidental to their own regulated business (not underground trenching in public streets by cable TV).</td></tr>
+<tr><td><strong>Material Suppliers</strong></td><td>Only furnish materials without fabricating or installing them.</td></tr>
+<tr><td><strong>Alarm Company Operators</strong></td><td>Licensed alarm company operators performing alarm system work.</td></tr>
+<tr><td><strong>Mural Artists (NEW 2026)</strong></td><td>Artists who paint/draw/restore murals per an authorized agreement. A "mural" does NOT include painted wall signs.</td></tr>
+<tr><td><strong>Real Estate Licensees</strong></td><td>Acting within the scope of their real estate license — but they CANNOT act as a contractor without a CSLB license.</td></tr>
+</tbody></table>
+<div class="callout red"><div class="callout-title">Watch Out — These Are NOT Exempt</div><div class="callout-body">
+<div class="callout-item">Water well drilling — specifically excluded from exemptions even though it involves land work</div>
+<div class="callout-item">Anyone who advertises as a contractor — advertising eliminates the small-job exemption</div>
+<div class="callout-item">Anyone who employs others to assist — kills the small-job exemption</div>
+</div></div>`},
+
+lic_penalties:{title:'Penalties for Unlicensed Contracting', html:`
+<div class="callout red"><div class="callout-title">Criminal Penalties</div><div class="callout-body">
+<div class="callout-item"><strong>1st Conviction:</strong> Fine up to $5,000 and/or county jail up to 6 months</div>
+<div class="callout-item"><strong>2nd Conviction:</strong> Fine = 20% of contract price or $5,000 (whichever is greater), minimum 90 days jail</div>
+<div class="callout-item"><strong>3rd+ Conviction:</strong> Fine = 20% of contract price or $10,000 (whichever is greater), 90 days to 1 year jail</div>
+<div class="callout-item"><strong>Disaster Area (state of emergency):</strong> Fine up to $10,000 and/or up to 3 years state prison</div>
+<div class="callout-item"><strong>Illegal advertising:</strong> $700–$1,000 fine (in addition to any other punishment)</div>
+<div class="callout-item"><strong>Using false license number:</strong> Up to $10,000 fine and/or state prison or county jail up to 1 year</div>
+</div></div>
+<div class="block-h2">Civil Consequences</div>
+<ul class="block-ul">
+<li class="block-li"><strong>Cannot sue to collect payment</strong> — no court action possible for work requiring a license, regardless of work quality</li>
+<li class="block-li"><strong>Owner can recover 100%</strong> of what they paid to an unlicensed contractor</li>
+<li class="block-li"><strong>Security interests are unenforceable</strong> — any mechanics lien filed by an unlicensed contractor is void</li>
+<li class="block-li"><strong>Substantial compliance</strong> defense only applies if contractor was PREVIOUSLY licensed, acted in good faith to maintain license, and promptly fixed the lapse — cannot apply if NEVER licensed</li>
+</ul>
+<div class="block-h2">Statute of Limitations for CSLB Citations</div>
+<ul class="block-ul">
+<li class="block-li">4 years after the act OR 18 months after the complaint was filed — <strong>whichever is LATER</strong></li>
+</ul>
+<div class="block-h2">Reapplication After Denial</div>
+<ul class="block-ul">
+<li class="block-li">Generally cannot reapply for <strong>1 year</strong> from the effective date of denial (unless CSLB sets an earlier date)</li>
+</ul>`},
+
+lic_display:{title:'License Display & Advertising Rules', html:`
+<div class="block-h2">License Number Requirements</div>
+<ul class="block-ul">
+<li class="block-li">Must appear in <strong>ALL construction contracts</strong></li>
+<li class="block-li">Must appear in <strong>ALL subcontracts and calls for bid</strong></li>
+<li class="block-li">Must appear in <strong>ALL forms of advertising</strong> (cards, signs, billboards, brochures, newspapers, electronic media, vehicle lettering)</li>
+</ul>
+<div class="block-h2">Vehicle Display Requirements</div>
+<table class="block-table"><thead><tr><th>Contractor Type</th><th>Requirement</th></tr></thead><tbody>
+<tr><td>C-36 Plumbing, C-45 Sign, C-57 Well Drilling</td><td>Name, permanent business address, AND license number on EACH SIDE of commercial vehicles in letters at least <strong>1½ inches high</strong></td></tr>
+<tr><td>All other contractors</td><td>Business name and license number in or on each commercial vehicle in at least <strong>72-point font (¾ inch)</strong> in a clearly visible location</td></tr>
+</tbody></table>
+<div class="block-h2">Written Contract Notice Requirements</div>
+<ul class="block-ul">
+<li class="block-li">All prime contracts: CSLB consumer notice in at least <strong>10-point type</strong> (mentions 4-year and 10-year complaint deadlines)</li>
+<li class="block-li">Home improvement contracts and service/repair contracts: CSLB notice in at least <strong>12-point type</strong></li>
+</ul>
+<div class="block-h2">Advertising Rules — What You Cannot Do</div>
+<ul class="block-ul">
+<li class="block-li">Cannot advertise as <strong>"insured"</strong> without identifying the specific type (e.g., "commercial general liability insurance" — abbreviations are OK)</li>
+<li class="block-li">Cannot advertise as <strong>"bonded"</strong> if referring to the required contractor license bond or disciplinary bond</li>
+<li class="block-li">Any reference to the required bond in advertising = grounds for license <strong>suspension</strong></li>
+</ul>
+<div class="block-h2">Disciplinary History Disclosure</div>
+<ul class="block-ul">
+<li class="block-li">Contractor with 2+ suspensions or revocations in the past 8 years must disclose this before signing residential contracts (4 or fewer units)</li>
+<li class="block-li">Penalties: 1st violation = $1,000 | 2nd = $2,500 | 3rd = $5,000 + 1-year suspension | 4th = revocation</li>
+</ul>`},
+
+lic_personnel:{title:'Personnel of Record Rules After Revocation', html:`
+<div class="callout red"><div class="callout-title">Critical Rule — Know This Cold</div><div class="callout-body">
+<div class="callout-item">A person who was the <strong>qualifying individual on a REVOKED license</strong> is prohibited from serving as QI, officer, director, associate, partner, manager, or member of the personnel of record for ANY other licensee — <strong>whether or not they had knowledge of or participated</strong> in the violations</div>
+<div class="callout-item">Only permitted role: <strong>bona fide nonsupervising employee</strong></div>
+</div></div>
+<div class="block-h2">Rules Step by Step</div>
+<ul class="block-ul">
+<li class="block-li">Person with revoked license must provide <strong>written notice of the revocation</strong> to any prospective employer before being hired</li>
+<li class="block-li">Employer who knowingly hires such a person in a supervisory role: <strong>misdemeanor</strong> — fine of at least $4,500 and/or 30 days to 1 year jail</li>
+<li class="block-li">Person who violates restriction on acting for a licensee (after their revocation): <strong>misdemeanor</strong> — fine of at least $4,500, minimum 90 days to 1 year jail</li>
+<li class="block-li">4-year statute of limitations for prosecuting violations of these restrictions</li>
+</ul>
+<div class="block-h2">QI Responsibility — Immateriality Rule</div>
+<ul class="block-ul">
+<li class="block-li">When the firm commits a violation, this constitutes cause for disciplinary action against the <strong>qualifying individual</strong> — whether or not the QI had knowledge of or participated in the act</li>
+<li class="block-li">Disassociation from the license after a violation does NOT relieve the QI of responsibility for complying with a citation</li>
+</ul>`},
+
+bond_amounts:{title:'Bond Amounts — All Types', html:`
+<div class="block-h2">Required Bond Amounts</div>
+<table class="block-table"><thead><tr><th>Bond Type</th><th>Amount</th></tr></thead><tbody>
+<tr><td><strong>Standard Contractor's Bond</strong></td><td><strong>$25,000</strong></td></tr>
+<tr><td><strong>LLC Additional Surety Bond</strong></td><td><strong>$100,000</strong> (in addition to the $25,000)</td></tr>
+<tr><td><strong>Qualifying Individual's Bond</strong></td><td><strong>$25,000</strong> (when QI is not proprietor, general partner, or joint licensee)</td></tr>
+<tr><td><strong>Disciplinary Bond (minimum)</strong></td><td><strong>$25,000</strong> (registrar sets amount based on severity; max = 10× standard bond)</td></tr>
+<tr><td><strong>Judgment Bond</strong></td><td>Equal to the full amount of the unsatisfied judgment</td></tr>
+<tr><td><strong>LLC Liability Insurance (≤5 personnel)</strong></td><td><strong>$1,000,000</strong> aggregate minimum</td></tr>
+<tr><td><strong>LLC Liability Insurance (per person over 5)</strong></td><td>+<strong>$100,000</strong> per person, up to <strong>$5,000,000</strong> maximum</td></tr>
+<tr><td><strong>Blanket Bond — min financial ratio</strong></td><td>Quick ratio ≥ 1:1 OR Current ratio ≥ 2:1</td></tr>
+</tbody></table>
+<div class="block-h2">Double Bond Requirement</div>
+<ul class="block-ul">
+<li class="block-li">CSLB may require <strong>double the standard bond</strong> ($50,000) when all of these are true:</li>
+<li class="block-li">Applicant was convicted of unlicensed contracting OR received a final citation for it</li>
+<li class="block-li">AND the violation constituted <strong>substantial injury to the public</strong></li>
+</ul>`},
+
+bond_rules:{title:"Contractor's Bond — Key Rules", html:`
+<div class="block-h2">The Basics</div>
+<ul class="block-ul">
+<li class="block-li">Must be maintained as a condition of licensure at ALL times</li>
+<li class="block-li">Lapsing bond = license subject to suspension or revocation</li>
+<li class="block-li">Must be executed by an admitted surety in favor of the <strong>State of California</strong></li>
+<li class="block-li">Only acceptable forms: (1) admitted surety bond, (2) cash deposit per Code of Civil Procedure §995.710(a)(1)</li>
+<li class="block-li"><strong>NOT acceptable:</strong> certificates of deposit, other financial instruments</li>
+<li class="block-li">Bond is NOT required while license is on <strong>inactive status</strong></li>
+<li class="block-li">Replacement bonds accepted retroactively if received within <strong>90 days</strong> of the effective date</li>
+</ul>
+<div class="block-h2">Advertising the Bond</div>
+<ul class="block-ul">
+<li class="block-li">Any reference to the required license bond in advertising, soliciting, or public presentments = grounds for <strong>license suspension</strong></li>
+<li class="block-li">Advertising as "bonded" (referring to the required bond) = cause for discipline</li>
+</ul>
+<div class="block-h2">Civil Actions Against the Bond Deposit</div>
+<ul class="block-ul">
+<li class="block-li">Once CSLB is notified of a civil action against the deposit: deposit <strong>cannot be released</strong> for any purpose except as determined by the court</li>
+<li class="block-li">Civil penalty orders CANNOT be made against the bond — <strong>bonds are exempt</strong> from civil penalty payment</li>
+<li class="block-li">Legal fees cannot be charged against the bond by CSLB (AB 521 — 2026)</li>
+</ul>
+<div class="block-h2">Disciplinary Bond Rules</div>
+<ul class="block-ul">
+<li class="block-li">Must remain on file for at least <strong>2 years</strong> (plus any additional time the registrar requires)</li>
+<li class="block-li">Bond period runs only while license is current, active, and in good standing</li>
+</ul>`},
+
+bond_bene:{title:'Bond Beneficiaries & Claim Limits', html:`
+<div class="block-h2">Who Can Collect From the Contractor's Bond?</div>
+<ul class="block-ul">
+<li class="block-li">Homeowners contracting for home improvement on their <strong>personal family residence</strong>, damaged by a license law violation</li>
+<li class="block-li">Property owners building a <strong>single-family dwelling NOT intended for sale</strong>, damaged by a violation</li>
+<li class="block-li">Persons damaged by <strong>willful/deliberate violations or fraud</strong> in contract execution or performance</li>
+<li class="block-li">Employees damaged by the contractor's <strong>failure to pay wages</strong></li>
+<li class="block-li">Entities damaged by the contractor's <strong>failure to pay fringe benefits</strong></li>
+</ul>
+<div class="block-h2">Surety Liability Limits</div>
+<table class="block-table"><thead><tr><th>Claim Type</th><th>Maximum Surety Liability</th></tr></thead><tbody>
+<tr><td>Wage and fringe benefit claims</td><td><strong>$4,000</strong> aggregate (distributed proportionally)</td></tr>
+<tr><td>Non-homeowner claimants (general)</td><td><strong>$7,500</strong> aggregate (balance reserved for homeowner claimants)</td></tr>
+</tbody></table>
+<div class="block-h2">Statute of Limitations — Filing Bond Claims</div>
+<table class="block-table"><thead><tr><th>Claim Type</th><th>Time Limit</th></tr></thead><tbody>
+<tr><td>Non-wage claims (general)</td><td>3 years after the license period in which the act occurred, OR 3 years after license inactivation/cancellation/revocation — <strong>whichever is FIRST</strong></td></tr>
+<tr><td>Wage and fringe benefit claims</td><td>6 months from <strong>discovery</strong> of the delinquency, but NEVER more than <strong>2 years</strong> from when wages were due</td></tr>
+</tbody></table>
+<div class="block-h2">When the Bond Cannot Be Renewed</div>
+<ul class="block-ul">
+<li class="block-li">No license may be renewed, reissued, or reinstated while a <strong>judgment or admitted claim in excess of the bond amount remains unsatisfied</strong></li>
+</ul>`},
+
+bond_llc:{title:'LLC Requirements — Bond & Insurance', html:`
+<div class="block-h2">The LLC Additional $100,000 Bond</div>
+<ul class="block-ul">
+<li class="block-li">Required IN ADDITION to the standard $25,000 contractor's bond</li>
+<li class="block-li">Primarily protects employees for unpaid wages, fringe benefits, welfare fund contributions, pension fund contributions, and apprentice program contributions</li>
+<li class="block-li">If the LLC is party to a <strong>collective bargaining agreement</strong>, the bond must also cover welfare, pension, and apprentice contributions</li>
+<li class="block-li">NOT required while the license is on inactive status</li>
+</ul>
+<div class="block-h2">LLC Liability Insurance Requirements</div>
+<table class="block-table"><thead><tr><th>Personnel of Record Count</th><th>Minimum Insurance</th></tr></thead><tbody>
+<tr><td>5 or fewer</td><td><strong>$1,000,000</strong> aggregate</td></tr>
+<tr><td>6 persons</td><td>$1,100,000</td></tr>
+<tr><td>7 persons</td><td>$1,200,000</td></tr>
+<tr><td>Each additional person</td><td>+$100,000 per person</td></tr>
+<tr><td>Maximum required</td><td><strong>$5,000,000</strong> regardless of personnel count</td></tr>
+</tbody></table>
+<div class="block-h2">Blanket Performance & Payment Bond</div>
+<ul class="block-ul">
+<li class="block-li">Requires at least <strong>2 years</strong> of continuous active California licensure before applying</li>
+<li class="block-li">Financial standards: <strong>Quick ratio ≥ 1:1</strong> OR <strong>Current ratio ≥ 2:1</strong> (must be shown in CPA-reviewed financial statements)</li>
+<li class="block-li">Qualifier must certify the bond amount meets the "100% rule" and monitor ongoing compliance</li>
+<li class="block-li">Must notify registrar within <strong>30 days</strong> if licensee cannot comply with 100% rule</li>
+<li class="block-li">Biennial re-certification and updated financial statements required at each renewal</li>
+</ul>`},
+
+bond_wc:{title:"Workers' Compensation Requirements", html:`
+<div class="block-h2">The Basic Rule</div>
+<ul class="block-ul">
+<li class="block-li">Workers' compensation insurance is required as a <strong>condition of licensure</strong></li>
+<li class="block-li">Certificate of Workers' Compensation Insurance or Certification of Self-Insurance must be on file at all times</li>
+<li class="block-li">NOT required while a license is on <strong>inactive status</strong></li>
+</ul>
+<div class="block-h2">The No-Employee Exemption</div>
+<ul class="block-ul">
+<li class="block-li">WC is not required if the contractor has <strong>NO employees</strong> AND files a certification statement to that effect</li>
+<li class="block-li"><strong>Exception:</strong> Holders of C-8, C-20, C-22, C-39, or D-49 classifications CANNOT claim the no-employee exemption — WC is always mandatory for these</li>
+</ul>
+<div class="callout gold"><div class="callout-title">2026 Changes — SB 291</div><div class="callout-body">
+<div class="callout-item">Significantly <strong>increased civil penalties</strong> for WC violations</div>
+<div class="callout-item">CSLB cannot <strong>renew or reinstate</strong> a license in violation of WC requirements until a valid WC certificate is provided</div>
+<div class="callout-item">CSLB must report WC enforcement data to Legislature <strong>annually</strong></div>
+<div class="callout-item">CSLB must develop evidence-based WC exemption verification process — report to Legislature by <strong>January 1, 2027</strong></div>
+</div></div>`},
+
+hi_def:{title:"What Is Home Improvement?", html:`
+<div class="block-h2">Definition</div>
+<div class="block-p">Repairing, remodeling, altering, converting, or modernizing residential property, plus adjacent land improvements. Includes installation of home improvement goods and furnishing of home improvement services.</div>
+<div class="block-h2">Examples of Home Improvement Work</div>
+<ul class="block-ul">
+<li class="block-li">Driveways, swimming pools (spas, hot tubs), terraces, patios</li>
+<li class="block-li">Awnings, storm windows, solar energy systems</li>
+<li class="block-li">Landscaping, fences, porches, garages, fallout shelters, basements</li>
+<li class="block-li">Other improvements to structures or land adjacent to a dwelling</li>
+</ul>
+<div class="block-h2">What Is NOT Home Improvement</div>
+<ul class="block-ul">
+<li class="block-li">New commercial construction</li>
+<li class="block-li">Industrial building construction</li>
+<li class="block-li">Work on properties that are not residential</li>
+</ul>
+<div class="block-h2">Home Improvement Contractor</div>
+<ul class="block-ul">
+<li class="block-li">Any CSLB-licensed contractor engaged in home improvement work — full-time or part-time</li>
+<li class="block-li">Swimming pool contractors are specifically included</li>
+</ul>`},
+
+hi_thresholds:{title:'Contract Dollar Thresholds', html:`
+<div class="block-h2">Which Contract Type Is Required?</div>
+<table class="block-table"><thead><tr><th>Job Amount</th><th>Contract Type</th></tr></thead><tbody>
+<tr><td><strong>$750 or less</strong> (and all 4 conditions met)</td><td><strong>Service and Repair Contract</strong></td></tr>
+<tr><td><strong>Over $750</strong></td><td><strong>Full Home Improvement Contract</strong></td></tr>
+<tr><td>Any amount if HIS is involved</td><td>Full Home Improvement Contract regardless of price</td></tr>
+</tbody></table>
+<div class="block-h2">Service and Repair Contract — The 4 Conditions</div>
+<div class="callout blue"><div class="callout-title">ALL 4 Must Be Met for a Service & Repair Contract</div><div class="callout-body">
+<div class="callout-item">1. Contract price is <strong>$750 or less</strong></div>
+<div class="callout-item">2. The <strong>buyer initiated contact</strong> with the contractor to request the work</div>
+<div class="callout-item">3. The contractor does <strong>not sell goods or services beyond</strong> what's needed for the specific problem</div>
+<div class="callout-item">4. <strong>No payment accepted until the work is fully completed</strong> (all conditions that caused the buyer to call are fully corrected)</div>
+</div></div>
+<div class="block-p">If ANY of the 4 conditions are not met, the full home improvement contract requirements apply — regardless of the contract price.</div>
+<div class="block-h2">Senior Citizen Cancellation Rights</div>
+<ul class="block-ul">
+<li class="block-li">Standard cancellation period for service and repair contracts: <strong>3 business days</strong></li>
+<li class="block-li">For <strong>senior citizen</strong> buyers: extended to <strong>5 business days</strong></li>
+</ul>`},
+
+hi_elements:{title:'Required Contract Elements', html:`
+<div class="block-h2">Key Numbers</div>
+<div class="callout gold"><div class="callout-title">Numbers You Must Know</div><div class="callout-body">
+<div class="callout-item">Down payment maximum: <strong>$1,000 OR 10% of contract price — whichever is LESS</strong></div>
+<div class="callout-item">Minimum text size: <strong>10-point type</strong> for text, <strong>10-point boldface</strong> for headings</div>
+<div class="callout-item">CSLB consumer notice in HI contract: at least <strong>12-point type</strong></div>
+</div></div>
+<div class="block-h2">Basic Contract Requirements</div>
+<ul class="block-ul">
+<li class="block-li">Contract and ALL changes must be in writing and signed by all parties</li>
+<li class="block-li">Contractor gives buyer a signed and dated copy <strong>before any work begins</strong></li>
+<li class="block-li">No payment (except down payment) until work is completed or materials are delivered</li>
+<li class="block-li">Contractor's name, business address, and license number required</li>
+<li class="block-li">HIS name and registration number required if a salesperson was involved</li>
+<li class="block-li">Salesperson commission: paid pro rata in proportion to owner payment schedule</li>
+</ul>
+<div class="block-h2">Required Contract Descriptions</div>
+<ul class="block-ul">
+<li class="block-li">Description of work and description of materials and equipment</li>
+<li class="block-li">Contract price, payment schedule</li>
+<li class="block-li">Start and completion dates</li>
+<li class="block-li">Permits and tests (and who pays)</li>
+<li class="block-li">Permissible delays, extra work provisions</li>
+<li class="block-li">Required mechanics lien release statements</li>
+<li class="block-li">Owner's right to cancellation</li>
+</ul>
+<div class="block-h2">Required Notices & Disclosures</div>
+<ul class="block-ul">
+<li class="block-li">Extra Work and Change Orders notice</li>
+<li class="block-li">Commercial General Liability Insurance notice</li>
+<li class="block-li">Workers' Compensation Insurance notice</li>
+<li class="block-li">Performance of Extra or Change-Order Work notice</li>
+<li class="block-li"><strong>Mechanics Lien Warning</strong> (warns owner that unpaid subs can lien their property)</li>
+<li class="block-li">Contractors Board (CSLB) Information</li>
+<li class="block-li">Right to Cancel and Notice of Cancellation Instructions</li>
+</ul>
+<div class="block-h2">Common Contract Problems</div>
+<ul class="block-ul">
+<li class="block-li">Missing notices/disclosures • Excessive down payment • Materials not specifically described</li>
+<li class="block-li">Job start/completion dates missing • Price not fully established • No change orders included</li>
+<li class="block-li">License number or HIS registration number missing • Permits not identified</li>
+</ul>`},
+
+hi_his:{title:'HIS Registration — Complete Rules', html:`
+<div class="block-h2">Who Must Register</div>
+<div class="block-p">Anyone who <strong>solicits, sells, negotiates, or executes</strong> home improvement contracts for a licensed contractor <strong>outside the contractor's normal place of business</strong> — regardless of the dollar amount.</div>
+<div class="block-h2">Key Numbers & Deadlines</div>
+<table class="block-table"><thead><tr><th>Topic</th><th>Rule</th></tr></thead><tbody>
+<tr><td>Application fee</td><td><strong>$200</strong> — nonrefundable, nontransferable</td></tr>
+<tr><td>Minimum age</td><td><strong>18 years old</strong></td></tr>
+<tr><td>Fingerprints</td><td>Required as part of the application</td></tr>
+<tr><td>Registration term</td><td><strong>2 years</strong> from the last day of the month issued</td></tr>
+<tr><td>Address change notice</td><td>Within <strong>90 days</strong> of the change</td></tr>
+<tr><td>May work before registration issued?</td><td><strong>NO</strong> — CSLB must review and issue a number first</td></tr>
+<tr><td>Can represent multiple employers?</td><td>Yes — single registration covers all employers</td></tr>
+</tbody></table>
+<div class="block-h2">Contractor Obligations</div>
+<ul class="block-ul">
+<li class="block-li">Must notify CSLB in writing <strong>before</strong> employing a registered HIS</li>
+<li class="block-li">Must notify CSLB in writing when HIS employment ends</li>
+<li class="block-li">Employing an unregistered person to negotiate HI contracts = <strong>disciplinary action against the contractor</strong></li>
+<li class="block-li">Acting as unregistered HIS = <strong>misdemeanor</strong> + administrative citation</li>
+</ul>
+<div class="block-h2">HIS Exemptions</div>
+<ul class="block-ul">
+<li class="block-li">Persons who ONLY contact buyers to <strong>schedule appointments</strong> for a registered HIS</li>
+<li class="block-li">Personnel listed in CSLB's official records for the contractor (contractors, qualifiers, partners, officers, LLC members/managers)</li>
+<li class="block-li">Bona fide service/repair people whose calls are limited to the initially-requested repair</li>
+<li class="block-li">Persons who only sell goods at a fixed business establishment where goods are exhibited</li>
+</ul>`},
+
+hi_warranties:{title:'Home Warranties & Joint Control', html:`
+<div class="block-h2">Home Warranties</div>
+<ul class="block-ul">
+<li class="block-li"><strong>General rule:</strong> Home warranties are NOT transferable to subsequent purchasers</li>
+<li class="block-li"><strong>Exception — Roof warranties only:</strong> Transfer to ALL subsequent purchasers without limitation (for contracts on or after January 1, 1994), UNLESS the contract contains a clear and conspicuous provision limiting transferability</li>
+</ul>
+<div class="block-h2">Joint Control Agreements</div>
+<ul class="block-ul">
+<li class="block-li">Optional — covers full performance and payment on home improvement contracts</li>
+<li class="block-li">CSLB does <strong>NOT license, regulate, or maintain lists</strong> of joint control companies</li>
+<li class="block-li">CSLB has <strong>NO legal jurisdiction</strong> over joint control company activities</li>
+<li class="block-li">Contractor is <strong>PROHIBITED</strong> from having any financial or other interest in the joint control company</li>
+<li class="block-li">Responsibility for the joint control addendum rests solely with the <strong>joint control company</strong></li>
+<li class="block-li">Contractors should consult an <strong>attorney</strong> before using a joint control agreement</li>
+</ul>
+<div class="block-h2">Material Representations in Contracts</div>
+<ul class="block-ul">
+<li class="block-li">When a contractor specifies a brand name, model number, or quality of materials in a home improvement contract, they MUST install exactly those materials</li>
+<li class="block-li">Failure to install the specified goods/materials = <strong>cause for disciplinary action</strong> (regardless of quality of substitute)</li>
+</ul>`},
+
+hi_changeorders:{title:'Change Orders & Fraudulent Acts', html:`
+<div class="block-h2">Change Order Requirements</div>
+<ul class="block-ul">
+<li class="block-li">Change order is <strong>NOT enforceable</strong> against the buyer unless it includes ALL THREE:</li>
+<li class="block-li">1. Scope of work encompassed by the order</li>
+<li class="block-li">2. Dollar amount to be added or subtracted</li>
+<li class="block-li">3. Effect on progress payments or completion date</li>
+<li class="block-li">Buyer may <strong>NOT</strong> require extra work without providing written authorization</li>
+<li class="block-li">Failure to comply with change order requirements does not prevent quantum meruit recovery</li>
+</ul>
+<div class="block-h2">Fraudulent Misrepresentation Penalties</div>
+<div class="callout red"><div class="callout-title">§7160 — Fraudulent Misrepresentation</div><div class="callout-body">
+<div class="callout-item">Person induced by false/fraudulent representations may recover: <strong>$500 penalty + reasonable attorney's fees + actual damages</strong></div>
+<div class="callout-item">Using false/deceptive advertising to induce a contract: <strong>misdemeanor + cause for discipline</strong></div>
+<div class="callout-item">Making false promises to induce signing: <strong>misdemeanor</strong></div>
+<div class="callout-item">In disaster areas: additional court fine of $500–$25,000 based on ability to pay</div>
+</div></div>
+<div class="block-h2">Contract Contingent on Buyer's Loan</div>
+<ul class="block-ul">
+<li class="block-li">If obtaining a loan is a condition of the HI contract: contract is NOT enforceable until (1) lender agrees to the loan, (2) buyer accepts the loan, AND (3) buyer does not rescind during the applicable rescission period</li>
+<li class="block-li">If the contract becomes unenforceable: contractor must <strong>immediately and without condition return ALL money and consideration</strong> given by the buyer</li>
+<li class="block-li">Emergency repair waiver: buyer may waive these protections for emergency repairs — must be in a dated written statement (not a printed form), describing the emergency, signed by each property owner</li>
+</ul>`},
+
+hi_solar:{title:'Solar Energy Contracts', html:`
+<div class="block-h2">Solar Disclosure Document</div>
+<ul class="block-ul">
+<li class="block-li">Required on the <strong>front page or cover page</strong> of every solar energy contract</li>
+<li class="block-li">Must be in <strong>16-point boldface type</strong></li>
+<li class="block-li">Must include: (1) total cost and payments including financing, (2) how and to whom complaints may be provided, (3) the consumer's right to the applicable cancellation period</li>
+<li class="block-li">Contract and disclosure must be written in the <strong>same language</strong> as the oral sales presentation</li>
+</ul>
+<div class="block-h2">Additional Disclosure Items (Optional but May Be Included)</div>
+<ul class="block-ul">
+<li class="block-li">Financing sources and amounts, panel calculations, energy generation estimates</li>
+<li class="block-li">Monthly electric company fees, turn-on charges, internet monitoring fees</li>
+<li class="block-li">Terms of any guaranteed rebate, final contract price without rebates</li>
+<li class="block-li">Contractor's license number, impacts of non-code installations</li>
+<li class="block-li">Difference between solar lease vs. purchase and impacts on future home sale</li>
+</ul>
+<div class="block-h2">PACE Financing</div>
+<ul class="block-ul">
+<li class="block-li">For Property Assessed Clean Energy (PACE) financing: the required PACE Financing Estimate and Disclosure form satisfies solar disclosure requirements for the FINANCING CONTRACT only — not for the underlying installation contract</li>
+</ul>
+<div class="block-h2">CSLB's Role</div>
+<ul class="block-ul">
+<li class="block-li">CSLB receives and reviews complaints about solar companies and solar contractors</li>
+<li class="block-li">CSLB publishes annual reports on solar contractor complaints (starting July 1, 2019)</li>
+</ul>`},
+
+biz_forms:{title:'Forms of Business Organization', html:`
+<div class="block-h2">Comparison Chart</div>
+<table class="block-table"><thead><tr><th>Form</th><th>Personal Liability</th><th>Tax Treatment</th><th>Contractor License Impact</th></tr></thead><tbody>
+<tr><td><strong>Sole Proprietorship</strong></td><td>Full personal liability</td><td>Business income = personal income</td><td>Simplest — owner is the licensee</td></tr>
+<tr><td><strong>General Partnership</strong></td><td>Each partner fully liable for ALL partner acts</td><td>Each partner's share = personal income</td><td>License CANCELED when any general partner leaves or is added</td></tr>
+<tr><td><strong>Limited Partnership</strong></td><td>Limited partners: only their investment. General partner: full liability</td><td>Pass-through like partnership</td><td>At least one general partner must qualify</td></tr>
+<tr><td><strong>Corporation</strong></td><td>Stockholders limited to their investment (officers may be personally liable)</td><td>Corporate income tax (C-corp) or pass-through (S-corp)</td><td>No fixed life — death of stockholder does not cancel license</td></tr>
+<tr><td><strong>LLC</strong></td><td>Members limited to their investment</td><td>Flexible — can elect taxation treatment</td><td>Requires $100,000 additional bond + $1M+ liability insurance</td></tr>
+</tbody></table>
+<div class="block-h2">Key Points to Remember</div>
+<ul class="block-ul">
+<li class="block-li"><strong>Partnership:</strong> License is canceled when any general partner leaves or is added — must reapply</li>
+<li class="block-li"><strong>Corporation:</strong> Has no fixed life — death of a stockholder or sale of stock does not disrupt the business or the license</li>
+<li class="block-li"><strong>LLC:</strong> Most burdensome licensing requirements — $100,000 additional bond AND significant liability insurance</li>
+</ul>`},
+
+biz_statements:{title:'The Three Financial Statements', html:`
+<div class="block-h2">1. Balance Sheet — Snapshot at a Point in Time</div>
+<div class="block-p">Shows what the company OWNS (assets) vs. what it OWES (liabilities) and owner's equity.</div>
+<table class="block-table"><thead><tr><th>Component</th><th>What It Includes</th></tr></thead><tbody>
+<tr><td><strong>Current Assets</strong></td><td>Cash, accounts receivable, inventories — convertible to cash within 1 year</td></tr>
+<tr><td><strong>Fixed Assets</strong></td><td>Equipment, vehicles, real property used in the business</td></tr>
+<tr><td><strong>Current Liabilities</strong></td><td>Accounts payable, notes payable, accrued expenses, accrued payroll, taxes — due within 1 year</td></tr>
+<tr><td><strong>Long-term Liabilities</strong></td><td>Bank loans, mortgages due more than 1 year away</td></tr>
+<tr><td><strong>Retained Earnings</strong></td><td>Total corporate earnings since founding MINUS total dividends declared — NOT just current year</td></tr>
+<tr><td><strong>Accrued Expenses Payable</strong></td><td>Expenses incurred but NOT yet due for payment (interest, insurance, service fees)</td></tr>
+</tbody></table>
+<div class="block-h2">2. Income Statement — Covers a Period of Time</div>
+<div class="block-p">Shows revenue, expenses, and profit or loss. The "bottom line" = net profit.</div>
+<table class="block-table"><thead><tr><th>Item</th><th>What It Means</th></tr></thead><tbody>
+<tr><td><strong>Materials Used</strong></td><td>The LARGEST single expense item — most critical to control</td></tr>
+<tr><td><strong>Direct Labor</strong></td><td>Actual wages paid to field workers</td></tr>
+<tr><td><strong>Direct Labor Burden</strong></td><td>Payroll taxes + insurance + benefits + union assessments</td></tr>
+<tr><td><strong>Other Direct Costs</strong></td><td>Permits, bonds, insurance, equipment rentals charged to specific jobs</td></tr>
+<tr><td><strong>G&A Expenses</strong></td><td>Office expenses, salaries, advertising — NOT attributable to specific jobs</td></tr>
+<tr><td><strong>Net Profit</strong></td><td>All revenues minus ALL expenses including taxes — the true "bottom line"</td></tr>
+</tbody></table>
+<div class="block-h2">3. Statement of Changes in Financial Position</div>
+<div class="block-p">Also called the "Statement of Sources and Applications of Funds." Shows where money came from and where it went. Required when audited by a CPA for creditors.</div>`},
+
+biz_ratios:{title:'Financial Ratios — Formulas & Examples', html:`
+<div class="callout blue"><div class="callout-title">Formulas — Memorize These</div><div class="callout-body">
+<div class="callout-item"><strong>Working Capital</strong> = Current Assets − Current Liabilities</div>
+<div class="callout-item"><strong>Current Ratio</strong> = Current Assets ÷ Current Liabilities</div>
+<div class="callout-item"><strong>Quick Ratio</strong> = (Current Assets − Inventories) ÷ Current Liabilities</div>
+</div></div>
+<div class="block-h2">Example — Typical Construction Co.</div>
+<table class="block-table"><thead><tr><th>Metric</th><th>Calculation</th><th>Result</th></tr></thead><tbody>
+<tr><td>Current Assets</td><td>Given</td><td>$250,000</td></tr>
+<tr><td>Inventories</td><td>Given</td><td>$110,000</td></tr>
+<tr><td>Current Liabilities</td><td>Given</td><td>$180,000</td></tr>
+<tr><td><strong>Working Capital</strong></td><td>$250,000 − $180,000</td><td><strong>$70,000</strong></td></tr>
+<tr><td><strong>Current Ratio</strong></td><td>$250,000 ÷ $180,000</td><td><strong>1.39</strong> ($1.39 for every $1 owed)</td></tr>
+<tr><td><strong>Quick Ratio</strong></td><td>$140,000 ÷ $180,000</td><td><strong>0.78</strong> ($0.78 for every $1 owed)</td></tr>
+</tbody></table>
+<div class="block-h2">What the Ratios Mean</div>
+<ul class="block-ul">
+<li class="block-li">Quick ratio is <strong>more conservative</strong> — excludes inventory because it cannot be as quickly converted to cash</li>
+<li class="block-li">Banks look at both ratios when evaluating lines of credit</li>
+<li class="block-li">Blanket bond qualification: Quick ratio ≥ 1:1 OR Current ratio ≥ 2:1</li>
+<li class="block-li">Low current ratio = may struggle to pay current debts</li>
+</ul>
+<div class="block-h2">Three Ways to Compare Financial Data</div>
+<ul class="block-ul">
+<li class="block-li">1. Compare current year to prior years (trend analysis)</li>
+<li class="block-li">2. Compare to other businesses in the same industry (benchmarking)</li>
+<li class="block-li">3. Ratio analysis — compare two figures within the current financial data</li>
+</ul>`},
+
+biz_financing:{title:'Financing a Contracting Business', html:`
+<div class="block-h2">Two Types of Financing</div>
+<table class="block-table"><thead><tr><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><strong>Equity Funds</strong></td><td>Investors who acquire ownership and a share of profits. Typical sources: acquaintances of the owner, venture capital companies, SBA-funded SBICs. Funds remain in the business.</td></tr>
+<tr><td><strong>Debt</strong></td><td>Borrowed money requiring repayment plus interest. Owner does NOT give up control. Two subtypes: long-term (bank loans, equipment financing) and short-term (lines of credit).</td></tr>
+</tbody></table>
+<div class="block-h2">The SBA's Role</div>
+<ul class="block-ul">
+<li class="block-li">The SBA does <strong>NOT make direct loans</strong></li>
+<li class="block-li">The SBA <strong>GUARANTEES</strong> repayment of loans made by banks and lenders</li>
+<li class="block-li">Visit: www.sba.gov | Phone: (800) 827-5722</li>
+</ul>
+<div class="block-h2">What Banks Evaluate — The Three C's</div>
+<table class="block-table"><thead><tr><th>Factor</th><th>What the Bank Looks At</th></tr></thead><tbody>
+<tr><td><strong>Character</strong></td><td>Experience with similar jobs, business reputation with lenders/suppliers/subcontractors, reasonableness of bid</td></tr>
+<tr><td><strong>Capacity</strong></td><td>Current workload, equipment availability, financial resources to withstand reasonable losses, financial strength of awarding agency and subcontractors</td></tr>
+<tr><td><strong>Certainty</strong></td><td>Chances that unexpected losses affect repayment, realism of completion dates, risk of delay penalties</td></tr>
+</tbody></table>
+<div class="block-h2">Retention (Retainage)</div>
+<ul class="block-ul">
+<li class="block-li">Typical contract: 90% paid during construction, final <strong>10% held until project completion and lien period expires</strong></li>
+<li class="block-li">This 10% is called the "retention" or "retainage"</li>
+<li class="block-li">Retention usually <strong>exceeds profits</strong> — a major claim on working capital</li>
+<li class="block-li">Subcontractors finishing early must wait for the entire project to be accepted before receiving their retention</li>
+</ul>`},
+
+biz_bidding:{title:'Bidding, Estimation & Scheduling', html:`
+<div class="block-h2">Steps for Accurate Bidding</div>
+<ul class="block-ul">
+<li class="block-li">On-site inspection (walk the job)</li>
+<li class="block-li">Review plans and specifications thoroughly</li>
+<li class="block-li">Identify required equipment and financing method (purchase, lease, rental)</li>
+<li class="block-li">Perform material takeoffs (quantity measurements from plans)</li>
+<li class="block-li">Get prices from price lists AND quotes from suppliers and subcontractors</li>
+<li class="block-li">Include <strong>sales tax and freight costs</strong> in material prices</li>
+<li class="block-li">Do NOT include cash discounts unless certain funds will be available during the discount period</li>
+<li class="block-li">Calculate labor including wages, payroll taxes, health/welfare, vacation, and insurance</li>
+<li class="block-li">Include indirect costs: fuel, lubricants, maintenance, small tools</li>
+<li class="block-li">Calculate overhead: office rent, supplies, salaries, advertising, etc.</li>
+<li class="block-li">Add <strong>PROFIT</strong> — never omit it</li>
+</ul>
+<div class="block-h2">Common Bidding Pitfalls</div>
+<ul class="block-ul">
+<li class="block-li">Bidding on projects where plans/specs are not completely understood</li>
+<li class="block-li">Insufficient planning — hurried analysis</li>
+<li class="block-li">Overextension of managerial and/or financial resources</li>
+<li class="block-li">Bidding against the competition rather than on the job itself</li>
+</ul>
+<div class="block-h2">Scheduling Methods</div>
+<table class="block-table"><thead><tr><th>Method</th><th>Description</th></tr></thead><tbody>
+<tr><td><strong>Bar Chart (Gantt)</strong></td><td>Simple graphic showing start and finish times for individual tasks. Easy to understand but overlooks some interrelated tasks.</td></tr>
+<tr><td><strong>Critical Path Method (CPM)</strong></td><td>More complex — interrelates ALL tasks. Any delay in a critical-path task causes an OVERALL project delay. Focuses management on the key path.</td></tr>
+</tbody></table>`},
+
+biz_risk:{title:'Risk Management & Insurance', html:`
+<div class="block-h2">Comprehensive Insurance Package</div>
+<ul class="block-ul">
+<li class="block-li">Workers' compensation insurance (mandatory if any employees)</li>
+<li class="block-li">Fire insurance</li>
+<li class="block-li">Liability insurance (commercial general liability)</li>
+<li class="block-li">Automobile insurance</li>
+<li class="block-li">Fidelity bonds</li>
+<li class="block-li">Business interruption insurance</li>
+<li class="block-li">Employee health and life insurance</li>
+<li class="block-li">"Key person" insurance</li>
+</ul>
+<div class="block-h2">Risk Management Principles</div>
+<ul class="block-ul">
+<li class="block-li"><strong>Cover the largest loss exposure first</strong> — property and liability insurance, reviewed yearly</li>
+<li class="block-li">Use deductibles to significantly reduce costs</li>
+<li class="block-li">Review coverage yearly to reflect changes in the business</li>
+<li class="block-li">Understand the implications of any changes in the insurer's contracts</li>
+</ul>
+<div class="block-h2">Why Contractors Fail — Top Causes</div>
+<div class="callout red"><div class="callout-title">The Law Book States</div><div class="callout-body">
+<div class="callout-item">Inability to plan, manage, and control business affairs</div>
+<div class="callout-item">Insufficient on-the-job supervisory experience</div>
+<div class="callout-item">Inability to manage employees</div>
+<div class="callout-item">Lack of knowledge about business practices</div>
+<div class="callout-item nobullet"><em>"Statistics show that a significant percentage of bankruptcies and business closures result from poor management."</em></div>
+</div></div>`},
+
+lien_vs:{title:'Mechanics Lien vs. Stop Notice', html:`
+<div class="block-h2">The Key Distinction</div>
+<table class="block-table"><thead><tr><th>Topic</th><th>Mechanics Lien</th><th>Stop Notice</th></tr></thead><tbody>
+<tr><td>Attaches to</td><td>The <strong>PROPERTY</strong> itself</td><td><strong>CONSTRUCTION FUNDS</strong> held by lender or owner</td></tr>
+<tr><td>Public works?</td><td>NO — cannot lien public property</td><td>YES — often the ONLY remedy in public works</td></tr>
+<tr><td>To bind a construction lender</td><td>N/A</td><td>Must be <strong>BONDED</strong> — bond = 1¼ times the claim</td></tr>
+<tr><td>Both available?</td><td colspan="2">YES — in private works you may use one, the other, or both</td></tr>
+</tbody></table>
+<div class="block-h2">Who CAN File a Mechanics Lien?</div>
+<ul class="block-ul">
+<li class="block-li">Persons with a contract directly with the owner or with an agent of the owner</li>
+<li class="block-li">Contractors, subcontractors, architects, builders, and anyone in charge of the work (all are agents of the owner)</li>
+<li class="block-li">Materials must be <strong>incorporated into the structure</strong> (installed) to be lienable</li>
+</ul>
+<div class="block-h2">Who CANNOT File</div>
+<ul class="block-ul">
+<li class="block-li">A <strong>material supplier's supplier</strong> — cannot file because they have no direct connection to an owner's agent</li>
+<li class="block-li">Anyone who only provided materials that were NOT incorporated into the structure</li>
+</ul>`},
+
+lien_prelim:{title:'Preliminary Notice — Critical First Step', html:`
+<div class="callout blue"><div class="callout-title">Preliminary 20-Day Notice — Key Rules</div><div class="callout-body">
+<div class="callout-item">Subcontractors and material suppliers: Must serve within <strong>20 days of FIRST furnishing labor or materials</strong></div>
+<div class="callout-item">Serve on: <strong>Owner, original contractor, AND construction lender</strong></div>
+<div class="callout-item">Only ONE Preliminary Notice needed regardless of how many deliveries are made</div>
+<div class="callout-item">Prime contractors and owner-hired parties: NOT required (owner already knows)</div>
+<div class="callout-item">Failure to serve = <strong>LOSS of mechanics lien rights</strong> for subcontractors and suppliers</div>
+</div></div>
+<div class="block-h2">How to Serve the Notice</div>
+<ul class="block-ul">
+<li class="block-li">First-class certified or registered mail, return receipt requested — keep post office receipts</li>
+<li class="block-li">Personal delivery or leaving with a person in charge (must be an adult)</li>
+<li class="block-li">May also file with the county recorder — recorder then notifies you of any Notice of Completion or Cessation</li>
+</ul>
+<div class="block-h2">Notice of Non-Responsibility</div>
+<ul class="block-ul">
+<li class="block-li">Used by a property owner when a TENANT causes improvements without the owner's direction</li>
+<li class="block-li">Must be <strong>posted conspicuously on site AND recorded with the County Recorder</strong> within <strong>10 days</strong> of discovering the work of improvement</li>
+<li class="block-li">Protects the owner from mechanics liens for that unauthorized work</li>
+</ul>`},
+
+lien_deadlines:{title:'Claim of Lien Deadlines & Filing', html:`
+<div class="block-h2">Notice of Completion — Must Be Recorded Within 10 Days After Project Completion</div>
+<table class="block-table"><thead><tr><th>Situation</th><th>Prime Contractor</th><th>Subcontractor</th></tr></thead><tbody>
+<tr><td>Owner records Notice of Completion</td><td><strong>60 days</strong> after recording</td><td><strong>30 days</strong> after recording</td></tr>
+<tr><td>Owner records Notice of Cessation</td><td><strong>60 days</strong> after recording</td><td><strong>30 days</strong> after recording</td></tr>
+<tr><td>No Notice recorded (labor ceased & work used/accepted)</td><td><strong>90 days</strong></td><td><strong>90 days</strong></td></tr>
+</tbody></table>
+<div class="callout gold"><div class="callout-title">Notice of Cessation — Key Rule</div><div class="callout-body">
+<div class="callout-item">Labor must have ceased for at least <strong>30 days</strong> before the owner may record a Notice of Cessation</div>
+</div></div>
+<div class="block-h2">After Recording the Claim of Lien</div>
+<ul class="block-ul">
+<li class="block-li"><strong>Lien Foreclosure Action</strong> must be filed within <strong>90 days</strong> of recording the Claim of Lien</li>
+<li class="block-li"><strong>Lis Pendens</strong> must be recorded at the <strong>same time</strong> as the Lien Foreclosure Action filing</li>
+<li class="block-li">Lis Pendens = a notice that a lawsuit is pending affecting real property — warns potential buyers they may be bound by an adverse judgment</li>
+</ul>
+<div class="block-h2">What a Claim of Lien Must State</div>
+<ul class="block-ul">
+<li class="block-li">The amount of the claimant's demand (after deducting credits and offsets)</li>
+<li class="block-li">The name of the owner or reputed owner</li>
+<li class="block-li">The kind of labor, services, equipment, or materials furnished</li>
+<li class="block-li">The name of the person who employed the claimant</li>
+<li class="block-li">A description of the site sufficient for identification</li>
+</ul>`},
+
+lien_disputes:{title:'Dispute Resolution Options', html:`
+<div class="block-h2">Overview of Options</div>
+<table class="block-table"><thead><tr><th>Option</th><th>Key Facts</th></tr></thead><tbody>
+<tr><td><strong>Settlement</strong></td><td>Always try first — lawsuits are costly, time-consuming, and disruptive</td></tr>
+<tr><td><strong>Small Claims Court</strong></td><td>Max judgment: <strong>$12,500</strong> for contractors. CANNOT foreclose a mechanics lien. No attorneys. Fast (1–2 months). Losing defendant has automatic right to appeal within 30 days.</td></tr>
+<tr><td><strong>CSLB Mandatory Arbitration</strong></td><td>Alleged damages <strong>under $25,000</strong>. FREE. License must be in good standing at time of violation. No prior violations. No prior private arbitration agreement.</td></tr>
+<tr><td><strong>CSLB Voluntary Arbitration</strong></td><td>Alleged damages <strong>$25,000–$50,000</strong>. FREE. Same eligibility requirements.</td></tr>
+<tr><td><strong>Private Arbitration</strong></td><td>Must be in the contract. If agreed upon, parties CANNOT use CSLB arbitration (unless both later sign a waiver). Usually binding. Very few appeal grounds.</td></tr>
+<tr><td><strong>Filing Suit</strong></td><td>Corporations/LLCs MUST have an attorney (except small claims). Sole proprietors and partners may represent themselves.</td></tr>
+</tbody></table>
+<div class="block-h2">CSLB Arbitration Eligibility Requirements</div>
+<ul class="block-ul">
+<li class="block-li">Contractor's license must be in good standing (current and not under suspension) AT THE TIME of the alleged violation</li>
+<li class="block-li">Contractor cannot have a record of prior violations</li>
+<li class="block-li">The parties cannot have previously agreed to private arbitration in the contract or elsewhere</li>
+</ul>`},
+
+disc_causes:{title:'Complete List of Causes for Discipline', html:`
+<div class="block-h2">Contract & Financial Violations</div>
+<ul class="block-ul">
+<li class="block-li"><strong>Abandonment</strong> of a construction project without legal excuse</li>
+<li class="block-li"><strong>Diversion of construction funds</strong> received for a specific project</li>
+<li class="block-li">Failure to pay subcontractors within <strong>7 days</strong> of receiving progress payment (2%/month penalty applies)</li>
+<li class="block-li">Failure to pay dump truck carriers by the 20th of the following month (2%/month penalty)</li>
+<li class="block-li">Failure to pay for materials or services when contractor has the capacity to pay</li>
+<li class="block-li">Failure to prosecute work diligently causing material injury</li>
+</ul>
+<div class="block-h2">Work Quality Violations</div>
+<ul class="block-ul">
+<li class="block-li">Willful departure from accepted trade standards (unless per architect's plans)</li>
+<li class="block-li">Willful departure from or disregard of plans or specifications in a material respect</li>
+</ul>
+<div class="block-h2">Safety & Legal Violations</div>
+<ul class="block-ul">
+<li class="block-li">Violation of Title 8 safety provisions — disciplinable <strong>even if no death or injury occurred</strong></li>
+<li class="block-li">Violation of Labor Code safety provisions resulting in death or serious injury</li>
+<li class="block-li">Willful disregard of building laws, safety laws, labor laws, or compensation insurance laws</li>
+</ul>
+<div class="block-h2">Record & Compliance Violations</div>
+<ul class="block-ul">
+<li class="block-li">Failure to keep records available for registrar inspection for at least <strong>5 years</strong> after project completion</li>
+<li class="block-li">Failure to respond to registrar's written request to cooperate in a complaint investigation</li>
+<li class="block-li">Omission or misrepresentation of a material fact on a license application or renewal</li>
+</ul>
+<div class="block-h2">Personnel & License Violations</div>
+<ul class="block-ul">
+<li class="block-li">Acting as contractor under any name other than the name on the license</li>
+<li class="block-li">Acting as contractor under an inactive, suspended, or expired license</li>
+<li class="block-li">Acting in an unauthorized license classification</li>
+<li class="block-li">Entering into a contract WITH an unlicensed contractor</li>
+<li class="block-li">Employing a person with a revoked license in a supervisory capacity</li>
+<li class="block-li">Subverting or attempting to subvert a CSLB investigation</li>
+<li class="block-li">Threatening or harassing anyone for providing evidence in a disciplinary action</li>
+</ul>
+<div class="block-h2">Advertising & Misrepresentation</div>
+<ul class="block-ul">
+<li class="block-li">Advertising as "insured" without identifying the specific type of insurance</li>
+<li class="block-li">Advertising as "bonded" (referring to the required license bond)</li>
+<li class="block-li">Any reference to the required bond in advertising (grounds for <strong>suspension</strong>)</li>
+<li class="block-li">Willful or fraudulent act injuring another</li>
+<li class="block-li">Criminal conviction substantially related to contracting duties</li>
+<li class="block-li">Overpricing after a disaster (conviction = minimum <strong>6-month suspension OR permanent revocation</strong>)</li>
+</ul>`},
+
+disc_citation:{title:'Citation Process Step by Step', html:`
+<div class="block-h2">The Citation Process</div>
+<table class="block-table"><thead><tr><th>Step</th><th>What Happens</th></tr></thead><tbody>
+<tr><td>1. Citation Issued</td><td>CSLB serves a written citation describing the violation, an order of abatement (cease and desist), and a civil penalty</td></tr>
+<tr><td>2. Response Window</td><td><strong>15 WORKING DAYS</strong> from service to notify registrar of intent to contest</td></tr>
+<tr><td>3A. Not Contested</td><td>Citation becomes a <strong>FINAL ORDER</strong> of the registrar — not reviewable by any court or agency</td></tr>
+<tr><td>3B. Contested</td><td>Registrar schedules a hearing OR licensee may request an informal citation conference within 15 days</td></tr>
+<tr><td>4. Informal Conference</td><td>Held within 60 days of request. Chief of enforcement may affirm, modify, or dismiss the citation.</td></tr>
+<tr><td>5. Final Decision</td><td>Affirms, modifies, or vacates the citation and/or penalty</td></tr>
+<tr><td>6. Failure to Comply</td><td>Ground for <strong>suspension or revocation</strong> of license</td></tr>
+</tbody></table>
+<div class="block-h2">Other Enforcement Tools</div>
+<ul class="block-ul">
+<li class="block-li">Disciplinary action by another state = grounds for California disciplinary action</li>
+<li class="block-li">Expiration, cancellation, or surrender of a license does NOT deprive the registrar of jurisdiction to proceed with investigations</li>
+<li class="block-li">After receiving Labor Commissioner finding of willful Labor Code violation: registrar must initiate disciplinary action within <strong>18 months</strong></li>
+</ul>`},
+
+disc_penalties:{title:'Civil Penalty Ranges (2026)', html:`
+<div class="block-h2">Effective July 1, 2026 (SB 779)</div>
+<table class="block-table"><thead><tr><th>Violation Type</th><th>Penalty Range</th></tr></thead><tbody>
+<tr><td>Standard violations (general)</td><td><strong>$500 – $8,000</strong></td></tr>
+<tr><td>Serious violations (safety, aiding unlicensed persons, acting under unlicensed name)</td><td><strong>$1,500 – $30,000</strong></td></tr>
+<tr><td>Unlicensed contracting citations</td><td><strong>$1,500 – $15,000</strong> minimum</td></tr>
+</tbody></table>
+<div class="block-h2">CPI Adjustment Rule</div>
+<ul class="block-ul">
+<li class="block-li">CSLB may adjust minimum civil penalty amounts for inflation every <strong>5 years</strong> based on the Consumer Price Index</li>
+<li class="block-li">CPI adjustments rounded to multiples of <strong>$100</strong> for penalties under $1,000</li>
+<li class="block-li">CPI adjustments rounded to multiples of <strong>$1,000</strong> for penalties over $1,000</li>
+</ul>
+<div class="block-h2">Additional Penalties for Specific Violations</div>
+<ul class="block-ul">
+<li class="block-li">Late payment to subcontractor: <strong>2%/month</strong> of amount due + attorney's fees</li>
+<li class="block-li">Late payment to dump truck carrier: <strong>2%/month</strong> of amount due + attorney's fees</li>
+<li class="block-li">Fraudulent misrepresentation in HI contracts: <strong>$500 + attorney's fees + actual damages</strong></li>
+<li class="block-li">Price gouging after disaster (conviction): <strong>minimum 6-month suspension OR permanent revocation</strong></li>
+</ul>`},
+
+disc_admonish:{title:'Letter of Admonishment', html:`
+<div class="block-h2">What It Is</div>
+<ul class="block-ul">
+<li class="block-li">Issued in lieu of a formal citation for minor probable violations</li>
+<li class="block-li"><strong>NOT considered disciplinary action</strong> for purposes of licensure or reporting</li>
+<li class="block-li">Describes the violation in detail and requires a response within 30 days</li>
+</ul>
+<div class="block-h2">Licensee's Options Within 30 Days</div>
+<ul class="block-ul">
+<li class="block-li">Request an office conference to contest the letter</li>
+<li class="block-li">Comply with the letter and submit a written corrective action plan</li>
+</ul>
+<div class="callout red"><div class="callout-title">Cannot Issue a Letter of Admonishment When:</div><div class="callout-body">
+<div class="callout-item">The licensee was <strong>unlicensed</strong> at the time of the violation</div>
+<div class="callout-item">There is a <strong>history of the same or similar violations</strong></div>
+<div class="callout-item">The violation resulted in <strong>financial harm</strong> to another</div>
+<div class="callout-item">The victim is an <strong>elder or dependent adult</strong></div>
+<div class="callout-item">The violation is related to <strong>disaster repair</strong></div>
+</div></div>`},
+
+disc_disclosure:{title:'Public Disclosure & Reinstatement', html:`
+<div class="block-h2">How Long Discipline Is Disclosed to the Public</div>
+<table class="block-table"><thead><tr><th>Type of Action</th><th>Duration of Disclosure</th></tr></thead><tbody>
+<tr><td>Citation (fully complied)</td><td><strong>5 years</strong> from compliance (if no additional actions)</td></tr>
+<tr><td>Suspension or stayed revocation</td><td><strong>7 years</strong> after settlement (if no additional actions)</td></tr>
+<tr><td>Revocations (NOT stayed)</td><td><strong>INDEFINITELY</strong></td></tr>
+<tr><td>Letter of admonishment</td><td>1 or 2 years from date of service (based on seriousness)</td></tr>
+<tr><td>Complaint resolved in contractor's favor</td><td>NOT disclosed</td></tr>
+</tbody></table>
+<div class="block-h2">License Reinstatement After Revocation</div>
+<ul class="block-ul">
+<li class="block-li">Minimum waiting period: <strong>1 year</strong> after final revocation decision</li>
+<li class="block-li">Maximum waiting period: <strong>5 years</strong> after final revocation decision</li>
+<li class="block-li">Must show: ALL loss caused by the violation has been fully satisfied AND all revocation conditions complied with</li>
+<li class="block-li">Personnel who knew of or participated in revocation-causing acts: same 1–5 year waiting period</li>
+<li class="block-li">Bankruptcy discharge of monetary debts: non-monetary conditions still must be met before reinstatement</li>
+</ul>`},
+
+law_ab521:{title:'AB 521 — Bond Liability (2026)', html:`
+<div class="callout gold"><div class="callout-title">AB 521 — What Changed</div><div class="callout-body">
+<div class="callout-item nobullet"><strong>CSLB is expressly NOT liable for attorney fees in civil claims involving a contractor's cash deposit filed with CSLB in lieu of a license bond.</strong></div>
+</div></div>
+<div class="block-h2">Details</div>
+<ul class="block-ul">
+<li class="block-li">Amended the contractor bonding provisions to clarify that CSLB bears no attorney fee liability in bond deposit civil claims</li>
+<li class="block-li">This was already the practice — AB 521 makes it explicit in the statute</li>
+<li class="block-li">Effective: <strong>January 1, 2026</strong></li>
+</ul>
+<div class="block-h2">What This Means for the Exam</div>
+<ul class="block-ul">
+<li class="block-li">If asked about CSLB's liability for attorney fees in bond-related civil claims: <strong>CSLB is NOT liable</strong></li>
+<li class="block-li">Legal fees cannot be charged against the bond by CSLB — also confirmed by this bill</li>
+</ul>`},
+
+law_ab1002:{title:'AB 1002 — AG Wage Actions (2026)', html:`
+<div class="callout gold"><div class="callout-title">AB 1002 — What Changed</div><div class="callout-body">
+<div class="callout-item">The <strong>Attorney General</strong> may now file a civil action to suspend, revoke, or deny a contractor license when a contractor fails to pay workers, fails to fulfill a wage judgment, or violates a wage-related court order</div>
+</div></div>
+<div class="block-h2">The Process</div>
+<ul class="block-ul">
+<li class="block-li">AG must notify CSLB at least <strong>30 days before filing</strong> the civil complaint</li>
+<li class="block-li">Failure to provide notice does NOT constitute a defense for the contractor</li>
+<li class="block-li">CSLB may <strong>intervene within 60 days</strong> of the initial complaint filing</li>
+<li class="block-li">After 60 days: intervention requires court leave upon good cause shown</li>
+<li class="block-li">If CSLB elects NOT to intervene = deemed <strong>consent to comply with any court order</strong> and to be subject to the court's jurisdiction</li>
+<li class="block-li">CSLB may still independently pursue its own disciplinary action regardless of the AG's case</li>
+</ul>
+<div class="block-h2">Key Points for the Exam</div>
+<ul class="block-ul">
+<li class="block-li">AG notification: <strong>30 days before filing</strong></li>
+<li class="block-li">CSLB intervention window: <strong>60 days from filing</strong></li>
+<li class="block-li">Grounds: failure to pay wages, unsatisfied wage judgment, OR violation of wage-related injunction/court order</li>
+</ul>`},
+
+law_ab1327:{title:'AB 1327 — HIC Email & Cancellation (2026)', html:`
+<div class="callout gold"><div class="callout-title">AB 1327 — What Changed</div><div class="callout-body">
+<div class="callout-item">Home improvement contracts must include the contractor's <strong>email address</strong></div>
+<div class="callout-item">Buyers must be allowed to <strong>cancel the contract via email</strong></div>
+<div class="callout-item">Contracts must include a <strong>telephone number</strong> to help the buyer locate and fill out the Notice of Cancellation</div>
+<div class="callout-item">If the Notice of Cancellation is <strong>missing</strong> from the HIC: buyer may file a <strong>complaint with CSLB</strong></div>
+</div></div>
+<div class="block-h2">What This Means for Contractors</div>
+<ul class="block-ul">
+<li class="block-li">All new home improvement contracts must include your business email address</li>
+<li class="block-li">Your contracts must explicitly allow cancellation by email (not just by mail or in person)</li>
+<li class="block-li">Include a phone number for the Notice of Cancellation form location</li>
+<li class="block-li">Missing Notice of Cancellation = new CSLB complaint pathway for buyers</li>
+<li class="block-li">Effective: <strong>January 1, 2026</strong></li>
+</ul>`},
+
+law_sb291:{title:"SB 291 — Workers' Comp Penalties (2026)", html:`
+<div class="callout gold"><div class="callout-title">SB 291 — What Changed</div><div class="callout-body">
+<div class="callout-item">Significantly <strong>increased civil penalties</strong> for workers' compensation violations</div>
+<div class="callout-item">CSLB <strong>cannot renew or reinstate</strong> a license until the applicant/licensee provides a current and valid WC certificate</div>
+<div class="callout-item">CSLB must report WC enforcement data to the Legislature <strong>annually</strong></div>
+<div class="callout-item">CSLB must develop evidence-based WC exemption verification process — report to Legislature by <strong>January 1, 2027</strong></div>
+</div></div>
+<div class="block-h2">Key Points for the Exam</div>
+<ul class="block-ul">
+<li class="block-li">WC violation penalties: <strong>increased</strong> (significantly)</li>
+<li class="block-li">License renewal/reinstatement: blocked until valid WC certificate is provided</li>
+<li class="block-li">Annual reporting to Legislature: required for WC enforcement data</li>
+<li class="block-li">Legislature report deadline: <strong>January 1, 2027</strong></li>
+<li class="block-li">Effective: <strong>January 1, 2026</strong></li>
+</ul>`},
+
+law_sb456:{title:'SB 456 — Mural Exemption (2026)', html:`
+<div class="callout gold"><div class="callout-title">SB 456 — What Changed</div><div class="callout-body">
+<div class="callout-item">Artists who <strong>draw, paint, apply, execute, restore, or conserve a mural</strong> pursuant to an authorized agreement are <strong>EXEMPT from contractor licensing</strong></div>
+</div></div>
+<div class="block-h2">Definition of "Mural"</div>
+<ul class="block-ul">
+<li class="block-li">A unique work of fine art <strong>protected by copyright, trademark, label, or patent</strong></li>
+<li class="block-li">Drawn or painted <strong>by hand directly</strong> onto interior or exterior walls, ceilings, fixtures, or other appurtenances of a building or structure</li>
+<li class="block-li">A mural does <strong>NOT include painted wall signs</strong></li>
+</ul>
+<div class="block-h2">Key Points for the Exam</div>
+<ul class="block-ul">
+<li class="block-li">A professional artist painting a mural on a restaurant's exterior wall: <strong>NO contractor license needed</strong></li>
+<li class="block-li">A sign painter painting a business logo on a wall: <strong>contractor license still required</strong> (painted wall signs are excluded from the exemption)</li>
+<li class="block-li">Effective: <strong>January 1, 2026</strong></li>
+</ul>`},
+
+law_sb517:{title:'SB 517 — Subcontractor Disclosure (2026)', html:`
+<div class="callout gold"><div class="callout-title">SB 517 — What Changed</div><div class="callout-body">
+<div class="callout-item">Upon <strong>consumer request</strong>, contractors must disclose each subcontractor's <strong>name, contact info, license number, and classification</strong></div>
+<div class="callout-item">Prime contractor remains <strong>responsible</strong> for the project</div>
+<div class="callout-item">Prime contractor's responsibility does <strong>NOT preclude discipline</strong> against subcontractors or HIS for their own violations</div>
+</div></div>
+<div class="block-h2">What This Means for Contractors</div>
+<ul class="block-ul">
+<li class="block-li">Keep track of all subcontractor information: name, contact info, license number, and classification</li>
+<li class="block-li">Be prepared to disclose this information when any consumer on the project requests it</li>
+<li class="block-li">The disclosure requirement is triggered by the <strong>consumer's request</strong> — not automatic</li>
+<li class="block-li">Effective: <strong>January 1, 2026</strong></li>
+</ul>`},
+
+law_sb779:{title:'SB 779 — Penalty Increases (2026)', html:`
+<div class="callout gold"><div class="callout-title">SB 779 — What Changed</div><div class="callout-body">
+<div class="callout-item">New minimum civil penalty for <strong>unlicensed contracting citations: $1,500</strong> (operative July 1, 2026 — was $200)</div>
+<div class="callout-item">Standard violations: <strong>$500–$8,000</strong> range</div>
+<div class="callout-item">Serious violations (safety, aiding unlicensed, acting under wrong name): <strong>$1,500–$30,000</strong></div>
+<div class="callout-item">CSLB may adjust minimums for inflation every <strong>5 years</strong> based on the CPI</div>
+<div class="callout-item">CSLB's revenue fund reserve cap increased from <strong>6 months to 12 months</strong></div>
+</div></div>
+<div class="block-h2">CPI Adjustment Rules</div>
+<ul class="block-ul">
+<li class="block-li">CPI adjustments rounded to multiples of <strong>$100</strong> for penalties $100–$1,000</li>
+<li class="block-li">CPI adjustments rounded to multiples of <strong>$1,000</strong> for penalties over $1,000</li>
+<li class="block-li">The unlicensed contracting citation minimum can also be adjusted every 5 years based on CPI</li>
+</ul>
+<div class="block-h2">Effective Dates</div>
+<ul class="block-ul">
+<li class="block-li">Most SB 779 provisions: <strong>January 1, 2026</strong></li>
+<li class="block-li">Minimum $1,500 for unlicensed contracting citations: <strong>July 1, 2026</strong></li>
+</ul>`},
+
+safe_usa:{title:'Underground Service Alert (USA)', html:`
+<div class="callout blue"><div class="callout-title">Call Before You Dig — Key Rules</div><div class="callout-body">
+<div class="callout-item">Who must call: <strong>ANYONE</strong> planning to excavate (dig, drill, bore, etc.)</div>
+<div class="callout-item">When to call: At least <strong>2 WORKING DAYS</strong> but no more than <strong>14 CALENDAR DAYS</strong> before excavation</div>
+<div class="callout-item">Phone: <strong>811 or (800) 640-5137 — FREE</strong></div>
+<div class="callout-item">Every contractor or subcontractor must obtain their <strong>OWN ticket</strong></div>
+<div class="callout-item">Ticket validity: <strong>28 CALENDAR DAYS</strong> — must be revalidated before expiration</div>
+<div class="callout-item">Excavation permit is <strong>INVALID without the USA ticket number</strong></div>
+</div></div>
+<div class="block-h2">Exemptions</div>
+<ul class="block-ul">
+<li class="block-li">Owner of private property who contracts with a licensed contractor for excavation NOT requiring a permit</li>
+<li class="block-li">Owner (not a licensed contractor) doing work on their own principal residence not requiring a permit</li>
+<li class="block-li">Equipment rental companies — if the rental agreement contains the specific required provision placing notification responsibility on the renter</li>
+</ul>
+<div class="block-h2">Operator Responsibility</div>
+<ul class="block-ul">
+<li class="block-li">Each operator is responsible <strong>only for facilities THEY OWN</strong> — not for other utilities' underground systems</li>
+<li class="block-li">Willful violation of the notification requirement = cause for license disciplinary action</li>
+</ul>`},
+
+safe_asbestos:{title:'Asbestos Regulations', html:`
+<div class="block-h2">Certification Requirements</div>
+<ul class="block-ul">
+<li class="block-li">Asbestos-related work requires <strong>certification from the Division of Occupational Safety and Health</strong> — in addition to a contractor's license</li>
+<li class="block-li">Both asbestos consultant AND site surveillance technician certifications must be obtained</li>
+</ul>
+<div class="block-h2">Penalties for Hiring Uncertified Personnel</div>
+<table class="block-table"><thead><tr><th>Offense</th><th>Penalty</th></tr></thead><tbody>
+<tr><td>1st offense (hiring uncertified person)</td><td>Infraction: <strong>$1,000–$3,000</strong> + possible license suspension/revocation</td></tr>
+<tr><td>Subsequent offense</td><td>Misdemeanor: <strong>$3,000–$5,000</strong> or up to 1 year jail + mandatory license action</td></tr>
+</tbody></table>
+<div class="block-h2">Asbestos Inspection Conflict Disclosure</div>
+<ul class="block-ul">
+<li class="block-li">If a contractor performs an asbestos inspection AND knows the report was required by a lender or public entity: must disclose <strong>orally AND in writing</strong> any ownership, common ownership, or financial relationship with any entity performing the corrective work</li>
+<li class="block-li">Violation = cause for disciplinary action AND a misdemeanor with fine of $3,000–$5,000</li>
+</ul>
+<div class="block-h2">Advertising Asbestos Services</div>
+<ul class="block-ul">
+<li class="block-li">Must include certification and registration numbers in all advertisements</li>
+<li class="block-li">Must use the same name under which certified and registered</li>
+<li class="block-li">Missing numbers: first a notice to comply, then a citation if not corrected</li>
+</ul>`},
+
+safe_wells:{title:'Water Wells & Native American Remains', html:`
+<div class="block-h2">Water Well Drilling</div>
+<ul class="block-ul">
+<li class="block-li">A <strong>C-57 (Water Well Drilling) license</strong> is specifically required to drill water wells</li>
+<li class="block-li">Drilling, digging, boring, or constructing water wells is <strong>specifically excluded from general exemptions</strong> — agricultural exemption and small-job exemption do NOT apply to water wells</li>
+<li class="block-li">Well standards and reporting requirements apply to all contractors drilling water wells</li>
+<li class="block-li">C-57 contractors must display their name, address, and license number on each side of commercial vehicles in letters at least 1½ inches high (same as C-36 and C-45)</li>
+</ul>
+<div class="block-h2">Native American Remains</div>
+<div class="callout blue"><div class="callout-title">What to Do If You Discover Possible Human Remains</div><div class="callout-body">
+<div class="callout-item">Step 1: <strong>STOP excavation immediately</strong></div>
+<div class="callout-item">Step 2: Notify the <strong>County Coroner</strong></div>
+<div class="callout-item">Step 3: Coroner notifies the <strong>Native American Heritage Commission</strong></div>
+<div class="callout-item">Step 4: Commission designates a <strong>Most Likely Descendant</strong> to consult on handling</div>
+</div></div>`},
+
+safe_discipline:{title:'Safety Violations & Discipline', html:`
+<div class="block-h2">Key Rule — Safety Violations</div>
+<div class="callout red"><div class="callout-title">Critical Safety Rule</div><div class="callout-body">
+<div class="callout-item">Violation of certain Title 8 safety provisions is cause for disciplinary action <strong>WITHOUT regard to whether death or serious injury occurred</strong></div>
+<div class="callout-item">Violation of Labor Code safety provisions resulting in <strong>death or serious injury</strong> is also cause for discipline</div>
+</div></div>
+<div class="block-h2">Safety-Related Causes for Discipline</div>
+<ul class="block-ul">
+<li class="block-li">Violation of Title 8, Article 12 of the California Code of Regulations (safety provisions) — disciplinable even with no injuries</li>
+<li class="block-li">Violation of Labor Code safety provisions resulting in death or serious injury to an employee</li>
+<li class="block-li">Willful disregard of safety laws or building laws</li>
+<li class="block-li">Willful violation of the Underground Service Alert notification requirements</li>
+</ul>
+<div class="block-h2">Subcontractor Payment Penalties</div>
+<ul class="block-ul">
+<li class="block-li">Late payment to subcontractor: cause for discipline + <strong>2% per month</strong> penalty payable to subcontractor</li>
+<li class="block-li">In any collection action, the prevailing party is entitled to attorney's fees and costs</li>
+<li class="block-li">Late payment to dump truck carrier: same 2%/month structure</li>
+<li class="block-li">Dump truck payment deadline: 20th day following the last day of the calendar month in which transportation was performed (if carrier submitted charges by the 5th of the following month)</li>
+</ul>`},
+
+qr_numbers:{title:'Key Dollar Amounts & Numbers', html:`
+<div class="callout blue"><div class="callout-title">Memorize Every Number on This List</div><div class="callout-body"><div class="callout-item nobullet">These are the most frequently tested numbers on the CSLB exam.</div></div></div>
+<table class="block-table"><thead><tr><th>Number</th><th>What It Means</th></tr></thead><tbody>
+<tr><td><strong>$1,000 or 10%</strong></td><td>Max HI contract down payment (whichever is LESS)</td></tr>
+<tr><td><strong>$750</strong></td><td>Service and repair contract threshold</td></tr>
+<tr><td><strong>$25,000</strong></td><td>Standard contractor's bond; QI bond; disciplinary bond minimum</td></tr>
+<tr><td><strong>$100,000</strong></td><td>LLC additional surety bond</td></tr>
+<tr><td><strong>$1,000,000</strong></td><td>LLC liability insurance minimum (≤5 personnel)</td></tr>
+<tr><td><strong>$5,000,000</strong></td><td>LLC liability insurance maximum (regardless of personnel)</td></tr>
+<tr><td><strong>$100,000</strong></td><td>Additional LLC insurance per person over 5</td></tr>
+<tr><td><strong>$4,000</strong></td><td>Max surety liability for wage/benefit claims on contractor's bond</td></tr>
+<tr><td><strong>$7,500</strong></td><td>Max surety liability for non-homeowner claims on contractor's bond</td></tr>
+<tr><td><strong>$500–$8,000</strong></td><td>Standard civil penalty range (July 1, 2026)</td></tr>
+<tr><td><strong>$1,500–$30,000</strong></td><td>Serious violations penalty range (safety, aiding unlicensed, etc.)</td></tr>
+<tr><td><strong>$1,500</strong></td><td>Min civil penalty for unlicensed contracting citations (July 1, 2026)</td></tr>
+<tr><td><strong>$12,500</strong></td><td>Max judgment in small claims court for contractors</td></tr>
+<tr><td><strong>&lt;$25,000</strong></td><td>CSLB mandatory arbitration threshold</td></tr>
+<tr><td><strong>$25,000–$50,000</strong></td><td>CSLB voluntary arbitration range</td></tr>
+<tr><td><strong>$500</strong></td><td>Fraudulent misrepresentation penalty (plus attorney's fees + actual damages)</td></tr>
+<tr><td><strong>$200</strong></td><td>HIS registration application fee (nonrefundable, nontransferable)</td></tr>
+<tr><td><strong>$5,000</strong></td><td>Max fine for first unlicensed contracting conviction</td></tr>
+<tr><td><strong>45</strong></td><td>Number of CSLB license classifications</td></tr>
+<tr><td><strong>15</strong></td><td>Number of CSLB board members</td></tr>
+<tr><td><strong>11 / 4</strong></td><td>Board members appointed by Governor / Legislature</td></tr>
+<tr><td><strong>285,000</strong></td><td>Approximate active contractor licenses in California</td></tr>
+<tr><td><strong>1929</strong></td><td>Year CSLB was founded</td></tr>
+<tr><td><strong>70%</strong></td><td>Passing score for the CSLB exam</td></tr>
+<tr><td><strong>1¼×</strong></td><td>Bond required for bonded stop notice to a construction lender</td></tr>
+</tbody></table>`},
+
+qr_deadlines:{title:'All Deadlines & Time Periods', html:`
+<table class="block-table"><thead><tr><th>Period</th><th>What It Applies To</th></tr></thead><tbody>
+<tr><td><strong>2 working days</strong></td><td>Minimum advance notice before excavation (USA call)</td></tr>
+<tr><td><strong>7 days</strong></td><td>Prime contractor must pay subcontractor after receiving progress payment</td></tr>
+<tr><td><strong>10 days</strong></td><td>Record Notice of Completion after project completion; post/record Notice of Non-Responsibility after discovering unauthorized work; owner must notify lien claimants after recording Notice of Completion/Cessation</td></tr>
+<tr><td><strong>14 calendar days</strong></td><td>Maximum advance notice for USA excavation call</td></tr>
+<tr><td><strong>15 working days</strong></td><td>To contest a CSLB citation or request informal conference</td></tr>
+<tr><td><strong>20 days</strong></td><td>Serve Preliminary Notice (subcontractors) from first furnishing labor/materials</td></tr>
+<tr><td><strong>28 calendar days</strong></td><td>USA excavation ticket validity</td></tr>
+<tr><td><strong>30 days</strong></td><td>Subcontractor must file Claim of Lien after Notice of Completion/Cessation recorded; appeal small claims judgment; minimum notice before AG files contractor license action; respond to letter of admonishment</td></tr>
+<tr><td><strong>60 days</strong></td><td>Prime contractor must file Claim of Lien after Notice of Completion/Cessation; CSLB may intervene in AG action</td></tr>
+<tr><td><strong>90 days</strong></td><td>Claim of Lien (no notice recorded); file Lien Foreclosure Action after recording lien; HIS address change notice; file judgment bond after CSLB notification; submit proof of surety payment</td></tr>
+<tr><td><strong>6 months</strong></td><td>Wage/benefit claims against bond from discovery (max 2 years from due date)</td></tr>
+<tr><td><strong>1 year</strong></td><td>Earliest reapplication after license denial; judgment bond minimum time on file</td></tr>
+<tr><td><strong>2 years</strong></td><td>HIS registration term; max period for wage claims against bond; min active license time before blanket bond; disciplinary bond min time on file</td></tr>
+<tr><td><strong>3 years</strong></td><td>Bond deposit claim period (non-wage); contractor records retention after license period</td></tr>
+<tr><td><strong>4 years</strong></td><td>CSLB complaint jurisdiction (patent violations); unlicensed contractor criminal complaint; one alternative for citation issuance</td></tr>
+<tr><td><strong>5 years</strong></td><td>Records available for registrar inspection; citation disclosure period; CPI penalty adjustment cycle</td></tr>
+<tr><td><strong>10 years</strong></td><td>CSLB complaint jurisdiction for latent structural defects</td></tr>
+<tr><td><strong>12 months</strong></td><td>CSLB revenue fund reserve cap (increased by SB 779)</td></tr>
+<tr><td><strong>18 months</strong></td><td>CSLB must initiate discipline after Labor Commissioner finding; alternative citation statute of limitations</td></tr>
+<tr><td><strong>1–5 years</strong></td><td>Waiting period to reapply after revocation for persons who participated in violations</td></tr>
+<tr><td><strong>7 years</strong></td><td>Disclosure period for suspensions/stayed revocations</td></tr>
+<tr><td><strong>Indefinitely</strong></td><td>Public disclosure of non-stayed license revocations</td></tr>
+</tbody></table>`},
+
+qr_formulas:{title:'Formulas & Key Legal Concepts', html:`
+<div class="block-h2">Financial Formulas</div>
+<table class="block-table"><thead><tr><th>Formula</th><th>Calculation</th></tr></thead><tbody>
+<tr><td><strong>Working Capital</strong></td><td>Current Assets − Current Liabilities</td></tr>
+<tr><td><strong>Current Ratio</strong></td><td>Current Assets ÷ Current Liabilities</td></tr>
+<tr><td><strong>Quick Ratio</strong></td><td>(Current Assets − Inventories) ÷ Current Liabilities</td></tr>
+<tr><td><strong>Quick Ratio Example</strong></td><td>($250K − $110K) ÷ $180K = 0.78</td></tr>
+<tr><td><strong>Current Ratio Example</strong></td><td>$250K ÷ $180K = 1.39</td></tr>
+</tbody></table>
+<div class="block-h2">Key Legal Concepts</div>
+<table class="block-table"><thead><tr><th>Concept</th><th>Plain-Language Summary</th></tr></thead><tbody>
+<tr><td><strong>License at ALL times</strong></td><td>Must be licensed from start to finish — being licensed at start but lapsing = unlicensed contracting</td></tr>
+<tr><td><strong>Unlicensed = no right to sue</strong></td><td>No contractor's license = no court action to collect, regardless of work quality</td></tr>
+<tr><td><strong>Owner can recover 100%</strong></td><td>Owner may sue to get back all money paid to an unlicensed contractor</td></tr>
+<tr><td><strong>QI responsibility</strong></td><td>QI may be disciplined for firm's violations whether or not they had knowledge or participated</td></tr>
+<tr><td><strong>Citation = final after 15 days</strong></td><td>If licensee doesn't contest within 15 working days, citation is a final, unappealable order</td></tr>
+<tr><td><strong>Retention exceeds profit</strong></td><td>The 10% retainage typically exceeds the contractor's profit margin — major working capital issue</td></tr>
+<tr><td><strong>Materials must be installed to lien</strong></td><td>Materials must be physically incorporated into the structure to support a mechanics lien</td></tr>
+<tr><td><strong>Bonded stop notice binds lender</strong></td><td>Without a bond of 1¼× the claim, the stop notice cannot bind the construction lender</td></tr>
+<tr><td><strong>Quick ratio vs. current ratio</strong></td><td>Quick = excludes inventory (more conservative). Both measure short-term liquidity.</td></tr>
+<tr><td><strong>Substantial compliance exception</strong></td><td>Only applies if contractor was PREVIOUSLY licensed, acted in good faith, and promptly fixed the lapse — CANNOT apply if never licensed</td></tr>
+</tbody></table>`},
+
+};
+
+// ─── STATE ─────────────────────────────────────────────────────────────────
+let currentSection = null;
+let currentTopicIndex = 0;
+let currentAccent = '#60a5fa';
+
+function setAccent(color) {
+  currentAccent = color;
+  document.documentElement.style.setProperty('--accent-current', color);
+}
+
+// ─── NAVIGATION ────────────────────────────────────────────────────────────
+function openSection(sectionKey) {
+  const sec = SECTIONS[sectionKey];
+  currentSection = sectionKey;
+  setAccent(sec.accent);
+
+  document.getElementById('hub').style.display = 'none';
+  document.getElementById('content-view').style.display = 'none';
+  const sv = document.getElementById('section-view');
+  sv.style.display = 'block';
+
+  document.getElementById('sv-icon').textContent = sec.icon;
+  document.getElementById('sv-title').textContent = sec.title;
+  document.getElementById('sv-subtitle').textContent = sec.subtitle;
+
+  const topicsEl = document.getElementById('sv-topics');
+  topicsEl.innerHTML = '';
+  sec.topics.forEach((t, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'topic-btn';
+    btn.style.setProperty('--accent', sec.accent);
+    btn.innerHTML = `
+      <div class="topic-btn-left">
+        <span class="topic-dot"></span>
+        <span class="topic-btn-name">${t.name}</span>
+      </div>
+      <span class="topic-arrow">›</span>`;
+    btn.onclick = () => openTopic(i);
+    topicsEl.appendChild(btn);
+  });
+
+  window.scrollTo(0, 0);
+}
+
+function openTopic(topicIndex) {
+  const sec = SECTIONS[currentSection];
+  const topic = sec.topics[topicIndex];
+  currentTopicIndex = topicIndex;
+
+  document.getElementById('section-view').style.display = 'none';
+  const cv = document.getElementById('content-view');
+  cv.style.display = 'block';
+
+  document.getElementById('cv-back').onclick = backToSection;
+  document.getElementById('cv-breadcrumb').innerHTML = `${sec.icon} <span>${sec.title}</span>`;
+  document.getElementById('cv-title').textContent = topic.name;
+  document.getElementById('cv-body').innerHTML = CONTENT[topic.id]?.html || '<p class="block-p">Content coming soon.</p>';
+
+  const prevBtn = document.getElementById('cv-prev');
+  const nextBtn = document.getElementById('cv-next');
+  prevBtn.disabled = topicIndex === 0;
+  nextBtn.disabled = topicIndex === sec.topics.length - 1;
+  nextBtn.textContent = topicIndex === sec.topics.length - 1 ? 'All Topics' : 'Next →';
+
+  window.scrollTo(0, 0);
+}
+
+function navTopic(dir) {
+  const sec = SECTIONS[currentSection];
+  const newIndex = currentTopicIndex + dir;
+  if (newIndex < 0 || newIndex >= sec.topics.length) {
+    backToSection();
+  } else {
+    openTopic(newIndex);
+  }
+}
+
+function backToSection() {
+  document.getElementById('content-view').style.display = 'none';
+  document.getElementById('section-view').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function goHub() {
+  document.getElementById('section-view').style.display = 'none';
+  document.getElementById('content-view').style.display = 'none';
+  document.getElementById('hub').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>

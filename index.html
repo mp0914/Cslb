@@ -25,6 +25,57 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cat-count{margin-top:12px;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.5px}
 .full-btn{display:block;width:100%;margin-top:20px;padding:15px;background:linear-gradient(135deg,#1e3a5f,#1a2f50);border:1px solid #1e40af55;border-radius:12px;color:#60a5fa;font-size:14px;font-weight:700;cursor:pointer;text-align:center;transition:all .18s}
 .full-btn:hover{background:linear-gradient(135deg,#1e40af33,#1e3a5f);transform:translateY(-1px)}
+.study-guide-btn {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #1e3a5f 0%, #162a44 100%);
+    border: 1px solid #3b82f644;
+    border-radius: 12px;
+    padding: 18px 24px;
+    margin-bottom: 32px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.study-guide-btn:hover {
+    transform: translateY(-2px);
+    border-color: #60a5fa;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.btn-icon {
+    font-size: 28px;
+    margin-right: 20px;
+}
+
+.btn-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.btn-title {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.btn-subtitle {
+    color: #93c5fd;
+    font-size: 12px;
+    margin-top: 2px;
+    opacity: 0.8;
+}
+
+.btn-arrow {
+    color: #60a5fa;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+  
 #quiz{display:none;max-width:660px;margin:32px auto;padding:0 20px 80px}
 .quiz-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
 .back-btn{background:none;border:1px solid #2a2d3e;color:#9ca3af;padding:7px 13px;border-radius:8px;cursor:pointer;font-size:12px;transition:all .15s}
@@ -77,10 +128,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 </div>
 <div id="hub">
-  
-  <a href="study-guide.html" class="full-btn" style="text-decoration: none;">
-    📖 View Study Guide
+  <a href="study-guide.html" class="study-guide-btn">
+    <span class="btn-icon">📖</span>
+    <div class="btn-content">
+        <span class="btn-title">Exam Study Guide</span>
+        <span class="btn-subtitle">Review key concepts and 2026 law summaries</span>
+    </div>
+    <span class="btn-arrow">→</span>
   </a>
+  
   <h2 class="hub-title">Choose a Topic</h2>
   <p class="hub-sub">257 exam-style questions written like the real CSLB test — scenario-based, no code references. Select a category or take the full mixed exam.</p>
   <div class="category-grid">

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSLB Practice Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #0b0e14;
+        }
+        .card-bg {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            transition: all 0.2s ease-in-out;
+        }
+        .card-bg:hover {
+            transform: translateY(-4px);
+            border-color: #58a6ff;
+            background-color: #1c2128;
+        }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen flex flex-col items-center p-6 md:p-12">
+
+    <header class="w-full max-w-4xl mb-12">
+        <h1 class="text-3xl font-bold mb-2">CSLB Practice Portal</h1>
+        <p class="text-gray-400">California Contractors License Law & Reference Book — 2026 Edition</p>
+    </header>
+
+    <main class="w-full max-w-4xl">
+        <h2 class="text-2xl font-semibold mb-8">Choose a Resource</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <a href="law-and-business-test.html" class="card-bg p-8 rounded-xl flex flex-col h-full group">
+                <div class="bg-blue-900/30 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-balance-scale text-blue-400 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Law and Business Practice Test</h3>
+                <p class="text-gray-400 text-sm mb-6 flex-grow">
+                    Scenario-based questions covering license law, labor codes, and business financial management.
+                </p>
+                <span class="text-blue-400 font-medium text-sm uppercase tracking-wider group-hover:underline">Launch Test →</span>
+            </a>
+
+            <a href="law-and-business-study-guide.html" class="card-bg p-8 rounded-xl flex flex-col h-full group">
+                <div class="bg-purple-900/30 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-book-open text-purple-400 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Law and Business Study Guide</h3>
+                <p class="text-gray-400 text-sm mb-6 flex-grow">
+                    Quick-reference summaries for mechanics liens, home improvement contracts, and safety regulations.
+                </p>
+                <span class="text-purple-400 font-medium text-sm uppercase tracking-wider group-hover:underline">Open Guide →</span>
+            </a>
+
+            <a href="c33-trade-test.html" class="card-bg p-8 rounded-xl flex flex-col h-full group">
+                <div class="bg-orange-900/30 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-paint-roller text-orange-400 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">C-33 Trade Practice Test</h3>
+                <p class="text-gray-400 text-sm mb-6 flex-grow">
+                    Test your knowledge on surface prep, coating systems, and specialized equipment for painters.
+                </p>
+                <span class="text-orange-400 font-medium text-sm uppercase tracking-wider group-hover:underline">Launch Test →</span>
+            </a>
+
+            <a href="c33-trade-study-guide.html" class="card-bg p-8 rounded-xl flex flex-col h-full group">
+                <div class="bg-green-900/30 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-clipboard-list text-green-400 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">C-33 Trade Study Guide</h3>
+                <p class="text-gray-400 text-sm mb-6 flex-grow">
+                    Detailed review of trade-specific safety (Cal/OSHA), material estimation, and application techniques.
+                </p>
+                <span class="text-green-400 font-medium text-sm uppercase tracking-wider group-hover:underline">Open Guide →</span>
+            </a>
+
+        </div>
+    </main>
+
+    <footer class="mt-20 text-gray-500 text-sm">
+        &copy; 2026 Exam Prep Dashboard. For study purposes only.
+    </footer>
+
+</body>
+</html>

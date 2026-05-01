@@ -7,30 +7,74 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* Exact styles from your study guide for consistency */
         body {
-            background-color: #0b0e14;
+            background-color: #0f1117; /* Matches #hub background */
+            color: #e8eaf0;
         }
+
+        .header {
+            background: linear-gradient(135deg,#1a1d2e 0%,#0f1117 100%);
+            border-bottom: 1px solid #2a2d3e;
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 11px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        .badge {
+            background: #1e3a5f;
+            color: #60a5fa;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid #1e40af44;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* Card Styles to match your cat-card aesthetic */
         .card-bg {
-            background-color: #161b22;
-            border: 1px solid #30363d;
-            transition: all 0.2s ease-in-out;
+            background: #161925;
+            border: 1px solid #2a2d3e;
+            transition: all .18s;
         }
+
         .card-bg:hover {
-            transform: translateY(-4px);
-            border-color: #58a6ff;
-            background-color: #1c2128;
+            border-color: #3a3d50;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0,0,0,.4);
         }
     </style>
 </head>
-<body class="text-gray-100 min-h-screen flex flex-col items-center p-6 md:p-12">
+<body class="min-h-screen">
 
-    <header class="w-full max-w-4xl mb-12">
-        <h1 class="text-3xl font-bold mb-2">C-33 Painting Practice Portal</h1>
-        <p class="text-gray-400">Choose a practice test or study guide</p>
-    </header>
+    <div class="header">
+        <div>
+            <h1>CSLB Practice Portal</h1>
+            <p>California Contractors License Law & Reference Book — 2026 Edition</p>
+        </div>
+        <span class="badge">2026</span>
+    </div>
 
-    <main class="w-full max-w-4xl">
-        <h2 class="text-2xl font-semibold mb-8">Choose a Resource</h2>
+    <main class="max-w-4xl mx-auto p-6 md:p-12">
+        <h2 class="text-2xl font-bold text-white mb-2">Choose a Resource</h2>
+        <p class="text-gray-500 text-sm mb-10">Select a category below to begin your study session or take a practice exam.</p>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
@@ -38,51 +82,51 @@
                 <div class="bg-blue-900/30 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
                     <i class="fas fa-balance-scale text-blue-400 text-xl"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-2">Law and Business Practice Test</h3>
-                <p class="text-gray-400 text-sm mb-6 flex-grow">
+                <h3 class="text-lg font-bold text-white mb-2">Law and Business Practice Test</h3>
+                <p class="text-gray-400 text-xs leading-relaxed mb-6 flex-grow">
                     Scenario-based questions covering license law, labor codes, and business financial management.
                 </p>
-                <span class="text-blue-400 font-medium text-sm uppercase tracking-wider group-hover:underline">Launch Test →</span>
+                <span class="text-blue-400 font-bold text-[10px] uppercase tracking-wider group-hover:underline">Launch Test →</span>
             </a>
 
             <a href="law-and-business-study-guide.html" class="card-bg p-8 rounded-xl flex flex-col h-full group">
                 <div class="bg-purple-900/30 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
                     <i class="fas fa-book-open text-purple-400 text-xl"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-2">Law and Business Study Guide</h3>
-                <p class="text-gray-400 text-sm mb-6 flex-grow">
+                <h3 class="text-lg font-bold text-white mb-2">Law and Business Study Guide</h3>
+                <p class="text-gray-400 text-xs leading-relaxed mb-6 flex-grow">
                     Quick-reference summaries for mechanics liens, home improvement contracts, and safety regulations.
                 </p>
-                <span class="text-purple-400 font-medium text-sm uppercase tracking-wider group-hover:underline">Open Guide →</span>
+                <span class="text-purple-400 font-bold text-[10px] uppercase tracking-wider group-hover:underline">Open Guide →</span>
             </a>
 
             <a href="c33-trade-test.html" class="card-bg p-8 rounded-xl flex flex-col h-full group">
                 <div class="bg-orange-900/30 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
                     <i class="fas fa-paint-roller text-orange-400 text-xl"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-2">C-33 Trade Practice Test</h3>
-                <p class="text-gray-400 text-sm mb-6 flex-grow">
+                <h3 class="text-lg font-bold text-white mb-2">C-33 Trade Practice Test</h3>
+                <p class="text-gray-400 text-xs leading-relaxed mb-6 flex-grow">
                     Test your knowledge on surface prep, coating systems, and specialized equipment for painters.
                 </p>
-                <span class="text-orange-400 font-medium text-sm uppercase tracking-wider group-hover:underline">Launch Test →</span>
+                <span class="text-orange-400 font-bold text-[10px] uppercase tracking-wider group-hover:underline">Launch Test →</span>
             </a>
 
             <a href="c33-trade-study-guide.html" class="card-bg p-8 rounded-xl flex flex-col h-full group">
                 <div class="bg-green-900/30 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
                     <i class="fas fa-clipboard-list text-green-400 text-xl"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-2">C-33 Trade Study Guide</h3>
-                <p class="text-gray-400 text-sm mb-6 flex-grow">
+                <h3 class="text-lg font-bold text-white mb-2">C-33 Trade Study Guide</h3>
+                <p class="text-gray-400 text-xs leading-relaxed mb-6 flex-grow">
                     Detailed review of trade-specific safety (Cal/OSHA), material estimation, and application techniques.
                 </p>
-                <span class="text-green-400 font-medium text-sm uppercase tracking-wider group-hover:underline">Open Guide →</span>
+                <span class="text-green-400 font-bold text-[10px] uppercase tracking-wider group-hover:underline">Open Guide →</span>
             </a>
 
         </div>
     </main>
 
-    <footer class="mt-20 text-gray-500 text-sm">
-        &copy; 2026 Exam Prep Dashboard. For study purposes only.
+    <footer class="mt-12 mb-12 text-center text-gray-600 text-[10px] uppercase tracking-widest">
+        &copy; 2026 Exam Prep Dashboard • Professional Resource
     </footer>
 
 </body>

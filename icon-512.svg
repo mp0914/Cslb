@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg512" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1d2e"/>
+      <stop offset="100%" stop-color="#0f1117"/>
+    </linearGradient>
+    <linearGradient id="handle512" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d4a96a"/>
+      <stop offset="50%" stop-color="#c49060"/>
+      <stop offset="100%" stop-color="#a87840"/>
+    </linearGradient>
+    <linearGradient id="bristles512" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#93c5fd"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="ferrule512" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#b8c4d0"/>
+      <stop offset="100%" stop-color="#7a8899"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background with rounded corners -->
+  <rect width="512" height="512" rx="96" fill="url(#bg512)"/>
+
+  <!-- Subtle circle accent -->
+  <circle cx="256" cy="256" r="192" fill="none" stroke="#2a2d3e" stroke-width="2" opacity="0.4"/>
+
+  <!-- Paintbrush group, centered and angled -42 degrees -->
+  <g transform="translate(256, 245) rotate(-42)">
+    <!-- Wooden handle -->
+    <rect x="-14.5" y="-208" width="29" height="218" rx="10" fill="url(#handle512)"/>
+    <!-- Handle wood grain -->
+    <line x1="-6" y1="-190" x2="-6" y2="-10" stroke="#e0b678" stroke-width="1.5" opacity="0.35"/>
+    <line x1="4" y1="-196" x2="4" y2="-10" stroke="#8b6030" stroke-width="1.2" opacity="0.3"/>
+    <!-- Handle end cap -->
+    <ellipse cx="0" cy="-208" rx="14.5" ry="9" fill="#7a5228"/>
+    <ellipse cx="0" cy="-208" rx="9" ry="5" fill="#9a6838" opacity="0.6"/>
+
+    <!-- Ferrule (metal collar) -->
+    <rect x="-18.5" y="10" width="37" height="48" rx="5" fill="url(#ferrule512)"/>
+    <!-- Ferrule top shine band -->
+    <rect x="-18.5" y="10" width="37" height="9" rx="5" fill="#dde6ee" opacity="0.8"/>
+    <!-- Ferrule bottom shine band -->
+    <rect x="-18.5" y="49" width="37" height="9" rx="0" fill="#dde6ee" opacity="0.5"/>
+    <!-- Ferrule rivets -->
+    <circle cx="-8" cy="34" r="4" fill="#5a6878" opacity="0.7"/>
+    <circle cx="8" cy="34" r="4" fill="#5a6878" opacity="0.7"/>
+
+    <!-- Bristles (tapered shape) -->
+    <path d="M-18.5,58 L-32,160 Q-16,186 0,194 Q16,186 32,160 L18.5,58 Z" fill="url(#bristles512)"/>
+    <!-- Bristle texture lines -->
+    <line x1="-10" y1="62" x2="-21" y2="158" stroke="#60a5fa" stroke-width="1.5" opacity="0.35"/>
+    <line x1="0" y1="62" x2="0" y2="174" stroke="#93c5fd" stroke-width="1.8" opacity="0.3"/>
+    <line x1="10" y1="62" x2="21" y2="158" stroke="#60a5fa" stroke-width="1.5" opacity="0.35"/>
+    <!-- Bristle tip highlight -->
+    <path d="M-22,154 Q0,178 22,154" stroke="#bfdbfe" stroke-width="3" fill="none" opacity="0.5"/>
+
+    <!-- Paint drop at tip -->
+    <ellipse cx="0" cy="202" rx="12" ry="14" fill="#3b82f6"/>
+    <ellipse cx="-4" cy="196" rx="5" ry="4" fill="#93c5fd" opacity="0.7"/>
+  </g>
+
+  <!-- Small paint splash accents -->
+  <circle cx="395" cy="128" r="8" fill="#60a5fa" opacity="0.3"/>
+  <circle cx="408" cy="145" r="4" fill="#60a5fa" opacity="0.2"/>
+  <circle cx="118" cy="394" r="5" fill="#3b82f6" opacity="0.25"/>
+</svg>

@@ -220,7 +220,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <span class="cat-icon">🔐</span>
       <div class="cat-name">Bonds & Insurance</div>
       <div class="cat-desc">Bond amounts, beneficiaries, LLC requirements, surety limits, workers' comp.</div>
-      <div class="cat-count" style="color:#38bdf8">5 topics</div>
+      <div class="cat-count" style="color:#38bdf8">6 topics</div>
     </div>
 
     <div class="cat-card" style="--accent:#34d399" onclick="openSection('home_improvement')">
@@ -233,8 +233,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="cat-card" style="--accent:#fb923c" onclick="openSection('business')">
       <span class="cat-icon">📊</span>
       <div class="cat-name">Business Management</div>
-      <div class="cat-desc">Financial statements, ratios, business forms, bidding, scheduling, risk management.</div>
-      <div class="cat-count" style="color:#fb923c">6 topics</div>
+      <div class="cat-desc">Financial statements, ratios, business forms, bidding, scheduling, operations, gov contracts, risk.</div>
+      <div class="cat-count" style="color:#fb923c">8 topics</div>
     </div>
 
     <div class="cat-card" style="--accent:#f97316" onclick="openSection('liens')">
@@ -261,8 +261,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="cat-card" style="--accent:#ef4444" onclick="openSection('safety')">
       <span class="cat-icon">🦺</span>
       <div class="cat-name">Construction & Safety</div>
-      <div class="cat-desc">Underground utilities, asbestos rules, water wells, Native American remains.</div>
-      <div class="cat-count" style="color:#ef4444">4 topics</div>
+      <div class="cat-desc">USA + field penalties, occupational injury reporting, asbestos, water wells, Native American remains.</div>
+      <div class="cat-count" style="color:#ef4444">6 topics</div>
     </div>
 
     <div class="cat-card" style="--accent:#c084fc" onclick="openSection('quickref')">
@@ -341,6 +341,7 @@ bonds:{
     {name:'Bond Beneficiaries & Claim Limits', id:'bond_bene'},
     {name:'LLC Requirements — Bond & Insurance', id:'bond_llc'},
     {name:'Workers\' Compensation Requirements', id:'bond_wc'},
+    {name:'WC Notifications, Benefits & Penalties', id:'bond_wc_employer'},
   ]
 },
 home_improvement:{
@@ -365,6 +366,8 @@ business:{
     {name:'Financial Ratios — Formulas & Examples', id:'biz_ratios'},
     {name:'Financing a Contracting Business', id:'biz_financing'},
     {name:'Bidding, Estimation & Scheduling', id:'biz_bidding'},
+    {name:'Operations Management & Cost Control', id:'biz_operations'},
+    {name:'Bidding on Government Contracts', id:'biz_govcontracts'},
     {name:'Risk Management & Insurance', id:'biz_risk'},
   ]
 },
@@ -407,6 +410,8 @@ safety:{
   accent:'#ef4444',
   topics:[
     {name:'Underground Service Alert (USA)', id:'safe_usa'},
+    {name:'USA Field Procedure & Penalties', id:'safe_usa_field'},
+    {name:'Occupational Injury Reporting', id:'safe_injury'},
     {name:'Asbestos Regulations', id:'safe_asbestos'},
     {name:'Water Wells & Native American Remains', id:'safe_wells'},
     {name:'Safety Violations & Discipline', id:'safe_discipline'},
@@ -786,6 +791,47 @@ bond_wc:{title:"Workers' Compensation Requirements", html:`
 <div class="callout-item">CSLB must develop evidence-based WC exemption verification process — report to Legislature by <strong>January 1, 2027</strong></div>
 </div></div>`},
 
+bond_wc_employer:{title:"WC Notifications, Benefits & Penalties", html:`
+<div class="block-h2">Coverage Options — Three Ways to Be Covered</div>
+<ul class="block-ul">
+<li class="block-li">Standard approved policy of workers' compensation insurance from any licensed carrier</li>
+<li class="block-li"><strong>Self-insurance</strong> permit from the Director of the Department of Industrial Relations (Labor Code §3700)</li>
+<li class="block-li">Participation in a collectively bargained alternative dispute resolution program (Labor Code §3201.5)</li>
+</ul>
+<div class="block-h2">Required Employee Notifications</div>
+<table class="block-table"><thead><tr><th>Notification</th><th>When / How</th></tr></thead><tbody>
+<tr><td><strong>WC Notice to New Hire</strong></td><td>At hiring or by end of first pay period — written notice of WC rights (Labor Code §3551). English + Spanish if Spanish-speaking employees.</td></tr>
+<tr><td><strong>"Notice to Employees" Poster</strong></td><td>Posted conspicuously where employees gather. Failure to post = <strong>misdemeanor</strong> (Labor Code §3550).</td></tr>
+<tr><td><strong>OSHA Posting</strong></td><td>Post information about employee protections and obligations under occupational safety and health laws (Labor Code §6408)</td></tr>
+<tr><td><strong>Workplace Crime Victim</strong></td><td>Written notice that the employee is eligible for WC (Labor Code §3553)</td></tr>
+</tbody></table>
+<div class="block-h2">Benefits Available to Injured Workers</div>
+<table class="block-table"><thead><tr><th>Benefit</th><th>Key Details</th></tr></thead><tbody>
+<tr><td><strong>Medical Treatment</strong></td><td>Authorize within <strong>1 working day</strong> of receiving claim form. Until claim accepted/rejected, liability is limited to <strong>$10,000</strong></td></tr>
+<tr><td><strong>Temporary Disability</strong></td><td>Weekly payments after 3rd day of disability. Two-thirds of weekly earnings up to legal max. 3-day waiting period eliminated if disability lasts beyond 14 days or requires hospital overnight stay.</td></tr>
+<tr><td><strong>Permanent Disability</strong></td><td>Compensation based on rated degree of disability; range set by state law</td></tr>
+<tr><td><strong>Death Benefits</strong></td><td>Payable to dependents + burial expenses up to prescribed amount</td></tr>
+<tr><td><strong>Supplemental Job Displacement</strong></td><td>If worker can't return to work for the employer within <strong>60 days</strong> after temporary disability ends — voucher for retraining/skill enhancement</td></tr>
+<tr><td><strong>Serious/Willful Misconduct +50%</strong></td><td>Compensation increased by half (plus up to $250 costs) when employee is injured by employer's serious or willful misconduct. <strong>Insurer cannot cover this increase.</strong></td></tr>
+</tbody></table>
+<div class="block-h2">Penalties for Failing to Carry WC</div>
+<div class="callout red"><div class="callout-title">Stiff Consequences</div><div class="callout-body">
+<div class="callout-item"><strong>Misdemeanor</strong> — failure to secure WC payment (Labor Code §3700.5)</div>
+<div class="callout-item">License may be <strong>suspended or revoked</strong> (B&P §7110)</div>
+<div class="callout-item"><strong>Stop Order</strong> from Division of Labor Standards Enforcement — prohibits using employee labor until coverage is in place (Labor Code §3710.1)</div>
+<div class="callout-item">Restraining order in Superior Court (Labor Code §3712)</div>
+<div class="callout-item"><strong>Penalty Assessment:</strong> Greater of (a) 2× the premium they would have paid, or (b) <strong>$1,000 per employee</strong> employed during the uninsured period</div>
+<div class="callout-item">If status discovered AFTER a claim is filed: <strong>$2,000 per employee</strong> on date of injury (non-compensable cases) or <strong>$10,000 per employee</strong> (compensable cases)</div>
+<div class="callout-item">Lien recordable against contractor's real & personal property (Labor Code §3727)</div>
+</div></div>
+<div class="block-h2">If Uninsured & Worker Is Injured</div>
+<ul class="block-ul">
+<li class="block-li">Contractor must pay <strong>disability compensation + 10% penalty + attorney's fees</strong></li>
+<li class="block-li">Must supply all necessary medical treatment</li>
+<li class="block-li">Liable for damages in civil action — with <strong>legal presumption the injury was caused by employer negligence</strong></li>
+<li class="block-li">Employee's contributory negligence is NOT a defense (Labor Code §§3706, 3708, 4554, 4555)</li>
+</ul>`},
+
 hi_def:{title:"What Is Home Improvement?", html:`
 <div class="block-h2">Definition</div>
 <div class="block-p">Repairing, remodeling, altering, converting, or modernizing residential property, plus adjacent land improvements. Includes installation of home improvement goods and furnishing of home improvement services.</div>
@@ -1127,6 +1173,70 @@ biz_bidding:{title:'Bidding, Estimation & Scheduling', html:`
 <tr><td><strong>Unit-Price</strong></td><td>Price set per unit of work (cubic yards, square feet, linear feet). Final price depends on actual quantities.</td></tr>
 <tr><td><strong>Guaranteed-Maximum Cost (GMP)</strong></td><td>Cost-plus, but with a ceiling — cost cannot exceed a set maximum. Contractor absorbs anything over the cap.</td></tr>
 </tbody></table>`},
+
+biz_operations:{title:'Operations Management & Cost Control', html:`
+<div class="block-h2">Job Selection — What to Consider</div>
+<ul class="block-ul">
+<li class="block-li">General level of business activity in the local area</li>
+<li class="block-li">Need for new construction</li>
+<li class="block-li">Costs of materials and labor</li>
+<li class="block-li">Contractor's current financial resources</li>
+<li class="block-li">Contractor's technical expertise</li>
+<li class="block-li">Any new architectural or structural advances</li>
+</ul>
+<div class="block-h2">The Construction Process — Coordination & Control</div>
+<ul class="block-ul">
+<li class="block-li">The estimate that supported the bid <strong>becomes the project budget</strong></li>
+<li class="block-li">Without extensive planning, lack of coordination quickly eats into profits</li>
+<li class="block-li">Break the job into a schedule of labor hours required</li>
+<li class="block-li">Materials AND labor must arrive at the proper time</li>
+</ul>
+<div class="block-h2">Controlling Costs — Permanent Payroll & Expansion</div>
+<div class="callout blue"><div class="callout-title">How Construction Payrolls Typically Work</div><div class="callout-body">
+<div class="callout-item">A small permanent payroll usually consists of <strong>a foreperson and skilled journeypersons</strong></div>
+<div class="callout-item">Expansion comes through <strong>union hiring halls</strong> — contractor must be knowledgeable about the union's master labor contract</div>
+<div class="callout-item">Subcontractors should be chosen based on <strong>ability to perform AND cost</strong> — untimely delays quickly eliminate any savings from the low bid</div>
+<div class="callout-item">Small contractor spends most of the day <strong>on-site coordinating activities</strong> and resolving conflicts</div>
+</div></div>
+<div class="block-h2">Purchasing & Materials Management</div>
+<ul class="block-ul">
+<li class="block-li">Carrying material inventory is <strong>expensive</strong> — purchasing is essential</li>
+<li class="block-li">Reliability is as important as price when picking suppliers</li>
+<li class="block-li">Contractors typically build trade relations with a <strong>limited number of suppliers</strong></li>
+<li class="block-li">Cost-control tactics: check competing suppliers when prices spike, verify order quantities, use cash discounts only when funds are guaranteed, avoid overstocking</li>
+</ul>
+<div class="block-h2">Marketing Management</div>
+<ul class="block-ul">
+<li class="block-li"><strong>Personal contacts</strong> are the major source of business for a new contractor</li>
+<li class="block-li">Small and medium-sized contracting businesses rely heavily on <strong>referrals</strong></li>
+<li class="block-li">Marketing effort is limited by the sources available to the contractor</li>
+</ul>
+<div class="block-h2">Records You Must Keep</div>
+<ul class="block-ul">
+<li class="block-li">State and federal agencies require records for <strong>audits and tax reporting</strong></li>
+<li class="block-li">Records specifically required by Contractors State License Law are listed in <strong>B&P §7111</strong></li>
+<li class="block-li">Records must be kept for at least <strong>5 years</strong> after project completion and available to the registrar (see also disciplinary rules)</li>
+</ul>`},
+
+biz_govcontracts:{title:'Bidding on Government Contracts', html:`
+<div class="block-h2">Goals That Apply to Public Contracts</div>
+<ul class="block-ul">
+<li class="block-li">Federal, state, and local government agencies — plus public utilities and private corporations — may require bidders to meet established goals for:</li>
+<li class="block-li"><strong>Minority Business Enterprise (MBE)</strong></li>
+<li class="block-li"><strong>Women Business Enterprise (WBE)</strong></li>
+<li class="block-li"><strong>Disabled Veteran Business Enterprise (DVBE)</strong></li>
+</ul>
+<div class="block-h2">Key Agencies & Resources</div>
+<table class="block-table"><thead><tr><th>Agency</th><th>Role</th></tr></thead><tbody>
+<tr><td><strong>California Dept of General Services (DGS)<br>Procurement Division<br>Office of Small Business and DVBE Services (OSDS)</strong></td><td>Information on fulfilling MBE/WBE/DVBE goals on California state contracts. <br>Phone: (916) 376-5000 or (916) 375-4940</td></tr>
+<tr><td><strong>U.S. Department of Commerce<br>Minority Business Development Agency (MBDA)</strong></td><td>Direct business development services to minority businesses via MBDA Business Centers in most major cities. Services include identifying contracting opportunities, preparing bid proposals, finding lenders, and preparing loan applications.</td></tr>
+</tbody></table>
+<div class="block-h2">What This Means for Your Bidding Strategy</div>
+<ul class="block-ul">
+<li class="block-li">On public works, the lowest bid isn't always enough — you may also need to demonstrate compliance with MBE/WBE/DVBE participation goals</li>
+<li class="block-li">Compliance often requires partnering with or subcontracting to certified MBE/WBE/DVBE firms</li>
+<li class="block-li">In public works projects, mechanics liens are NOT available — stop notices on construction funds may be the only remedy</li>
+</ul>`},
 
 biz_risk:{title:'Risk Management & Insurance', html:`
 <div class="block-h2">Comprehensive Insurance Package</div>
@@ -1512,6 +1622,59 @@ safe_usa:{title:'Underground Service Alert (USA)', html:`
 <ul class="block-ul">
 <li class="block-li">Each operator is responsible <strong>only for facilities THEY OWN</strong> — not for other utilities' underground systems</li>
 <li class="block-li">Willful violation of the notification requirement = cause for license disciplinary action</li>
+</ul>`},
+
+safe_usa_field:{title:'USA Field Procedure & Penalties', html:`
+<div class="block-h2">On-Site Procedure — Step by Step</div>
+<ul class="block-ul">
+<li class="block-li">Excavator must <strong>clearly mark the boundaries</strong> of the work area, usually with <strong>white paint</strong></li>
+<li class="block-li">Within those boundaries, operators mark or stake their lines with the appropriate utility color OR advise of clearance</li>
+<li class="block-li">If markings become unclear during the job: contact the regional center — operator must <strong>re-mark within 2 working days</strong></li>
+<li class="block-li">Before any <strong>power equipment</strong> may be used, excavator must determine the EXACT location of underground facilities using <strong>hand tools or a vacuum device</strong></li>
+<li class="block-li">Damage notification: excavator must notify the regional center within <strong>48 hours</strong> of discovering or causing damage</li>
+<li class="block-li">After January 1, 2023: all new subsurface installations must be mapped via GIS and maintained as permanent records by the operator</li>
+</ul>
+<div class="block-h2">Utility Color Codes (general knowledge)</div>
+<table class="block-table"><thead><tr><th>Color</th><th>Utility</th></tr></thead><tbody>
+<tr><td><strong>White</strong></td><td>Proposed excavation (the excavator's mark)</td></tr>
+<tr><td><strong>Pink</strong></td><td>Temporary survey markings</td></tr>
+<tr><td><strong>Red</strong></td><td>Electric power lines, cables, conduit, lighting cables</td></tr>
+<tr><td><strong>Yellow</strong></td><td>Gas, oil, steam, petroleum, gaseous materials</td></tr>
+<tr><td><strong>Orange</strong></td><td>Communication, alarm or signal lines, cables, conduit</td></tr>
+<tr><td><strong>Blue</strong></td><td>Potable water</td></tr>
+<tr><td><strong>Purple</strong></td><td>Reclaimed water, irrigation, slurry lines</td></tr>
+<tr><td><strong>Green</strong></td><td>Sewers and drain lines</td></tr>
+</tbody></table>
+<div class="block-h2">Civil Penalty Amounts — Government Code §§4216-4216.9</div>
+<div class="callout red"><div class="callout-title">Tiered Fines</div><div class="callout-body">
+<div class="callout-item"><strong>Negligent</strong> violation: fine up to <strong>$10,000</strong></div>
+<div class="callout-item"><strong>Knowing & willful</strong> violation: fine up to <strong>$50,000</strong></div>
+<div class="callout-item">Knowing & willful violation causing damage to a <strong>gas or hazardous liquid pipeline</strong> that results in the escape of any flammable/toxic/corrosive gas or liquid: fine up to <strong>$100,000</strong></div>
+<div class="callout-item">Excavator may also face <strong>third-party claims</strong> for damages arising from the excavation</div>
+<div class="callout-item">CSLB license discipline (up to revocation) is also possible</div>
+</div></div>`},
+
+safe_injury:{title:'Occupational Injury Reporting', html:`
+<div class="block-h2">When Must a Contractor File a Report?</div>
+<div class="callout blue"><div class="callout-title">Trigger</div><div class="callout-body">
+<div class="callout-item">Any employee occupational injury or illness that results in <strong>lost time beyond the date of injury</strong>, OR</div>
+<div class="callout-item">Any injury/illness requiring <strong>medical treatment beyond first aid</strong></div>
+</div></div>
+<div class="block-h2">Deadlines (Labor Code §6409.1)</div>
+<table class="block-table"><thead><tr><th>Situation</th><th>Deadline</th><th>Who To Notify</th></tr></thead><tbody>
+<tr><td>Standard occupational injury/illness</td><td>Within <strong>5 days</strong> of employer obtaining knowledge</td><td>Division of Labor Statistics & Research (DIR) — OR the WC insurer if insured</td></tr>
+<tr><td>Serious injury, serious illness, or death</td><td><strong>IMMEDIATELY</strong> by telephone or email</td><td>Division of Occupational Safety and Health (Cal/OSHA)</td></tr>
+<tr><td>Insurance carrier doesn't get report</td><td>WCAB may issue order forcing report within <strong>5 days</strong></td><td>WCAB</td></tr>
+</tbody></table>
+<div class="block-h2">Required Content</div>
+<ul class="block-ul">
+<li class="block-li">Report must use the official form from the Division of Labor Statistics & Research</li>
+<li class="block-li">Must indicate the <strong>Social Security number</strong> of the injured employee</li>
+<li class="block-li">Failure to comply with WCAB order to report = punishable as <strong>contempt</strong></li>
+</ul>
+<div class="block-h2">Willful Safety Violation Causing Death/Prolonged Impairment</div>
+<ul class="block-ul">
+<li class="block-li">Every employer, AND every employee with direction/management/control over other employees, who <strong>willfully violates an occupational safety/health standard causing death or prolonged impairment</strong> faces fine and/or imprisonment (Labor Code §6425)</li>
 </ul>`},
 
 safe_asbestos:{title:'Asbestos Regulations', html:`

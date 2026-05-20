@@ -584,6 +584,12 @@ function startQuiz(c){
   cat=c;
   if(c==='all'){pool=[];Object.entries(Q).forEach(([k,v])=>{v.forEach(q=>pool.push({...q,cat:k}));});pool=shuffle(pool).slice(0,115);}
   else{pool=shuffle(Q[c]).map(q=>({...q,cat:c}));}
+  // Randomize option positions so the correct answer isn't always in the same spot
+  pool=pool.map(q=>{
+    const tagged=q.opts.map((text,i)=>({text,correct:i===q.ans}));
+    const shuf=shuffle(tagged);
+    return {...q,opts:shuf.map(t=>t.text),ans:shuf.findIndex(t=>t.correct)};
+  });
   idx=0;score=0;answered=false;
   document.getElementById('hub').style.display='none';
   document.getElementById('results').style.display='none';

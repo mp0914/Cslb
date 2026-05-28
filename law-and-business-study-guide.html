@@ -1959,24 +1959,45 @@ function pickVoice() {
   const voices = speechSynthesis.getVoices();
   if (!voices.length) return null;
   const lower = (s) => (s || '').toLowerCase();
-  // English-only first
-  const english = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith('en'));
-  const pool = english.length ? english : voices;
-  // 1. Explicitly labelled "male"
-  let m = pool.find(v => lower(v.name).includes('male') && !lower(v.name).includes('female'));
-  if (m) return m;
-  // 2. Known male first names, excluding any with female hints
-  m = pool.find(v => {
+
+  // Tier the pool: British English first, then other English, then everything else
+  const isGB = (v) => (v.lang || '').toLowerCase().startsWith('en-gb');
+  const isEN = (v) => (v.lang || '').toLowerCase().startsWith('en');
+  const britishEnglish = voices.filter(isGB);
+  const otherEnglish = voices.filter(v => isEN(v) && !isGB(v));
+  // Order: British > other English > anything
+  const tiers = [britishEnglish, otherEnglish, voices];
+
+  const isFemaleName = (v) => FEMALE_HINTS.some(h => lower(v.name).includes(h));
+  const isMaleLabelled = (v) => lower(v.name).includes('male') && !isFemaleName(v);
+  // Strong British male name hints (covers iOS Siri "Daniel", Mac "Daniel/Oliver",
+  // Windows "George/Hazel-no", Google "UK English Male", classic Mac "Arthur")
+  const BRITISH_MALE_HINTS = ['daniel','oliver','arthur','george','reed','rishi','liam','jamie','reed'];
+  const looksBritishMale = (v) => {
     const n = lower(v.name);
-    if (FEMALE_HINTS.some(h => n.includes(h))) return false;
-    return MALE_HINTS.some(h => n.includes(h));
-  });
-  if (m) return m;
-  // 3. Any English voice without a female hint
-  m = pool.find(v => !FEMALE_HINTS.some(h => lower(v.name).includes(h)));
-  if (m) return m;
-  // 4. Fall back to first English voice (or first voice overall)
-  return pool[0];
+    if (isFemaleName(v)) return false;
+    return BRITISH_MALE_HINTS.some(h => n.includes(h)) || isMaleLabelled(v);
+  };
+  const looksMale = (v) => {
+    const n = lower(v.name);
+    if (isFemaleName(v)) return false;
+    return MALE_HINTS.some(h => n.includes(h)) || isMaleLabelled(v);
+  };
+
+  // Walk tiers, applying progressively looser male preference
+  for (const tier of tiers) {
+    if (!tier.length) continue;
+    // 1. Best: British-male-named OR explicitly labelled male in this tier
+    let m = tier.find(looksBritishMale);
+    if (m) return m;
+    // 2. Any male-named voice in this tier
+    m = tier.find(looksMale);
+    if (m) return m;
+    // 3. Any non-female-named voice in this tier
+    m = tier.find(v => !isFemaleName(v));
+    if (m) return m;
+  }
+  return voices[0];
 }
 
 function loadVoice() {
@@ -2130,7 +2151,7 @@ function speakNext() {
   const chunk = AUDIO.chunks[AUDIO.idx];
   const u = new SpeechSynthesisUtterance(chunk.text);
   u.rate = AUDIO.rate;
-  u.lang = 'en-US';
+  u.lang = 'en-GB';
   if (!AUDIO.voice) loadVoice();
   if (AUDIO.voice) u.voice = AUDIO.voice;
   u.onend = () => {

@@ -165,6 +165,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .nav-btn.primary{background:#1e3a5f;border-color:#1e40af55;color:#60a5fa}
 .nav-btn.primary:hover{background:#1e40af44}
 .nav-btn:disabled{opacity:.3;cursor:default}
+
+/* ── Audio player ── */
+.audio-bar{position:sticky;bottom:16px;z-index:50;margin:24px 0 8px;background:linear-gradient(180deg,#1a1d2e,#161925);border:1px solid #2a2d3e;border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 28px rgba(0,0,0,.5)}
+.audio-btn{background:#1e3a5f;border:1px solid rgba(30,64,175,.4);color:#60a5fa;width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;font-weight:700;flex-shrink:0;transition:background .15s}
+.audio-btn:hover{background:rgba(30,64,175,.4)}
+.audio-btn.secondary{background:transparent;color:#9ca3af;border-color:#2a2d3e}
+.audio-btn.secondary:hover{color:#fff;background:#1f2235}
+.audio-btn:disabled{opacity:.35;cursor:default}
+.audio-label{flex:1;font-size:11px;color:#9ca3af;line-height:1.4;min-width:0}
+.audio-label strong{display:block;color:#e8eaf0;font-size:13px;font-weight:700;margin-bottom:2px}
+.audio-speed{background:transparent;border:1px solid #2a2d3e;color:#9ca3af;padding:8px 12px;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;transition:all .15s;min-width:54px}
+.audio-speed:hover{color:#fff;border-color:#3a3d50}
+.audio-progress{height:3px;background:#2a2d3e;border-radius:2px;margin-top:8px;overflow:hidden}
+.audio-progress-fill{height:100%;background:#60a5fa;width:0%;transition:width .3s}
 </style>
 </head>
 <body>
@@ -300,6 +314,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <h2 id="cv-title"></h2>
   </div>
   <div class="content-body" id="cv-body"></div>
+  <div class="audio-bar" id="audio-bar">
+    <button class="audio-btn" id="audio-play" onclick="audioToggle()" aria-label="Play or pause">▶</button>
+    <button class="audio-btn secondary" id="audio-stop" onclick="audioStop()" aria-label="Stop">■</button>
+    <div class="audio-label" id="audio-label">
+      <strong>Listen to this section</strong>
+      Tap play to hear it read aloud
+      <div class="audio-progress"><div class="audio-progress-fill" id="audio-progress-fill"></div></div>
+    </div>
+    <button class="audio-speed" id="audio-speed" onclick="audioSpeedCycle()" aria-label="Change speed">1.0×</button>
+  </div>
   <div class="content-nav">
     <button class="nav-btn" id="cv-prev" onclick="navTopic(-1)">← Prev</button>
     <button class="nav-btn" onclick="backToSection()">All Topics</button>
@@ -1869,6 +1893,7 @@ function openSection(sectionKey) {
 }
 
 function openTopic(topicIndex) {
+  audioReset();
   const sec = SECTIONS[currentSection];
   const topic = sec.topics[topicIndex];
   currentTopicIndex = topicIndex;
@@ -1892,6 +1917,7 @@ function openTopic(topicIndex) {
 }
 
 function navTopic(dir) {
+  audioReset();
   const sec = SECTIONS[currentSection];
   const newIndex = currentTopicIndex + dir;
   if (newIndex < 0 || newIndex >= sec.topics.length) {
@@ -1902,17 +1928,147 @@ function navTopic(dir) {
 }
 
 function backToSection() {
+  audioReset();
   document.getElementById('content-view').style.display = 'none';
   document.getElementById('section-view').style.display = 'block';
   window.scrollTo(0, 0);
 }
 
 function goHub() {
+  audioReset();
   document.getElementById('section-view').style.display = 'none';
   document.getElementById('content-view').style.display = 'none';
   document.getElementById('hub').style.display = 'block';
   window.scrollTo(0, 0);
 }
+
+// ─── AUDIO PLAYBACK ────────────────────────────────────────────────────────
+const AUDIO = { chunks: [], idx: 0, rate: 1.0, state: 'idle' };
+const SPEEDS = [0.75, 1.0, 1.25, 1.5, 2.0];
+
+function chunkText(text) {
+  text = text.replace(/\s+/g, ' ').trim();
+  const parts = text.match(/[^.!?:]+[.!?:]+(\s|$)|[^.!?:]+$/g) || [text];
+  const chunks = [];
+  let current = '';
+  for (const p of parts) {
+    if ((current + p).length > 220 && current) {
+      chunks.push(current.trim());
+      current = p;
+    } else {
+      current += p;
+    }
+  }
+  if (current.trim()) chunks.push(current.trim());
+  return chunks;
+}
+
+function buildChunks() {
+  const title = document.getElementById('cv-title').textContent;
+  const body = document.getElementById('cv-body').innerText;
+  return chunkText(title + '. ' + body);
+}
+
+function audioReset() {
+  if (typeof speechSynthesis !== 'undefined') speechSynthesis.cancel();
+  AUDIO.chunks = [];
+  AUDIO.idx = 0;
+  AUDIO.state = 'idle';
+  updateAudioUI();
+}
+
+function speakNext() {
+  if (AUDIO.state !== 'playing') return;
+  if (AUDIO.idx >= AUDIO.chunks.length) {
+    AUDIO.state = 'idle';
+    AUDIO.idx = 0;
+    updateAudioUI();
+    return;
+  }
+  const u = new SpeechSynthesisUtterance(AUDIO.chunks[AUDIO.idx]);
+  u.rate = AUDIO.rate;
+  u.onend = () => {
+    if (AUDIO.state === 'playing') {
+      AUDIO.idx++;
+      speakNext();
+    }
+  };
+  u.onerror = () => {
+    if (AUDIO.state === 'playing') {
+      AUDIO.idx++;
+      speakNext();
+    }
+  };
+  speechSynthesis.speak(u);
+  updateAudioUI();
+}
+
+function audioToggle() {
+  if (!('speechSynthesis' in window)) {
+    alert('Your browser does not support text-to-speech. Try Safari or Chrome.');
+    return;
+  }
+  if (AUDIO.state === 'playing') {
+    speechSynthesis.cancel();
+    AUDIO.state = 'paused';
+    updateAudioUI();
+    return;
+  }
+  if (AUDIO.state === 'paused') {
+    AUDIO.state = 'playing';
+    speakNext();
+    return;
+  }
+  // Idle — start fresh
+  AUDIO.chunks = buildChunks();
+  AUDIO.idx = 0;
+  AUDIO.state = 'playing';
+  speakNext();
+}
+
+function audioStop() {
+  audioReset();
+}
+
+function audioSpeedCycle() {
+  const i = SPEEDS.indexOf(AUDIO.rate);
+  AUDIO.rate = SPEEDS[(i + 1) % SPEEDS.length];
+  document.getElementById('audio-speed').textContent = AUDIO.rate + '×';
+  if (AUDIO.state === 'playing') {
+    // Restart current chunk with new rate
+    speechSynthesis.cancel();
+    speakNext();
+  }
+}
+
+function updateAudioUI() {
+  const btn = document.getElementById('audio-play');
+  const label = document.getElementById('audio-label');
+  const fill = document.getElementById('audio-progress-fill');
+  if (!btn || !label) return;
+  const total = AUDIO.chunks.length;
+  const pct = total ? Math.min(100, Math.round((AUDIO.idx / total) * 100)) : 0;
+  if (fill) fill.style.width = pct + '%';
+  if (AUDIO.state === 'playing') {
+    btn.innerHTML = '❚❚';
+    label.innerHTML = `<strong>Reading aloud…</strong>Part ${AUDIO.idx + 1} of ${total}<div class="audio-progress"><div class="audio-progress-fill" style="width:${pct}%"></div></div>`;
+  } else if (AUDIO.state === 'paused') {
+    btn.innerHTML = '▶';
+    label.innerHTML = `<strong>Paused</strong>Part ${AUDIO.idx + 1} of ${total} — tap to resume<div class="audio-progress"><div class="audio-progress-fill" style="width:${pct}%"></div></div>`;
+  } else {
+    btn.innerHTML = '▶';
+    label.innerHTML = `<strong>Listen to this section</strong>Tap play to hear it read aloud<div class="audio-progress"><div class="audio-progress-fill" style="width:0%"></div></div>`;
+  }
+}
+
+// Stop audio if the page is hidden (e.g., user switches apps)
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && AUDIO.state === 'playing') {
+    speechSynthesis.cancel();
+    AUDIO.state = 'paused';
+    updateAudioUI();
+  }
+});
 </script>
 <script src="/pwa.js"></script>
 </body>

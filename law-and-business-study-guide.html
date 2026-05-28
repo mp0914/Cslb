@@ -1988,31 +1988,131 @@ if ('speechSynthesis' in window) {
   speechSynthesis.onvoiceschanged = loadVoice;
 }
 
-function chunkText(text) {
-  text = text.replace(/\s+/g, ' ').trim();
+// Pause durations (ms) — scaled by playback rate at speak time
+const PAUSE = {
+  title: 900,    // after the topic title
+  h2: 800,       // between major sub-sections
+  h3: 600,       // between minor sub-sections
+  callout: 600,  // after a callout block ends
+  p: 400,        // after a paragraph
+  li: 300,       // between list items
+  callout_item: 350, // between callout items
+  row: 400,      // between table rows
+  sub: 180       // between sentence splits within a long chunk
+};
+
+function cleanText(s) {
+  if (!s) return '';
+  s = s.replace(/\s+/g, ' ').trim();
+  s = s.replace(/^[•·•→\-]\s*/, ''); // strip leading bullet markers
+  return s;
+}
+
+function ensureEnding(s) {
+  if (!s) return s;
+  const last = s[s.length - 1];
+  if ('.!?:,;'.indexOf(last) >= 0) return s;
+  return s + '.';
+}
+
+function sentenceSplit(text, basePause) {
+  // Split long text into sentence-sized chunks; smaller pauses between sentences
   const parts = text.match(/[^.!?:]+[.!?:]+(\s|$)|[^.!?:]+$/g) || [text];
-  const chunks = [];
-  let current = '';
+  const out = [];
+  let cur = '';
   for (const p of parts) {
-    if ((current + p).length > 220 && current) {
-      chunks.push(current.trim());
-      current = p;
+    if ((cur + p).length > 220 && cur) {
+      out.push({ text: ensureEnding(cur.trim()), pauseAfter: PAUSE.sub });
+      cur = p;
     } else {
-      current += p;
+      cur += p;
     }
   }
-  if (current.trim()) chunks.push(current.trim());
-  return chunks;
+  if (cur.trim()) out.push({ text: ensureEnding(cur.trim()), pauseAfter: basePause });
+  return out;
+}
+
+function emit(chunks, text, pauseAfter) {
+  const t = cleanText(text);
+  if (!t) return;
+  if (t.length <= 220) {
+    chunks.push({ text: ensureEnding(t), pauseAfter });
+  } else {
+    chunks.push(...sentenceSplit(t, pauseAfter));
+  }
 }
 
 function buildChunks() {
+  const chunks = [];
   const title = document.getElementById('cv-title').textContent;
-  const body = document.getElementById('cv-body').innerText;
-  return chunkText(title + '. ' + body);
+  emit(chunks, title, PAUSE.title);
+  const body = document.getElementById('cv-body');
+
+  // Walk top-level children in document order
+  const topNodes = Array.from(body.children);
+  for (const node of topNodes) {
+    processNode(node, chunks);
+  }
+  return chunks;
+}
+
+function processNode(node, chunks) {
+  if (!node || node.nodeType !== 1) return;
+  const cls = node.className || '';
+  const tag = node.tagName.toLowerCase();
+
+  if (cls.includes('block-h2')) {
+    emit(chunks, node.textContent, PAUSE.h2);
+    return;
+  }
+  if (cls.includes('block-h3')) {
+    emit(chunks, node.textContent, PAUSE.h3);
+    return;
+  }
+  if (cls.includes('block-p')) {
+    emit(chunks, node.textContent, PAUSE.p);
+    return;
+  }
+  if (cls.includes('block-ul')) {
+    const items = node.querySelectorAll('.block-li');
+    items.forEach(li => emit(chunks, li.textContent, PAUSE.li));
+    return;
+  }
+  if (cls.includes('callout')) {
+    const title = node.querySelector('.callout-title');
+    if (title) emit(chunks, title.textContent, PAUSE.h3);
+    const items = node.querySelectorAll('.callout-item');
+    items.forEach(it => emit(chunks, it.textContent, PAUSE.callout_item));
+    // Extra breath at end of callout block
+    if (chunks.length) chunks[chunks.length - 1].pauseAfter = PAUSE.callout;
+    return;
+  }
+  if (cls.includes('block-table') || tag === 'table') {
+    const headers = Array.from(node.querySelectorAll('thead th')).map(th => cleanText(th.textContent));
+    const rows = node.querySelectorAll('tbody tr');
+    rows.forEach(tr => {
+      const cells = Array.from(tr.querySelectorAll('td')).map(td => cleanText(td.textContent));
+      if (!cells.length) return;
+      // Build a row sentence by pairing header to cell when possible
+      const parts = cells.map((cell, i) => {
+        const h = headers[i];
+        if (h && h !== cell) return h + ': ' + cell;
+        return cell;
+      });
+      emit(chunks, parts.join('. '), PAUSE.row);
+    });
+    return;
+  }
+  // Fallback: recurse into children
+  Array.from(node.children).forEach(c => processNode(c, chunks));
 }
 
 function audioReset() {
   if (typeof speechSynthesis !== 'undefined') speechSynthesis.cancel();
+  if (AUDIO.pauseTimer) {
+    clearTimeout(AUDIO.pauseTimer);
+    AUDIO.pauseTimer = null;
+  }
   AUDIO.chunks = [];
   AUDIO.idx = 0;
   AUDIO.state = 'idle';
@@ -2027,16 +2127,23 @@ function speakNext() {
     updateAudioUI();
     return;
   }
-  const u = new SpeechSynthesisUtterance(AUDIO.chunks[AUDIO.idx]);
+  const chunk = AUDIO.chunks[AUDIO.idx];
+  const u = new SpeechSynthesisUtterance(chunk.text);
   u.rate = AUDIO.rate;
   u.lang = 'en-US';
   if (!AUDIO.voice) loadVoice();
   if (AUDIO.voice) u.voice = AUDIO.voice;
   u.onend = () => {
-    if (AUDIO.state === 'playing') {
-      AUDIO.idx++;
-      speakNext();
-    }
+    if (AUDIO.state !== 'playing') return;
+    AUDIO.idx++;
+    // Schedule next chunk after a calibrated pause (scaled by speed so faster
+    // playback also tightens the gaps)
+    const baseDelay = chunk.pauseAfter || PAUSE.sub;
+    const delay = Math.max(80, Math.round(baseDelay / AUDIO.rate));
+    AUDIO.pauseTimer = setTimeout(() => {
+      AUDIO.pauseTimer = null;
+      if (AUDIO.state === 'playing') speakNext();
+    }, delay);
   };
   u.onerror = () => {
     if (AUDIO.state === 'playing') {
@@ -2055,6 +2162,10 @@ function audioToggle() {
   }
   if (AUDIO.state === 'playing') {
     speechSynthesis.cancel();
+    if (AUDIO.pauseTimer) {
+      clearTimeout(AUDIO.pauseTimer);
+      AUDIO.pauseTimer = null;
+    }
     AUDIO.state = 'paused';
     updateAudioUI();
     return;
@@ -2081,6 +2192,10 @@ function audioSpeedCycle() {
   document.getElementById('audio-speed').textContent = AUDIO.rate + '×';
   if (AUDIO.state === 'playing') {
     // Restart current chunk with new rate
+    if (AUDIO.pauseTimer) {
+      clearTimeout(AUDIO.pauseTimer);
+      AUDIO.pauseTimer = null;
+    }
     speechSynthesis.cancel();
     speakNext();
   }
@@ -2110,6 +2225,10 @@ function updateAudioUI() {
 document.addEventListener('visibilitychange', () => {
   if (document.hidden && AUDIO.state === 'playing') {
     speechSynthesis.cancel();
+    if (AUDIO.pauseTimer) {
+      clearTimeout(AUDIO.pauseTimer);
+      AUDIO.pauseTimer = null;
+    }
     AUDIO.state = 'paused';
     updateAudioUI();
   }

@@ -179,11 +179,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .audio-speed:hover{color:#fff;border-color:#3a3d50}
 .audio-progress{height:3px;background:#2a2d3e;border-radius:2px;margin-top:8px;overflow:hidden}
 .audio-progress-fill{height:100%;background:#60a5fa;width:0%;transition:width .3s}
-.voice-row{display:flex;align-items:center;gap:8px;margin:8px 4px 0;font-size:11px}
-.voice-row-label{color:#6b7280;font-weight:600;text-transform:uppercase;letter-spacing:.5px;font-size:10px}
-.voice-pick{flex:1;text-align:left;background:transparent;border:1px solid #2a2d3e;color:#9ca3af;padding:6px 10px;border-radius:8px;font-size:11px;cursor:pointer;transition:all .15s;font-family:inherit}
-.voice-pick:hover{color:#fff;border-color:#3a3d50;background:#161925}
-.voice-pick.warn{color:#fbbf24;border-color:#ca8a0455;background:#1c1504}
 </style>
 </head>
 <body>
@@ -328,10 +323,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="audio-progress"><div class="audio-progress-fill" id="audio-progress-fill"></div></div>
     </div>
     <button class="audio-speed" id="audio-speed" onclick="audioSpeedCycle()" aria-label="Change speed">1.0×</button>
-  </div>
-  <div class="voice-row">
-    <span class="voice-row-label">Voice:</span>
-    <button class="voice-pick" id="voice-label" onclick="openVoicePicker()">Loading…</button>
   </div>
   <div class="content-nav">
     <button class="nav-btn" id="cv-prev" onclick="navTopic(-1)">← Prev</button>
@@ -1903,7 +1894,6 @@ function openSection(sectionKey) {
 
 function openTopic(topicIndex) {
   audioReset();
-  if (typeof refreshVoiceLabel === 'function') refreshVoiceLabel();
   const sec = SECTIONS[currentSection];
   const topic = sec.topics[topicIndex];
   currentTopicIndex = topicIndex;
@@ -2013,94 +2003,11 @@ function pickVoice() {
   return britishEnglish[0] || otherEnglish[0] || null;
 }
 
-function getEnglishVoices() {
-  if (!('speechSynthesis' in window)) return [];
-  return speechSynthesis.getVoices().filter(v => (v.lang || '').toLowerCase().startsWith('en'));
-}
-
 function loadVoice() {
-  // Honour a stored user pick first
-  let storedName = null;
-  try { storedName = localStorage.getItem('audio-voice-name'); } catch (e) {}
-  if (storedName) {
-    const v = (speechSynthesis.getVoices() || []).find(x => x.name === storedName);
-    if (v) { AUDIO.voice = v; refreshVoiceLabel(); return; }
-  }
+  // Clear any voice the user previously picked manually — we now rely on
+  // automatic selection only.
+  try { localStorage.removeItem('audio-voice-name'); } catch (e) {}
   AUDIO.voice = pickVoice();
-  refreshVoiceLabel();
-}
-
-function refreshVoiceLabel() {
-  const el = document.getElementById('voice-label');
-  if (!el) return;
-  if (AUDIO.voice) {
-    el.textContent = AUDIO.voice.name + (AUDIO.voice.lang ? ' (' + AUDIO.voice.lang + ')' : '');
-    el.classList.remove('warn');
-  } else {
-    const anyEnglish = getEnglishVoices().length;
-    el.textContent = anyEnglish
-      ? 'Tap to choose voice'
-      : 'No English voice installed — tap for help';
-    el.classList.add('warn');
-  }
-}
-
-function openVoicePicker() {
-  if (!('speechSynthesis' in window)) return;
-  const englishVoices = getEnglishVoices();
-  if (!englishVoices.length) {
-    const ua = navigator.userAgent || '';
-    const isAndroid = /Android/i.test(ua);
-    const isIOS = /iPhone|iPad|iPod/i.test(ua);
-    let msg = 'No English voices are installed on this device.\n\n';
-    if (isAndroid) {
-      msg +=
-        'On Android:\n' +
-        '1. Open Settings → Accessibility → Text-to-speech output\n' +
-        '   (Samsung: Settings → General management → Text-to-speech)\n' +
-        '2. Make sure "Google Text-to-Speech" is the preferred engine\n' +
-        '3. Tap the gear icon next to Google TTS → "Install voice data"\n' +
-        '4. Pick "English (United Kingdom)" and download the voices\n' +
-        '5. Restart Chrome, then come back here and tap the voice name';
-    } else if (isIOS) {
-      msg +=
-        'On iPhone / iPad:\n' +
-        'Settings → Accessibility → Spoken Content → Voices → English → ' +
-        'pick a voice (Daniel = British male) and tap the cloud-download button.\n\n' +
-        'Then come back here and tap the voice name to refresh.';
-    } else {
-      msg +=
-        'Install English text-to-speech voices in your operating system, ' +
-        'then come back and tap the voice name to refresh.\n\n' +
-        '• Windows: Settings → Time & Language → Speech → Add voices\n' +
-        '• macOS: System Settings → Accessibility → Spoken Content → System voice → Manage Voices\n' +
-        '• Linux: install speech-dispatcher and espeak-ng / pico2wave';
-    }
-    alert(msg);
-    return;
-  }
-  const labels = englishVoices.map((v, i) => {
-    const uri = (v.voiceURI || '').toLowerCase();
-    const name = (v.name || '').toLowerCase();
-    let tag = '';
-    if (MALE_URI_RE.test(uri) || (/male/i.test(v.name) && !FEMALE_HINTS.some(h => name.includes(h)))) tag = ' ♂';
-    else if (FEMALE_URI_RE.test(uri) || FEMALE_HINTS.some(h => name.includes(h))) tag = ' ♀';
-    return `${i + 1}.${tag} ${v.name} (${v.lang})`;
-  }).join('\n');
-  const pick = prompt('Pick a voice by number (♂ = likely male, ♀ = likely female):\n\n' + labels, '1');
-  if (pick === null) return;
-  const n = parseInt(pick, 10);
-  if (!isNaN(n) && n >= 1 && n <= englishVoices.length) {
-    AUDIO.voice = englishVoices[n - 1];
-    try { localStorage.setItem('audio-voice-name', AUDIO.voice.name); } catch (e) {}
-    refreshVoiceLabel();
-    // If currently playing, restart current chunk with new voice
-    if (AUDIO.state === 'playing') {
-      if (AUDIO.pauseTimer) { clearTimeout(AUDIO.pauseTimer); AUDIO.pauseTimer = null; }
-      speechSynthesis.cancel();
-      speakNext();
-    }
-  }
 }
 
 if ('speechSynthesis' in window) {

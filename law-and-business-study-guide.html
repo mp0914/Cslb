@@ -1964,47 +1964,50 @@ const FEMALE_HINTS = ['female','samantha','victoria','karen','tessa','susan','al
   'ava','serena','moira','fiona','catherine','kate','zoe','emily','sophia','isabella',
   'paulina','monica','marisol','rosa'];
 
+// Google TTS Android voiceURI codes: gbb/gbc/gbf/gbg female; gbd/gbe male; rjs male
+const MALE_URI_RE = /-(gbd|gbe|rjs|usm|usn|uso|aum)-/i;
+const FEMALE_URI_RE = /-(gba|gbb|gbc|gbf|gbg|usa|usb|usc|usf|usg|usk|usl|aua|auc)-/i;
+
 function pickVoice() {
   if (!('speechSynthesis' in window)) return null;
   const voices = speechSynthesis.getVoices();
   if (!voices.length) return null;
   const lower = (s) => (s || '').toLowerCase();
 
-  // CRITICAL: only consider English voices. If no English voices are installed
-  // on the device, return null so the engine falls back to its English-by-lang
-  // default rather than picking a Spanish/other voice and butchering the words.
-  const isGB = (v) => (v.lang || '').toLowerCase().startsWith('en-gb') || (v.lang || '').toLowerCase().startsWith('en_gb');
-  const isEN = (v) => (v.lang || '').toLowerCase().startsWith('en');
+  const isGB = (v) => /^en[-_]gb/i.test(v.lang || '');
+  const isEN = (v) => /^en/i.test(v.lang || '');
   const britishEnglish = voices.filter(isGB);
   const otherEnglish = voices.filter(v => isEN(v) && !isGB(v));
-  const tiers = [britishEnglish, otherEnglish]; // English-only
-
-  if (!britishEnglish.length && !otherEnglish.length) {
-    // No English voices installed — bail out so the engine uses lang hint only
-    return null;
-  }
+  if (!britishEnglish.length && !otherEnglish.length) return null;
 
   const isFemaleName = (v) => FEMALE_HINTS.some(h => lower(v.name).includes(h));
-  const isMaleLabelled = (v) => lower(v.name).includes('male') && !isFemaleName(v);
+  const isFemaleURI = (v) => FEMALE_URI_RE.test(v.voiceURI || '');
+  const isFemaleVoice = (v) => isFemaleName(v) || isFemaleURI(v);
+  const isMaleLabelled = (v) => /male/i.test(v.name) && !isFemaleName(v);
+  const isMaleURI = (v) => MALE_URI_RE.test(v.voiceURI || '');
+
   const BRITISH_MALE_HINTS = ['daniel','oliver','arthur','george','reed','rishi','liam','jamie'];
   const looksBritishMale = (v) => {
+    if (isFemaleVoice(v)) return false;
+    if (isGB(v) && isMaleURI(v)) return true;
     const n = lower(v.name);
-    if (isFemaleName(v)) return false;
     return BRITISH_MALE_HINTS.some(h => n.includes(h)) || isMaleLabelled(v);
   };
   const looksMale = (v) => {
+    if (isFemaleVoice(v)) return false;
+    if (isMaleURI(v)) return true;
     const n = lower(v.name);
-    if (isFemaleName(v)) return false;
     return MALE_HINTS.some(h => n.includes(h)) || isMaleLabelled(v);
   };
 
+  const tiers = [britishEnglish, otherEnglish];
   for (const tier of tiers) {
     if (!tier.length) continue;
     let m = tier.find(looksBritishMale);
     if (m) return m;
     m = tier.find(looksMale);
     if (m) return m;
-    m = tier.find(v => !isFemaleName(v));
+    m = tier.find(v => !isFemaleVoice(v));
     if (m) return m;
   }
   return britishEnglish[0] || otherEnglish[0] || null;
@@ -2076,8 +2079,15 @@ function openVoicePicker() {
     alert(msg);
     return;
   }
-  const labels = englishVoices.map((v, i) => `${i + 1}. ${v.name} (${v.lang})`).join('\n');
-  const pick = prompt('Pick a voice by number:\n\n' + labels, '1');
+  const labels = englishVoices.map((v, i) => {
+    const uri = (v.voiceURI || '').toLowerCase();
+    const name = (v.name || '').toLowerCase();
+    let tag = '';
+    if (MALE_URI_RE.test(uri) || (/male/i.test(v.name) && !FEMALE_HINTS.some(h => name.includes(h)))) tag = ' ♂';
+    else if (FEMALE_URI_RE.test(uri) || FEMALE_HINTS.some(h => name.includes(h))) tag = ' ♀';
+    return `${i + 1}.${tag} ${v.name} (${v.lang})`;
+  }).join('\n');
+  const pick = prompt('Pick a voice by number (♂ = likely male, ♀ = likely female):\n\n' + labels, '1');
   if (pick === null) return;
   const n = parseInt(pick, 10);
   if (!isNaN(n) && n >= 1 && n <= englishVoices.length) {

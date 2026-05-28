@@ -179,6 +179,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .audio-speed:hover{color:#fff;border-color:#3a3d50}
 .audio-progress{height:3px;background:#2a2d3e;border-radius:2px;margin-top:8px;overflow:hidden}
 .audio-progress-fill{height:100%;background:#60a5fa;width:0%;transition:width .3s}
+.voice-row{display:flex;align-items:center;gap:8px;margin:8px 4px 0;font-size:11px}
+.voice-row-label{color:#6b7280;font-weight:600;text-transform:uppercase;letter-spacing:.5px;font-size:10px}
+.voice-pick{flex:1;text-align:left;background:transparent;border:1px solid #2a2d3e;color:#9ca3af;padding:6px 10px;border-radius:8px;font-size:11px;cursor:pointer;transition:all .15s;font-family:inherit}
+.voice-pick:hover{color:#fff;border-color:#3a3d50;background:#161925}
+.voice-pick.warn{color:#fbbf24;border-color:#ca8a0455;background:#1c1504}
 </style>
 </head>
 <body>
@@ -323,6 +328,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="audio-progress"><div class="audio-progress-fill" id="audio-progress-fill"></div></div>
     </div>
     <button class="audio-speed" id="audio-speed" onclick="audioSpeedCycle()" aria-label="Change speed">1.0×</button>
+  </div>
+  <div class="voice-row">
+    <span class="voice-row-label">Voice:</span>
+    <button class="voice-pick" id="voice-label" onclick="openVoicePicker()">Loading…</button>
   </div>
   <div class="content-nav">
     <button class="nav-btn" id="cv-prev" onclick="navTopic(-1)">← Prev</button>
@@ -1894,6 +1903,7 @@ function openSection(sectionKey) {
 
 function openTopic(topicIndex) {
   audioReset();
+  if (typeof refreshVoiceLabel === 'function') refreshVoiceLabel();
   const sec = SECTIONS[currentSection];
   const topic = sec.topics[topicIndex];
   currentTopicIndex = topicIndex;
@@ -1960,19 +1970,23 @@ function pickVoice() {
   if (!voices.length) return null;
   const lower = (s) => (s || '').toLowerCase();
 
-  // Tier the pool: British English first, then other English, then everything else
-  const isGB = (v) => (v.lang || '').toLowerCase().startsWith('en-gb');
+  // CRITICAL: only consider English voices. If no English voices are installed
+  // on the device, return null so the engine falls back to its English-by-lang
+  // default rather than picking a Spanish/other voice and butchering the words.
+  const isGB = (v) => (v.lang || '').toLowerCase().startsWith('en-gb') || (v.lang || '').toLowerCase().startsWith('en_gb');
   const isEN = (v) => (v.lang || '').toLowerCase().startsWith('en');
   const britishEnglish = voices.filter(isGB);
   const otherEnglish = voices.filter(v => isEN(v) && !isGB(v));
-  // Order: British > other English > anything
-  const tiers = [britishEnglish, otherEnglish, voices];
+  const tiers = [britishEnglish, otherEnglish]; // English-only
+
+  if (!britishEnglish.length && !otherEnglish.length) {
+    // No English voices installed — bail out so the engine uses lang hint only
+    return null;
+  }
 
   const isFemaleName = (v) => FEMALE_HINTS.some(h => lower(v.name).includes(h));
   const isMaleLabelled = (v) => lower(v.name).includes('male') && !isFemaleName(v);
-  // Strong British male name hints (covers iOS Siri "Daniel", Mac "Daniel/Oliver",
-  // Windows "George/Hazel-no", Google "UK English Male", classic Mac "Arthur")
-  const BRITISH_MALE_HINTS = ['daniel','oliver','arthur','george','reed','rishi','liam','jamie','reed'];
+  const BRITISH_MALE_HINTS = ['daniel','oliver','arthur','george','reed','rishi','liam','jamie'];
   const looksBritishMale = (v) => {
     const n = lower(v.name);
     if (isFemaleName(v)) return false;
@@ -1984,24 +1998,75 @@ function pickVoice() {
     return MALE_HINTS.some(h => n.includes(h)) || isMaleLabelled(v);
   };
 
-  // Walk tiers, applying progressively looser male preference
   for (const tier of tiers) {
     if (!tier.length) continue;
-    // 1. Best: British-male-named OR explicitly labelled male in this tier
     let m = tier.find(looksBritishMale);
     if (m) return m;
-    // 2. Any male-named voice in this tier
     m = tier.find(looksMale);
     if (m) return m;
-    // 3. Any non-female-named voice in this tier
     m = tier.find(v => !isFemaleName(v));
     if (m) return m;
   }
-  return voices[0];
+  return britishEnglish[0] || otherEnglish[0] || null;
+}
+
+function getEnglishVoices() {
+  if (!('speechSynthesis' in window)) return [];
+  return speechSynthesis.getVoices().filter(v => (v.lang || '').toLowerCase().startsWith('en'));
 }
 
 function loadVoice() {
+  // Honour a stored user pick first
+  let storedName = null;
+  try { storedName = localStorage.getItem('audio-voice-name'); } catch (e) {}
+  if (storedName) {
+    const v = (speechSynthesis.getVoices() || []).find(x => x.name === storedName);
+    if (v) { AUDIO.voice = v; refreshVoiceLabel(); return; }
+  }
   AUDIO.voice = pickVoice();
+  refreshVoiceLabel();
+}
+
+function refreshVoiceLabel() {
+  const el = document.getElementById('voice-label');
+  if (!el) return;
+  if (AUDIO.voice) {
+    el.textContent = AUDIO.voice.name + (AUDIO.voice.lang ? ' (' + AUDIO.voice.lang + ')' : '');
+    el.classList.remove('warn');
+  } else {
+    const anyEnglish = getEnglishVoices().length;
+    el.textContent = anyEnglish
+      ? 'Tap to choose voice'
+      : 'No English voice installed — tap for help';
+    el.classList.add('warn');
+  }
+}
+
+function openVoicePicker() {
+  if (!('speechSynthesis' in window)) return;
+  const englishVoices = getEnglishVoices();
+  if (!englishVoices.length) {
+    alert('No English voices are installed on this device.\n\n' +
+      'On iPhone/iPad:\n' +
+      'Settings → Accessibility → Spoken Content → Voices → English → pick a voice (Daniel is British male) and tap the cloud-download button.\n\n' +
+      'Then come back here and tap the voice name to refresh.');
+    return;
+  }
+  const labels = englishVoices.map((v, i) => `${i + 1}. ${v.name} (${v.lang})`).join('\n');
+  const pick = prompt('Pick a voice by number:\n\n' + labels, '1');
+  if (pick === null) return;
+  const n = parseInt(pick, 10);
+  if (!isNaN(n) && n >= 1 && n <= englishVoices.length) {
+    AUDIO.voice = englishVoices[n - 1];
+    try { localStorage.setItem('audio-voice-name', AUDIO.voice.name); } catch (e) {}
+    refreshVoiceLabel();
+    // If currently playing, restart current chunk with new voice
+    if (AUDIO.state === 'playing') {
+      if (AUDIO.pauseTimer) { clearTimeout(AUDIO.pauseTimer); AUDIO.pauseTimer = null; }
+      speechSynthesis.cancel();
+      speakNext();
+    }
+  }
 }
 
 if ('speechSynthesis' in window) {
@@ -2151,9 +2216,15 @@ function speakNext() {
   const chunk = AUDIO.chunks[AUDIO.idx];
   const u = new SpeechSynthesisUtterance(chunk.text);
   u.rate = AUDIO.rate;
-  u.lang = 'en-GB';
+  // Always force English. Prefer en-GB; fall back to en-US if no GB voice.
+  u.lang = (AUDIO.voice && /en-?gb/i.test(AUDIO.voice.lang)) ? 'en-GB'
+         : (AUDIO.voice && /en/i.test(AUDIO.voice.lang)) ? AUDIO.voice.lang
+         : 'en-GB';
   if (!AUDIO.voice) loadVoice();
-  if (AUDIO.voice) u.voice = AUDIO.voice;
+  // Only assign a voice if we found an English one. Otherwise let the engine
+  // pick its own English voice based on u.lang (avoids falling through to a
+  // Spanish system default).
+  if (AUDIO.voice && /^en/i.test(AUDIO.voice.lang || '')) u.voice = AUDIO.voice;
   u.onend = () => {
     if (AUDIO.state !== 'playing') return;
     AUDIO.idx++;

@@ -1943,8 +1943,50 @@ function goHub() {
 }
 
 // ─── AUDIO PLAYBACK ────────────────────────────────────────────────────────
-const AUDIO = { chunks: [], idx: 0, rate: 1.0, state: 'idle' };
+const AUDIO = { chunks: [], idx: 0, rate: 1.0, state: 'idle', voice: null };
 const SPEEDS = [0.75, 1.0, 1.25, 1.5, 2.0];
+
+// Names that strongly hint at an English-speaking male voice
+const MALE_HINTS = ['daniel','alex','aaron','fred','tom','thomas','george','michael','mike',
+  'david','mark','james','john','albert','arthur','oliver','kevin','matthew','jamie',
+  'liam','noah','william','rishi','reed','evan','ryan','ralph'];
+const FEMALE_HINTS = ['female','samantha','victoria','karen','tessa','susan','allison',
+  'ava','serena','moira','fiona','catherine','kate','zoe','emily','sophia','isabella',
+  'paulina','monica','marisol','rosa'];
+
+function pickVoice() {
+  if (!('speechSynthesis' in window)) return null;
+  const voices = speechSynthesis.getVoices();
+  if (!voices.length) return null;
+  const lower = (s) => (s || '').toLowerCase();
+  // English-only first
+  const english = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith('en'));
+  const pool = english.length ? english : voices;
+  // 1. Explicitly labelled "male"
+  let m = pool.find(v => lower(v.name).includes('male') && !lower(v.name).includes('female'));
+  if (m) return m;
+  // 2. Known male first names, excluding any with female hints
+  m = pool.find(v => {
+    const n = lower(v.name);
+    if (FEMALE_HINTS.some(h => n.includes(h))) return false;
+    return MALE_HINTS.some(h => n.includes(h));
+  });
+  if (m) return m;
+  // 3. Any English voice without a female hint
+  m = pool.find(v => !FEMALE_HINTS.some(h => lower(v.name).includes(h)));
+  if (m) return m;
+  // 4. Fall back to first English voice (or first voice overall)
+  return pool[0];
+}
+
+function loadVoice() {
+  AUDIO.voice = pickVoice();
+}
+
+if ('speechSynthesis' in window) {
+  loadVoice();
+  speechSynthesis.onvoiceschanged = loadVoice;
+}
 
 function chunkText(text) {
   text = text.replace(/\s+/g, ' ').trim();
@@ -1987,6 +2029,9 @@ function speakNext() {
   }
   const u = new SpeechSynthesisUtterance(AUDIO.chunks[AUDIO.idx]);
   u.rate = AUDIO.rate;
+  u.lang = 'en-US';
+  if (!AUDIO.voice) loadVoice();
+  if (AUDIO.voice) u.voice = AUDIO.voice;
   u.onend = () => {
     if (AUDIO.state === 'playing') {
       AUDIO.idx++;

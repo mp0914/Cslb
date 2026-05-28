@@ -121,6 +121,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cross-link-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:4px;line-height:1.2}
 .cross-link-sub{font-size:12px;color:#93c5fd;line-height:1.4}
 .cross-link-arrow{font-size:20px;color:#60a5fa;flex-shrink:0;font-weight:700}
+
+/* ── Audio player ── */
+.audio-bar{position:sticky;bottom:16px;z-index:50;margin:24px 0 8px;background:linear-gradient(180deg,#1a1d2e,#161925);border:1px solid #2a2d3e;border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 28px rgba(0,0,0,.5)}
+.audio-btn{background:#1e3a5f;border:1px solid rgba(30,64,175,.4);color:#60a5fa;width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;font-weight:700;flex-shrink:0;transition:background .15s}
+.audio-btn:hover{background:rgba(30,64,175,.4)}
+.audio-btn.secondary{background:transparent;color:#9ca3af;border-color:#2a2d3e}
+.audio-btn.secondary:hover{color:#fff;background:#1f2235}
+.audio-btn:disabled{opacity:.35;cursor:default}
+.audio-label{flex:1;font-size:11px;color:#9ca3af;line-height:1.4;min-width:0}
+.audio-label strong{display:block;color:#e8eaf0;font-size:13px;font-weight:700;margin-bottom:2px}
+.audio-speed{background:transparent;border:1px solid #2a2d3e;color:#9ca3af;padding:8px 12px;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;transition:all .15s;min-width:54px}
+.audio-speed:hover{color:#fff;border-color:#3a3d50}
+.audio-progress{height:3px;background:#2a2d3e;border-radius:2px;margin-top:8px;overflow:hidden}
+.audio-progress-fill{height:100%;background:#60a5fa;width:0%;transition:width .3s}
+.voice-row{display:flex;align-items:center;gap:8px;margin:8px 4px 0;font-size:11px}
+.voice-row-label{color:#6b7280;font-weight:600;text-transform:uppercase;letter-spacing:.5px;font-size:10px}
+.voice-pick{flex:1;text-align:left;background:transparent;border:1px solid #2a2d3e;color:#9ca3af;padding:6px 10px;border-radius:8px;font-size:11px;cursor:pointer;transition:all .15s;font-family:inherit}
+.voice-pick:hover{color:#fff;border-color:#3a3d50;background:#161925}
+.voice-pick.warn{color:#fbbf24;border-color:#ca8a0455;background:#1c1504}
 </style>
 </head>
 <body>
@@ -250,6 +269,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <h2 id="cv-title"></h2>
   </div>
   <div class="content-body" id="cv-body"></div>
+  <div class="audio-bar" id="audio-bar">
+    <button class="audio-btn" id="audio-play" onclick="audioToggle()" aria-label="Play or pause">▶</button>
+    <button class="audio-btn secondary" id="audio-stop" onclick="audioStop()" aria-label="Stop">■</button>
+    <div class="audio-label" id="audio-label">
+      <strong>Listen to this section</strong>
+      Tap play to hear it read aloud
+      <div class="audio-progress"><div class="audio-progress-fill" id="audio-progress-fill"></div></div>
+    </div>
+    <button class="audio-speed" id="audio-speed" onclick="audioSpeedCycle()" aria-label="Change speed">1.0×</button>
+  </div>
+  <div class="voice-row">
+    <span class="voice-row-label">Voice:</span>
+    <button class="voice-pick" id="voice-label" onclick="openVoicePicker()">Loading…</button>
+  </div>
   <div class="content-nav">
     <button class="nav-btn" id="cv-prev" onclick="navTopic(-1)">← Prev</button>
     <button class="nav-btn" onclick="backToSection()">All Topics</button>
@@ -548,6 +581,8 @@ function openSection(sectionKey) {
 }
 
 function openTopic(topicIndex) {
+  audioReset();
+  if (typeof refreshVoiceLabel === 'function') refreshVoiceLabel();
   const sec = SECTIONS[currentSection];
   const topic = sec.topics[topicIndex];
   currentTopicIndex = topicIndex;
@@ -571,6 +606,7 @@ function openTopic(topicIndex) {
 }
 
 function navTopic(dir) {
+  audioReset();
   const sec = SECTIONS[currentSection];
   const newIndex = currentTopicIndex + dir;
   if (newIndex < 0 || newIndex >= sec.topics.length) {
@@ -581,17 +617,382 @@ function navTopic(dir) {
 }
 
 function backToSection() {
+  audioReset();
   document.getElementById('content-view').style.display = 'none';
   document.getElementById('section-view').style.display = 'block';
   window.scrollTo(0, 0);
 }
 
 function goHub() {
+  audioReset();
   document.getElementById('section-view').style.display = 'none';
   document.getElementById('content-view').style.display = 'none';
   document.getElementById('hub').style.display = 'block';
   window.scrollTo(0, 0);
 }
+
+// ─── AUDIO PLAYBACK ────────────────────────────────────────────────────────
+const AUDIO = { chunks: [], idx: 0, rate: 1.0, state: 'idle', voice: null, pauseTimer: null };
+const SPEEDS = [0.75, 1.0, 1.25, 1.5, 2.0];
+
+// Names that strongly hint at an English-speaking male voice
+const MALE_HINTS = ['daniel','alex','aaron','fred','tom','thomas','george','michael','mike',
+  'david','mark','james','john','albert','arthur','oliver','kevin','matthew','jamie',
+  'liam','noah','william','rishi','reed','evan','ryan','ralph'];
+const FEMALE_HINTS = ['female','samantha','victoria','karen','tessa','susan','allison',
+  'ava','serena','moira','fiona','catherine','kate','zoe','emily','sophia','isabella',
+  'paulina','monica','marisol','rosa'];
+
+// Google TTS Android voiceURI codes: gbb/gbc/gbf/gbg female; gbd/gbe male; rjs male
+const MALE_URI_RE = /-(gbd|gbe|rjs|usm|usn|uso|aum)-/i;
+const FEMALE_URI_RE = /-(gba|gbb|gbc|gbf|gbg|usa|usb|usc|usf|usg|usk|usl|aua|auc)-/i;
+
+function pickVoice() {
+  if (!('speechSynthesis' in window)) return null;
+  const voices = speechSynthesis.getVoices();
+  if (!voices.length) return null;
+  const lower = (s) => (s || '').toLowerCase();
+
+  const isGB = (v) => /^en[-_]gb/i.test(v.lang || '');
+  const isEN = (v) => /^en/i.test(v.lang || '');
+  const britishEnglish = voices.filter(isGB);
+  const otherEnglish = voices.filter(v => isEN(v) && !isGB(v));
+  if (!britishEnglish.length && !otherEnglish.length) return null;
+
+  const isFemaleName = (v) => FEMALE_HINTS.some(h => lower(v.name).includes(h));
+  const isFemaleURI = (v) => FEMALE_URI_RE.test(v.voiceURI || '');
+  const isFemaleVoice = (v) => isFemaleName(v) || isFemaleURI(v);
+  const isMaleLabelled = (v) => /male/i.test(v.name) && !isFemaleName(v);
+  const isMaleURI = (v) => MALE_URI_RE.test(v.voiceURI || '');
+
+  const BRITISH_MALE_HINTS = ['daniel','oliver','arthur','george','reed','rishi','liam','jamie'];
+  const looksBritishMale = (v) => {
+    if (isFemaleVoice(v)) return false;
+    if (isGB(v) && isMaleURI(v)) return true;
+    const n = lower(v.name);
+    return BRITISH_MALE_HINTS.some(h => n.includes(h)) || isMaleLabelled(v);
+  };
+  const looksMale = (v) => {
+    if (isFemaleVoice(v)) return false;
+    if (isMaleURI(v)) return true;
+    const n = lower(v.name);
+    return MALE_HINTS.some(h => n.includes(h)) || isMaleLabelled(v);
+  };
+
+  const tiers = [britishEnglish, otherEnglish];
+  for (const tier of tiers) {
+    if (!tier.length) continue;
+    let m = tier.find(looksBritishMale);
+    if (m) return m;
+    m = tier.find(looksMale);
+    if (m) return m;
+    m = tier.find(v => !isFemaleVoice(v));
+    if (m) return m;
+  }
+  return britishEnglish[0] || otherEnglish[0] || null;
+}
+
+function getEnglishVoices() {
+  if (!('speechSynthesis' in window)) return [];
+  return speechSynthesis.getVoices().filter(v => (v.lang || '').toLowerCase().startsWith('en'));
+}
+
+function loadVoice() {
+  let storedName = null;
+  try { storedName = localStorage.getItem('audio-voice-name'); } catch (e) {}
+  if (storedName) {
+    const v = (speechSynthesis.getVoices() || []).find(x => x.name === storedName);
+    if (v) { AUDIO.voice = v; refreshVoiceLabel(); return; }
+  }
+  AUDIO.voice = pickVoice();
+  refreshVoiceLabel();
+}
+
+function refreshVoiceLabel() {
+  const el = document.getElementById('voice-label');
+  if (!el) return;
+  if (AUDIO.voice) {
+    el.textContent = AUDIO.voice.name + (AUDIO.voice.lang ? ' (' + AUDIO.voice.lang + ')' : '');
+    el.classList.remove('warn');
+  } else {
+    const anyEnglish = getEnglishVoices().length;
+    el.textContent = anyEnglish
+      ? 'Tap to choose voice'
+      : 'No English voice installed — tap for help';
+    el.classList.add('warn');
+  }
+}
+
+function openVoicePicker() {
+  if (!('speechSynthesis' in window)) return;
+  const englishVoices = getEnglishVoices();
+  if (!englishVoices.length) {
+    const ua = navigator.userAgent || '';
+    const isAndroid = /Android/i.test(ua);
+    const isIOS = /iPhone|iPad|iPod/i.test(ua);
+    let msg = 'No English voices are installed on this device.\n\n';
+    if (isAndroid) {
+      msg +=
+        'On Android:\n' +
+        '1. Open Settings → Accessibility → Text-to-speech output\n' +
+        '   (Samsung: Settings → General management → Text-to-speech)\n' +
+        '2. Make sure "Google Text-to-Speech" is the preferred engine\n' +
+        '3. Tap the gear icon next to Google TTS → "Install voice data"\n' +
+        '4. Pick "English (United Kingdom)" and download the voices\n' +
+        '5. Restart Chrome, then come back here and tap the voice name';
+    } else if (isIOS) {
+      msg +=
+        'On iPhone / iPad:\n' +
+        'Settings → Accessibility → Spoken Content → Voices → English → ' +
+        'pick a voice (Daniel = British male) and tap the cloud-download button.\n\n' +
+        'Then come back here and tap the voice name to refresh.';
+    } else {
+      msg +=
+        'Install English text-to-speech voices in your operating system, ' +
+        'then come back and tap the voice name to refresh.\n\n' +
+        '• Windows: Settings → Time & Language → Speech → Add voices\n' +
+        '• macOS: System Settings → Accessibility → Spoken Content → System voice → Manage Voices\n' +
+        '• Linux: install speech-dispatcher and espeak-ng / pico2wave';
+    }
+    alert(msg);
+    return;
+  }
+  const labels = englishVoices.map((v, i) => {
+    const uri = (v.voiceURI || '').toLowerCase();
+    const name = (v.name || '').toLowerCase();
+    let tag = '';
+    if (MALE_URI_RE.test(uri) || (/male/i.test(v.name) && !FEMALE_HINTS.some(h => name.includes(h)))) tag = ' ♂';
+    else if (FEMALE_URI_RE.test(uri) || FEMALE_HINTS.some(h => name.includes(h))) tag = ' ♀';
+    return `${i + 1}.${tag} ${v.name} (${v.lang})`;
+  }).join('\n');
+  const pick = prompt('Pick a voice by number (♂ = likely male, ♀ = likely female):\n\n' + labels, '1');
+  if (pick === null) return;
+  const n = parseInt(pick, 10);
+  if (!isNaN(n) && n >= 1 && n <= englishVoices.length) {
+    AUDIO.voice = englishVoices[n - 1];
+    try { localStorage.setItem('audio-voice-name', AUDIO.voice.name); } catch (e) {}
+    refreshVoiceLabel();
+    if (AUDIO.state === 'playing') {
+      if (AUDIO.pauseTimer) { clearTimeout(AUDIO.pauseTimer); AUDIO.pauseTimer = null; }
+      speechSynthesis.cancel();
+      speakNext();
+    }
+  }
+}
+
+if ('speechSynthesis' in window) {
+  loadVoice();
+  speechSynthesis.onvoiceschanged = loadVoice;
+}
+
+// Pause durations (ms) — scaled by playback rate at speak time
+const PAUSE = {
+  title: 900,
+  h2: 800,
+  h3: 600,
+  callout: 600,
+  p: 400,
+  li: 300,
+  callout_item: 350,
+  row: 400,
+  sub: 180
+};
+
+function cleanText(s) {
+  if (!s) return '';
+  s = s.replace(/\s+/g, ' ').trim();
+  s = s.replace(/^[•·•→\-]\s*/, '');
+  return s;
+}
+
+function ensureEnding(s) {
+  if (!s) return s;
+  const last = s[s.length - 1];
+  if ('.!?:,;'.indexOf(last) >= 0) return s;
+  return s + '.';
+}
+
+function sentenceSplit(text, basePause) {
+  const parts = text.match(/[^.!?:]+[.!?:]+(\s|$)|[^.!?:]+$/g) || [text];
+  const out = [];
+  let cur = '';
+  for (const p of parts) {
+    if ((cur + p).length > 220 && cur) {
+      out.push({ text: ensureEnding(cur.trim()), pauseAfter: PAUSE.sub });
+      cur = p;
+    } else {
+      cur += p;
+    }
+  }
+  if (cur.trim()) out.push({ text: ensureEnding(cur.trim()), pauseAfter: basePause });
+  return out;
+}
+
+function emit(chunks, text, pauseAfter) {
+  const t = cleanText(text);
+  if (!t) return;
+  if (t.length <= 220) {
+    chunks.push({ text: ensureEnding(t), pauseAfter });
+  } else {
+    chunks.push(...sentenceSplit(t, pauseAfter));
+  }
+}
+
+function buildChunks() {
+  const chunks = [];
+  const title = document.getElementById('cv-title').textContent;
+  emit(chunks, title, PAUSE.title);
+  const body = document.getElementById('cv-body');
+  const topNodes = Array.from(body.children);
+  for (const node of topNodes) processNode(node, chunks);
+  return chunks;
+}
+
+function processNode(node, chunks) {
+  if (!node || node.nodeType !== 1) return;
+  const cls = node.className || '';
+  const tag = node.tagName.toLowerCase();
+
+  if (cls.includes('block-h2')) { emit(chunks, node.textContent, PAUSE.h2); return; }
+  if (cls.includes('block-h3')) { emit(chunks, node.textContent, PAUSE.h3); return; }
+  if (cls.includes('block-p'))  { emit(chunks, node.textContent, PAUSE.p);  return; }
+  if (cls.includes('block-ul')) {
+    const items = node.querySelectorAll('.block-li');
+    items.forEach(li => emit(chunks, li.textContent, PAUSE.li));
+    return;
+  }
+  if (cls.includes('callout')) {
+    const title = node.querySelector('.callout-title');
+    if (title) emit(chunks, title.textContent, PAUSE.h3);
+    const items = node.querySelectorAll('.callout-item');
+    items.forEach(it => emit(chunks, it.textContent, PAUSE.callout_item));
+    if (chunks.length) chunks[chunks.length - 1].pauseAfter = PAUSE.callout;
+    return;
+  }
+  if (cls.includes('block-table') || tag === 'table') {
+    const headers = Array.from(node.querySelectorAll('thead th')).map(th => cleanText(th.textContent));
+    const rows = node.querySelectorAll('tbody tr');
+    rows.forEach(tr => {
+      const cells = Array.from(tr.querySelectorAll('td')).map(td => cleanText(td.textContent));
+      if (!cells.length) return;
+      const parts = cells.map((cell, i) => {
+        const h = headers[i];
+        if (h && h !== cell) return h + ': ' + cell;
+        return cell;
+      });
+      emit(chunks, parts.join('. '), PAUSE.row);
+    });
+    return;
+  }
+  Array.from(node.children).forEach(c => processNode(c, chunks));
+}
+
+function audioReset() {
+  if (typeof speechSynthesis !== 'undefined') speechSynthesis.cancel();
+  if (AUDIO.pauseTimer) { clearTimeout(AUDIO.pauseTimer); AUDIO.pauseTimer = null; }
+  AUDIO.chunks = [];
+  AUDIO.idx = 0;
+  AUDIO.state = 'idle';
+  updateAudioUI();
+}
+
+function speakNext() {
+  if (AUDIO.state !== 'playing') return;
+  if (AUDIO.idx >= AUDIO.chunks.length) {
+    AUDIO.state = 'idle';
+    AUDIO.idx = 0;
+    updateAudioUI();
+    return;
+  }
+  const chunk = AUDIO.chunks[AUDIO.idx];
+  const u = new SpeechSynthesisUtterance(chunk.text);
+  u.rate = AUDIO.rate;
+  u.lang = (AUDIO.voice && /en-?gb/i.test(AUDIO.voice.lang)) ? 'en-GB'
+         : (AUDIO.voice && /en/i.test(AUDIO.voice.lang)) ? AUDIO.voice.lang
+         : 'en-GB';
+  if (!AUDIO.voice) loadVoice();
+  if (AUDIO.voice && /^en/i.test(AUDIO.voice.lang || '')) u.voice = AUDIO.voice;
+  u.onend = () => {
+    if (AUDIO.state !== 'playing') return;
+    AUDIO.idx++;
+    const baseDelay = chunk.pauseAfter || PAUSE.sub;
+    const delay = Math.max(80, Math.round(baseDelay / AUDIO.rate));
+    AUDIO.pauseTimer = setTimeout(() => {
+      AUDIO.pauseTimer = null;
+      if (AUDIO.state === 'playing') speakNext();
+    }, delay);
+  };
+  u.onerror = () => {
+    if (AUDIO.state === 'playing') { AUDIO.idx++; speakNext(); }
+  };
+  speechSynthesis.speak(u);
+  updateAudioUI();
+}
+
+function audioToggle() {
+  if (!('speechSynthesis' in window)) {
+    alert('Your browser does not support text-to-speech. Try Safari or Chrome.');
+    return;
+  }
+  if (AUDIO.state === 'playing') {
+    speechSynthesis.cancel();
+    if (AUDIO.pauseTimer) { clearTimeout(AUDIO.pauseTimer); AUDIO.pauseTimer = null; }
+    AUDIO.state = 'paused';
+    updateAudioUI();
+    return;
+  }
+  if (AUDIO.state === 'paused') {
+    AUDIO.state = 'playing';
+    speakNext();
+    return;
+  }
+  AUDIO.chunks = buildChunks();
+  AUDIO.idx = 0;
+  AUDIO.state = 'playing';
+  speakNext();
+}
+
+function audioStop() { audioReset(); }
+
+function audioSpeedCycle() {
+  const i = SPEEDS.indexOf(AUDIO.rate);
+  AUDIO.rate = SPEEDS[(i + 1) % SPEEDS.length];
+  document.getElementById('audio-speed').textContent = AUDIO.rate + '×';
+  if (AUDIO.state === 'playing') {
+    if (AUDIO.pauseTimer) { clearTimeout(AUDIO.pauseTimer); AUDIO.pauseTimer = null; }
+    speechSynthesis.cancel();
+    speakNext();
+  }
+}
+
+function updateAudioUI() {
+  const btn = document.getElementById('audio-play');
+  const label = document.getElementById('audio-label');
+  const fill = document.getElementById('audio-progress-fill');
+  if (!btn || !label) return;
+  const total = AUDIO.chunks.length;
+  const pct = total ? Math.min(100, Math.round((AUDIO.idx / total) * 100)) : 0;
+  if (fill) fill.style.width = pct + '%';
+  if (AUDIO.state === 'playing') {
+    btn.innerHTML = '❚❚';
+    label.innerHTML = `<strong>Reading aloud…</strong>Part ${AUDIO.idx + 1} of ${total}<div class="audio-progress"><div class="audio-progress-fill" style="width:${pct}%"></div></div>`;
+  } else if (AUDIO.state === 'paused') {
+    btn.innerHTML = '▶';
+    label.innerHTML = `<strong>Paused</strong>Part ${AUDIO.idx + 1} of ${total} — tap to resume<div class="audio-progress"><div class="audio-progress-fill" style="width:${pct}%"></div></div>`;
+  } else {
+    btn.innerHTML = '▶';
+    label.innerHTML = `<strong>Listen to this section</strong>Tap play to hear it read aloud<div class="audio-progress"><div class="audio-progress-fill" style="width:0%"></div></div>`;
+  }
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && AUDIO.state === 'playing') {
+    speechSynthesis.cancel();
+    if (AUDIO.pauseTimer) { clearTimeout(AUDIO.pauseTimer); AUDIO.pauseTimer = null; }
+    AUDIO.state = 'paused';
+    updateAudioUI();
+  }
+});
 </script>
 <script src="/pwa.js"></script>
 </body>

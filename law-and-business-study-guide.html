@@ -2046,10 +2046,34 @@ function openVoicePicker() {
   if (!('speechSynthesis' in window)) return;
   const englishVoices = getEnglishVoices();
   if (!englishVoices.length) {
-    alert('No English voices are installed on this device.\n\n' +
-      'On iPhone/iPad:\n' +
-      'Settings → Accessibility → Spoken Content → Voices → English → pick a voice (Daniel is British male) and tap the cloud-download button.\n\n' +
-      'Then come back here and tap the voice name to refresh.');
+    const ua = navigator.userAgent || '';
+    const isAndroid = /Android/i.test(ua);
+    const isIOS = /iPhone|iPad|iPod/i.test(ua);
+    let msg = 'No English voices are installed on this device.\n\n';
+    if (isAndroid) {
+      msg +=
+        'On Android:\n' +
+        '1. Open Settings → Accessibility → Text-to-speech output\n' +
+        '   (Samsung: Settings → General management → Text-to-speech)\n' +
+        '2. Make sure "Google Text-to-Speech" is the preferred engine\n' +
+        '3. Tap the gear icon next to Google TTS → "Install voice data"\n' +
+        '4. Pick "English (United Kingdom)" and download the voices\n' +
+        '5. Restart Chrome, then come back here and tap the voice name';
+    } else if (isIOS) {
+      msg +=
+        'On iPhone / iPad:\n' +
+        'Settings → Accessibility → Spoken Content → Voices → English → ' +
+        'pick a voice (Daniel = British male) and tap the cloud-download button.\n\n' +
+        'Then come back here and tap the voice name to refresh.';
+    } else {
+      msg +=
+        'Install English text-to-speech voices in your operating system, ' +
+        'then come back and tap the voice name to refresh.\n\n' +
+        '• Windows: Settings → Time & Language → Speech → Add voices\n' +
+        '• macOS: System Settings → Accessibility → Spoken Content → System voice → Manage Voices\n' +
+        '• Linux: install speech-dispatcher and espeak-ng / pico2wave';
+    }
+    alert(msg);
     return;
   }
   const labels = englishVoices.map((v, i) => `${i + 1}. ${v.name} (${v.lang})`).join('\n');

@@ -240,7 +240,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="cat-card" style="--accent:#34d399" onclick="openSection('home_improvement')">
       <span class="cat-icon">🏠</span>
       <div class="cat-name">Home Improvement</div>
-      <div class="cat-desc">Contracts, down payments, HIS registration, warranties, solar, change orders.</div>
+      <div class="cat-desc">Contracts, down payments, home improvement salesperson registration, warranties, solar, change orders.</div>
       <div class="cat-count" style="color:#34d399">7 topics</div>
     </div>
 
@@ -249,6 +249,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="cat-name">Business Management</div>
       <div class="cat-desc">Financial statements, ratios, business forms, bidding, scheduling, operations, gov contracts, risk.</div>
       <div class="cat-count" style="color:#fb923c">8 topics</div>
+    </div>
+
+    <div class="cat-card" style="--accent:#22d3ee" onclick="openSection('employment')">
+      <span class="cat-icon">👷</span>
+      <div class="cat-name">Employment Requirements</div>
+      <div class="cat-desc">Hiring paperwork, payroll taxes, overtime and breaks, worker classification, training, records.</div>
+      <div class="cat-count" style="color:#22d3ee">6 topics</div>
+    </div>
+
+    <div class="cat-card" style="--accent:#94a3b8" onclick="openSection('public_works')">
+      <span class="cat-icon">🏗️</span>
+      <div class="cat-name">Public Works</div>
+      <div class="cat-desc">Prevailing wage, certified payroll, bid and payment bonds, apprentice ratios on government jobs.</div>
+      <div class="cat-count" style="color:#94a3b8">5 topics</div>
     </div>
 
     <div class="cat-card" style="--accent:#f97316" onclick="openSection('liens')">
@@ -265,17 +279,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="cat-count" style="color:#f472b6">5 topics</div>
     </div>
 
-    <div class="cat-card" style="--accent:#facc15" onclick="openSection('new_laws')">
-      <span class="cat-icon">📰</span>
-      <div class="cat-name">2026 Law Changes</div>
-      <div class="cat-desc">All 7 new bills — what changed and what you must know for the exam.</div>
-      <div class="cat-count" style="color:#facc15">7 topics</div>
-    </div>
-
     <div class="cat-card" style="--accent:#ef4444" onclick="openSection('safety')">
       <span class="cat-icon">🦺</span>
       <div class="cat-name">Construction & Safety</div>
-      <div class="cat-desc">USA + field penalties, occupational injury reporting, asbestos, water wells, Native American remains.</div>
+      <div class="cat-desc">Underground Service Alert + field penalties, occupational injury reporting, asbestos, water wells, Native American remains.</div>
       <div class="cat-count" style="color:#ef4444">6 topics</div>
     </div>
 
@@ -341,7 +348,7 @@ cslb:{
     {name:'History & Board Structure', id:'cslb_history'},
     {name:'CSLB Mission & Operations', id:'cslb_mission'},
     {name:'How Complaints Are Processed', id:'cslb_complaints'},
-    {name:'SWIFT & Unlicensed Activity', id:'cslb_swift'},
+    {name:'Fraud Team & Unlicensed Activity', id:'cslb_swift'},
   ]
 },
 licensing:{
@@ -365,7 +372,7 @@ bonds:{
     {name:'Bond Beneficiaries & Claim Limits', id:'bond_bene'},
     {name:'LLC Requirements — Bond & Insurance', id:'bond_llc'},
     {name:'Workers\' Compensation Requirements', id:'bond_wc'},
-    {name:'WC Notifications, Benefits & Penalties', id:'bond_wc_employer'},
+    {name:"Workers' Compensation Notices & Benefits", id:'bond_wc_employer'},
   ]
 },
 home_improvement:{
@@ -375,7 +382,7 @@ home_improvement:{
     {name:'What Is Home Improvement?', id:'hi_def'},
     {name:'Contract Dollar Thresholds', id:'hi_thresholds'},
     {name:'Required Contract Elements', id:'hi_elements'},
-    {name:'HIS Registration — Complete Rules', id:'hi_his'},
+    {name:'Home Improvement Salesperson Registration', id:'hi_his'},
     {name:'Home Warranties & Joint Control', id:'hi_warranties'},
     {name:'Change Orders & Fraudulent Acts', id:'hi_changeorders'},
     {name:'Solar Energy Contracts', id:'hi_solar'},
@@ -388,11 +395,36 @@ business:{
     {name:'Forms of Business Organization', id:'biz_forms'},
     {name:'The Three Financial Statements', id:'biz_statements'},
     {name:'Financial Ratios — Formulas & Examples', id:'biz_ratios'},
+    {name:'Cash Management & Budgeting', id:'biz_cash'},
+    {name:'Business Taxes', id:'biz_taxes'},
     {name:'Financing a Contracting Business', id:'biz_financing'},
     {name:'Bidding, Estimation & Scheduling', id:'biz_bidding'},
     {name:'Operations Management & Cost Control', id:'biz_operations'},
     {name:'Bidding on Government Contracts', id:'biz_govcontracts'},
     {name:'Risk Management & Insurance', id:'biz_risk'},
+  ]
+},
+employment:{
+  icon:'👷', title:'Employment Requirements', subtitle:'Hiring, payroll, wage and hour rules, training, and records — the biggest section of the exam',
+  accent:'#22d3ee',
+  topics:[
+    {name:'Hiring a New Employee', id:'emp_hiring'},
+    {name:'Payroll & Payroll Taxes', id:'emp_payroll'},
+    {name:'Wage & Hour Rules', id:'emp_wagehour'},
+    {name:'Employee or Independent Contractor?', id:'emp_classify'},
+    {name:'Supervising & Training Employees', id:'emp_training'},
+    {name:'Records, Reviews & Ending Employment', id:'emp_records'},
+  ]
+},
+public_works:{
+  icon:'🏗️', title:'Public Works', subtitle:'Prevailing wage, certified payroll, bonding, and apprenticeship on government jobs',
+  accent:'#94a3b8',
+  topics:[
+    {name:'What Counts as Public Works', id:'pw_what'},
+    {name:'Prevailing Wage — How It Works', id:'pw_wage'},
+    {name:'Certified Payroll Records', id:'pw_payroll'},
+    {name:'Bonds & Insurance on Public Jobs', id:'pw_bonds'},
+    {name:'Apprentices on Public Jobs', id:'pw_apprentice'},
   ]
 },
 liens:{
@@ -416,25 +448,12 @@ discipline:{
     {name:'Public Disclosure & Reinstatement', id:'disc_disclosure'},
   ]
 },
-new_laws:{
-  icon:'📰', title:'2026 Law Changes', subtitle:'Every new bill — what changed and what you\'ll be tested on',
-  accent:'#facc15',
-  topics:[
-    {name:'AB 521 — Bond Liability', id:'law_ab521'},
-    {name:'AB 1002 — AG Wage Actions', id:'law_ab1002'},
-    {name:'AB 1327 — HIC Email & Cancellation', id:'law_ab1327'},
-    {name:'SB 291 — Workers\' Comp Penalties', id:'law_sb291'},
-    {name:'SB 456 — Mural Exemption', id:'law_sb456'},
-    {name:'SB 517 — Subcontractor Disclosure', id:'law_sb517'},
-    {name:'SB 779 — Penalty Increases', id:'law_sb779'},
-  ]
-},
 safety:{
   icon:'🦺', title:'Construction & Safety', subtitle:'Underground utilities, asbestos, water wells, and site regulations',
   accent:'#ef4444',
   topics:[
-    {name:'Underground Service Alert (USA)', id:'safe_usa'},
-    {name:'USA Field Procedure & Penalties', id:'safe_usa_field'},
+    {name:'Underground Service Alert', id:'safe_usa'},
+    {name:'Utility Locating — Field Procedure & Penalties', id:'safe_usa_field'},
     {name:'Occupational Injury Reporting', id:'safe_injury'},
     {name:'Asbestos Regulations', id:'safe_asbestos'},
     {name:'Water Wells & Native American Remains', id:'safe_wells'},
@@ -448,6 +467,8 @@ quickref:{
     {name:'Key Dollar Amounts & Numbers', id:'qr_numbers'},
     {name:'All Deadlines & Time Periods', id:'qr_deadlines'},
     {name:'Formulas & Legal Concepts', id:'qr_formulas'},
+    {name:'Recent Rule Changes', id:'qr_recent'},
+    {name:'Abbreviations Explained', id:'qr_abbrev'},
   ]
 },
 };
@@ -503,7 +524,7 @@ cslb_mission:{title:'CSLB Mission & Operations', html:`
 <li class="block-li">Field offices investigate consumer complaints against contractors</li>
 <li class="block-li">24-hour automated line provides license lookup, complaint procedures, office locations, and publication orders</li>
 <li class="block-li">"Find A Licensed Contractor" feature allows searches by classification and zip code</li>
-<li class="block-li">License lookup shows: contact info, license status, CSLB legal actions, classifications, business type, bond and WC insurance info</li>
+<li class="block-li">License lookup shows: contact info, license status, CSLB legal actions, classifications, business type, bond and workers' compensation insurance info</li>
 </ul>
 <div class="block-h2">Disaster Response</div>
 <ul class="block-ul">
@@ -530,10 +551,10 @@ cslb_complaints:{title:'How Complaints Are Processed', html:`
 <li class="block-li">If not appealed within 15 working days — becomes a final order</li>
 <li class="block-li"><strong>Criminal Action:</strong> Referral to local district attorney; court may order fine, probation, restitution, or jail</li>
 <li class="block-li"><strong>Injunction:</strong> Registrar may seek court injunction to stop unlicensed activity</li>
-<li class="block-li">Same citation process applies to unregistered HIS; disciplinary action may also be taken against the licensed contractor who employed them</li>
+<li class="block-li">Same citation process applies to unregistered home improvement salesperson; disciplinary action may also be taken against the licensed contractor who employed them</li>
 </ul>`},
 
-cslb_swift:{title:'SWIFT & Unlicensed Activity', html:`
+cslb_swift:{title:'Fraud Team & Unlicensed Activity', html:`
 <div class="callout gold"><div class="callout-title">SWIFT — Statewide Investigative Fraud Team</div><div class="callout-body">
 <div class="callout-item">Part of the Enforcement Division — focuses on the underground economy and unlicensed contractors</div>
 <div class="callout-item">Authority to visit any jobsite <strong>without cause or complaint</strong></div>
@@ -690,7 +711,7 @@ lic_display:{title:'License Display & Advertising Rules', html:`
 
 lic_personnel:{title:'Personnel of Record Rules After Revocation', html:`
 <div class="callout red"><div class="callout-title">Critical Rule — Know This Cold</div><div class="callout-body">
-<div class="callout-item">A person who was the <strong>qualifying individual on a REVOKED license</strong> is prohibited from serving as QI, officer, director, associate, partner, manager, or member of the personnel of record for ANY other licensee — <strong>whether or not they had knowledge of or participated</strong> in the violations</div>
+<div class="callout-item">A person who was the <strong>qualifying individual on a REVOKED license</strong> is prohibited from serving as qualifying individual, officer, director, associate, partner, manager, or member of the personnel of record for ANY other licensee — <strong>whether or not they had knowledge of or participated</strong> in the violations</div>
 <div class="callout-item">Only permitted role: <strong>bona fide nonsupervising employee</strong></div>
 </div></div>
 <div class="block-h2">Rules Step by Step</div>
@@ -700,10 +721,10 @@ lic_personnel:{title:'Personnel of Record Rules After Revocation', html:`
 <li class="block-li">Person who violates restriction on acting for a licensee (after their revocation): <strong>misdemeanor</strong> — fine of at least $4,500, minimum 90 days to 1 year jail</li>
 <li class="block-li">4-year statute of limitations for prosecuting violations of these restrictions</li>
 </ul>
-<div class="block-h2">QI Responsibility — Immateriality Rule</div>
+<div class="block-h2">qualifying individual Responsibility — Immateriality Rule</div>
 <ul class="block-ul">
-<li class="block-li">When the firm commits a violation, this constitutes cause for disciplinary action against the <strong>qualifying individual</strong> — whether or not the QI had knowledge of or participated in the act</li>
-<li class="block-li">Disassociation from the license after a violation does NOT relieve the QI of responsibility for complying with a citation</li>
+<li class="block-li">When the firm commits a violation, this constitutes cause for disciplinary action against the <strong>qualifying individual</strong> — whether or not the qualifying individual had knowledge of or participated in the act</li>
+<li class="block-li">Disassociation from the license after a violation does NOT relieve the qualifying individual of responsibility for complying with a citation</li>
 </ul>
 <div class="block-h2">Former Personnel Can't Just Strike Out Solo</div>
 <div class="callout red"><div class="callout-title">Even Without a Revoked License — You Still Need Your Own</div><div class="callout-body">
@@ -717,7 +738,7 @@ bond_amounts:{title:'Bond Amounts — All Types', html:`
 <table class="block-table"><thead><tr><th>Bond Type</th><th>Amount</th></tr></thead><tbody>
 <tr><td><strong>Standard Contractor's Bond</strong></td><td><strong>$25,000</strong></td></tr>
 <tr><td><strong>LLC Additional Surety Bond</strong></td><td><strong>$100,000</strong> (in addition to the $25,000)</td></tr>
-<tr><td><strong>Qualifying Individual's Bond</strong></td><td><strong>$25,000</strong> (when QI is not proprietor, general partner, or joint licensee)</td></tr>
+<tr><td><strong>Qualifying Individual's Bond</strong></td><td><strong>$25,000</strong> (when qualifying individual is not proprietor, general partner, or joint licensee)</td></tr>
 <tr><td><strong>Disciplinary Bond (minimum)</strong></td><td><strong>$25,000</strong> (registrar sets amount based on severity; max = 10× standard bond)</td></tr>
 <tr><td><strong>Judgment Bond</strong></td><td>Equal to the full amount of the unsatisfied judgment</td></tr>
 <tr><td><strong>LLC Liability Insurance (≤5 personnel)</strong></td><td><strong>$1,000,000</strong> aggregate minimum</td></tr>
@@ -737,7 +758,7 @@ bond_rules:{title:"Contractor's Bond — Key Rules", html:`
 <li class="block-li">Must be maintained as a condition of licensure at ALL times</li>
 <li class="block-li">Lapsing bond = license subject to suspension or revocation</li>
 <li class="block-li">Must be executed by an admitted surety in favor of the <strong>State of California</strong></li>
-<li class="block-li">Only acceptable forms: (1) admitted surety bond, (2) cash deposit per Code of Civil Procedure §995.710(a)(1)</li>
+<li class="block-li">Only acceptable forms: (1) admitted surety bond, (2) cash deposit with the registrar</li>
 <li class="block-li"><strong>NOT acceptable:</strong> certificates of deposit, other financial instruments</li>
 <li class="block-li">Bond is NOT required while license is on <strong>inactive status</strong></li>
 <li class="block-li">Replacement bonds accepted retroactively if received within <strong>90 days</strong> of the effective date</li>
@@ -751,7 +772,7 @@ bond_rules:{title:"Contractor's Bond — Key Rules", html:`
 <ul class="block-ul">
 <li class="block-li">Once CSLB is notified of a civil action against the deposit: deposit <strong>cannot be released</strong> for any purpose except as determined by the court</li>
 <li class="block-li">Civil penalty orders CANNOT be made against the bond — <strong>bonds are exempt</strong> from civil penalty payment</li>
-<li class="block-li">Legal fees cannot be charged against the bond by CSLB (AB 521 — 2026)</li>
+<li class="block-li">Legal fees cannot be charged against the bond by CSLB</li>
 </ul>
 <div class="block-h2">Disciplinary Bond Rules</div>
 <ul class="block-ul">
@@ -833,29 +854,29 @@ bond_wc:{title:"Workers' Compensation Requirements", html:`
 </ul>
 <div class="block-h2">The No-Employee Exemption</div>
 <ul class="block-ul">
-<li class="block-li">WC is not required if the contractor has <strong>NO employees</strong> AND files a certification statement to that effect</li>
-<li class="block-li"><strong>Exception:</strong> Holders of C-8, C-20, C-22, C-39, or D-49 classifications CANNOT claim the no-employee exemption — WC is always mandatory for these</li>
+<li class="block-li">Workers' compensation is not required if the contractor has <strong>NO employees</strong> AND files a certification statement to that effect</li>
+<li class="block-li"><strong>Exception:</strong> Holders of C-8, C-20, C-22, C-39, or D-49 classifications CANNOT claim the no-employee exemption — workers' compensation is always mandatory for these</li>
 </ul>
-<div class="callout gold"><div class="callout-title">2026 Changes — SB 291</div><div class="callout-body">
-<div class="callout-item">Significantly <strong>increased civil penalties</strong> for WC violations</div>
-<div class="callout-item">CSLB cannot <strong>renew or reinstate</strong> a license in violation of WC requirements until a valid WC certificate is provided</div>
-<div class="callout-item">CSLB must report WC enforcement data to Legislature <strong>annually</strong></div>
-<div class="callout-item">CSLB must develop evidence-based WC exemption verification process — report to Legislature by <strong>January 1, 2027</strong></div>
+<div class="callout gold"><div class="callout-title">Recent Changes</div><div class="callout-body">
+<div class="callout-item">Significantly <strong>increased civil penalties</strong> for workers' compensation violations</div>
+<div class="callout-item">CSLB cannot <strong>renew or reinstate</strong> a license in violation of workers' compensation requirements until a valid workers' compensation certificate is provided</div>
+<div class="callout-item">CSLB must report workers' compensation enforcement data to Legislature <strong>annually</strong></div>
+<div class="callout-item">CSLB must develop evidence-based workers' compensation exemption verification process — report to Legislature by <strong>January 1, 2027</strong></div>
 </div></div>`},
 
-bond_wc_employer:{title:"WC Notifications, Benefits & Penalties", html:`
+bond_wc_employer:{title:"Workers' Compensation Notices & Benefits", html:`
 <div class="block-h2">Coverage Options — Three Ways to Be Covered</div>
 <ul class="block-ul">
 <li class="block-li">Standard approved policy of workers' compensation insurance from any licensed carrier</li>
-<li class="block-li"><strong>Self-insurance</strong> permit from the Director of the Department of Industrial Relations (Labor Code §3700)</li>
-<li class="block-li">Participation in a collectively bargained alternative dispute resolution program (Labor Code §3201.5)</li>
+<li class="block-li"><strong>Self-insurance</strong> permit from the Director of the Department of Industrial Relations</li>
+<li class="block-li">Participation in a collectively bargained alternative dispute resolution program</li>
 </ul>
 <div class="block-h2">Required Employee Notifications</div>
 <table class="block-table"><thead><tr><th>Notification</th><th>When / How</th></tr></thead><tbody>
-<tr><td><strong>WC Notice to New Hire</strong></td><td>At hiring or by end of first pay period — written notice of WC rights (Labor Code §3551). English + Spanish if Spanish-speaking employees.</td></tr>
-<tr><td><strong>"Notice to Employees" Poster</strong></td><td>Posted conspicuously where employees gather. Failure to post = <strong>misdemeanor</strong> (Labor Code §3550).</td></tr>
-<tr><td><strong>OSHA Posting</strong></td><td>Post information about employee protections and obligations under occupational safety and health laws (Labor Code §6408)</td></tr>
-<tr><td><strong>Workplace Crime Victim</strong></td><td>Written notice that the employee is eligible for WC (Labor Code §3553)</td></tr>
+<tr><td><strong>Workers' compensation Notice to New Hire</strong></td><td>At hiring or by end of first pay period — written notice of workers' compensation rights. English + Spanish if Spanish-speaking employees.</td></tr>
+<tr><td><strong>"Notice to Employees" Poster</strong></td><td>Posted conspicuously where employees gather. Failure to post = <strong>misdemeanor</strong>.</td></tr>
+<tr><td><strong>OSHA Posting</strong></td><td>Post information about employee protections and obligations under occupational safety and health laws</td></tr>
+<tr><td><strong>Workplace Crime Victim</strong></td><td>Written notice that the employee is eligible for workers' compensation</td></tr>
 </tbody></table>
 <div class="block-h2">Benefits Available to Injured Workers</div>
 <table class="block-table"><thead><tr><th>Benefit</th><th>Key Details</th></tr></thead><tbody>
@@ -866,22 +887,22 @@ bond_wc_employer:{title:"WC Notifications, Benefits & Penalties", html:`
 <tr><td><strong>Supplemental Job Displacement</strong></td><td>If worker can't return to work for the employer within <strong>60 days</strong> after temporary disability ends — voucher for retraining/skill enhancement</td></tr>
 <tr><td><strong>Serious/Willful Misconduct +50%</strong></td><td>Compensation increased by half (plus up to $250 costs) when employee is injured by employer's serious or willful misconduct. <strong>Insurer cannot cover this increase.</strong></td></tr>
 </tbody></table>
-<div class="block-h2">Penalties for Failing to Carry WC</div>
+<div class="block-h2">Penalties for Failing to Carry workers' compensation</div>
 <div class="callout red"><div class="callout-title">Stiff Consequences</div><div class="callout-body">
-<div class="callout-item"><strong>Misdemeanor</strong> — failure to secure WC payment (Labor Code §3700.5)</div>
-<div class="callout-item">License may be <strong>suspended or revoked</strong> (B&P §7110)</div>
-<div class="callout-item"><strong>Stop Order</strong> from Division of Labor Standards Enforcement — prohibits using employee labor until coverage is in place (Labor Code §3710.1)</div>
-<div class="callout-item">Restraining order in Superior Court (Labor Code §3712)</div>
+<div class="callout-item"><strong>Misdemeanor</strong> — failure to secure workers' compensation payment</div>
+<div class="callout-item">License may be <strong>suspended or revoked</strong></div>
+<div class="callout-item"><strong>Stop Order</strong> from Division of Labor Standards Enforcement — prohibits using employee labor until coverage is in place</div>
+<div class="callout-item">Restraining order in Superior Court</div>
 <div class="callout-item"><strong>Penalty Assessment:</strong> Greater of (a) 2× the premium they would have paid, or (b) <strong>$1,000 per employee</strong> employed during the uninsured period</div>
 <div class="callout-item">If status discovered AFTER a claim is filed: <strong>$2,000 per employee</strong> on date of injury (non-compensable cases) or <strong>$10,000 per employee</strong> (compensable cases)</div>
-<div class="callout-item">Lien recordable against contractor's real & personal property (Labor Code §3727)</div>
+<div class="callout-item">Lien recordable against contractor's real & personal property</div>
 </div></div>
 <div class="block-h2">If Uninsured & Worker Is Injured</div>
 <ul class="block-ul">
 <li class="block-li">Contractor must pay <strong>disability compensation + 10% penalty + attorney's fees</strong></li>
 <li class="block-li">Must supply all necessary medical treatment</li>
 <li class="block-li">Liable for damages in civil action — with <strong>legal presumption the injury was caused by employer negligence</strong></li>
-<li class="block-li">Employee's contributory negligence is NOT a defense (Labor Code §§3706, 3708, 4554, 4555)</li>
+<li class="block-li">Employee's contributory negligence is NOT a defense</li>
 </ul>`},
 
 hi_def:{title:"What Is Home Improvement?", html:`
@@ -907,7 +928,7 @@ hi_def:{title:"What Is Home Improvement?", html:`
 </ul>
 <div class="block-h2">Swimming Pool Special Rules</div>
 <div class="callout gold"><div class="callout-title">Two Pool-Specific Rules to Remember</div><div class="callout-body">
-<div class="callout-item"><strong>HIC requirements DO NOT apply</strong> to swimming pools built as part of an <strong>original building plan by the same contractor</strong> who builds the single-family dwelling on the premises (§7166)</div>
+<div class="callout-item"><strong>home improvement contract requirements DO NOT apply</strong> to swimming pools built as part of an <strong>original building plan by the same contractor</strong> who builds the single-family dwelling on the premises ()</div>
 <div class="callout-item">In any swimming pool construction dispute, the <strong>prevailing party</strong> is entitled to <strong>reasonable attorney's fees</strong></div>
 </div></div>`},
 
@@ -916,7 +937,7 @@ hi_thresholds:{title:'Contract Dollar Thresholds', html:`
 <table class="block-table"><thead><tr><th>Job Amount</th><th>Contract Type</th></tr></thead><tbody>
 <tr><td><strong>$750 or less</strong> (and all 4 conditions met)</td><td><strong>Service and Repair Contract</strong></td></tr>
 <tr><td><strong>Over $750</strong></td><td><strong>Full Home Improvement Contract</strong></td></tr>
-<tr><td>Any amount if HIS is involved</td><td>Full Home Improvement Contract regardless of price</td></tr>
+<tr><td>Any amount if home improvement salesperson is involved</td><td>Full Home Improvement Contract regardless of price</td></tr>
 </tbody></table>
 <div class="block-h2">Service and Repair Contract — The 4 Conditions</div>
 <div class="callout blue"><div class="callout-title">ALL 4 Must Be Met for a Service & Repair Contract</div><div class="callout-body">
@@ -942,7 +963,7 @@ hi_elements:{title:'Required Contract Elements', html:`
 <div class="callout gold"><div class="callout-title">Numbers You Must Know</div><div class="callout-body">
 <div class="callout-item">Down payment maximum: <strong>$1,000 OR 10% of contract price — whichever is LESS</strong></div>
 <div class="callout-item">Minimum text size: <strong>10-point type</strong> for text, <strong>10-point boldface</strong> for headings</div>
-<div class="callout-item">CSLB consumer notice in HI contract: at least <strong>12-point type</strong></div>
+<div class="callout-item">CSLB consumer notice in a home improvement contract: at least <strong>12-point type</strong></div>
 </div></div>
 <div class="block-h2">Basic Contract Requirements</div>
 <ul class="block-ul">
@@ -950,7 +971,7 @@ hi_elements:{title:'Required Contract Elements', html:`
 <li class="block-li">Contractor gives buyer a signed and dated copy <strong>before any work begins</strong></li>
 <li class="block-li">No payment (except down payment) until work is completed or materials are delivered</li>
 <li class="block-li">Contractor's name, business address, and license number required</li>
-<li class="block-li">HIS name and registration number required if a salesperson was involved</li>
+<li class="block-li">home improvement salesperson name and registration number required if a salesperson was involved</li>
 <li class="block-li">Salesperson commission: paid pro rata in proportion to owner payment schedule</li>
 </ul>
 <div class="block-h2">Required Contract Descriptions</div>
@@ -975,21 +996,21 @@ hi_elements:{title:'Required Contract Elements', html:`
 </ul>
 <div class="block-h2">2026 Additions — What Must Now Be Included</div>
 <div class="callout gold"><div class="callout-title">Effective January 1, 2026</div><div class="callout-body">
-<div class="callout-item"><strong>Contractor's email address</strong> must appear in the contract (AB 1327)</div>
-<div class="callout-item">Buyer must be allowed to <strong>cancel the contract via email</strong> (AB 1327)</div>
-<div class="callout-item">A <strong>telephone number</strong> to help the buyer locate the Notice of Cancellation form is required (AB 1327)</div>
+<div class="callout-item"><strong>Contractor's email address</strong> must appear in the contract</div>
+<div class="callout-item">Buyer must be allowed to <strong>cancel the contract via email</strong></div>
+<div class="callout-item">A <strong>telephone number</strong> to help the buyer locate the Notice of Cancellation form is required</div>
 <div class="callout-item">If the Notice of Cancellation is missing or not attached: buyer may file a CSLB complaint</div>
-<div class="callout-item">On consumer request, contractor must disclose each <strong>subcontractor's name, contact info, license number, and classification</strong> (SB 517)</div>
+<div class="callout-item">On consumer request, contractor must disclose each <strong>subcontractor's name, contact info, license number, and classification</strong></div>
 </div></div>
 <div class="block-h2">Common Contract Problems</div>
 <ul class="block-ul">
 <li class="block-li">Missing notices/disclosures • Excessive down payment • Materials not specifically described</li>
 <li class="block-li">Job start/completion dates missing • Price not fully established • No change orders included</li>
-<li class="block-li">License number or HIS registration number missing • Permits not identified</li>
+<li class="block-li">License number or home improvement salesperson registration number missing • Permits not identified</li>
 <li class="block-li">Email address missing (post-2026) • No mechanism for email cancellation</li>
 </ul>`},
 
-hi_his:{title:'HIS Registration — Complete Rules', html:`
+hi_his:{title:'home improvement salesperson Registration — Complete Rules', html:`
 <div class="block-h2">Who Must Register</div>
 <div class="block-p">Anyone who <strong>solicits, sells, negotiates, or executes</strong> home improvement contracts for a licensed contractor <strong>outside the contractor's normal place of business</strong> — regardless of the dollar amount.</div>
 <div class="block-h2">Key Numbers & Deadlines</div>
@@ -1004,14 +1025,14 @@ hi_his:{title:'HIS Registration — Complete Rules', html:`
 </tbody></table>
 <div class="block-h2">Contractor Obligations</div>
 <ul class="block-ul">
-<li class="block-li">Must notify CSLB in writing <strong>before</strong> employing a registered HIS</li>
-<li class="block-li">Must notify CSLB in writing when HIS employment ends</li>
-<li class="block-li">Employing an unregistered person to negotiate HI contracts = <strong>disciplinary action against the contractor</strong></li>
-<li class="block-li">Acting as unregistered HIS = <strong>misdemeanor</strong> + administrative citation</li>
+<li class="block-li">Must notify CSLB in writing <strong>before</strong> employing a registered home improvement salesperson</li>
+<li class="block-li">Must notify CSLB in writing when home improvement salesperson employment ends</li>
+<li class="block-li">Employing an unregistered person to negotiate home improvement contracts = <strong>disciplinary action against the contractor</strong></li>
+<li class="block-li">Acting as unregistered home improvement salesperson = <strong>misdemeanor</strong> + administrative citation</li>
 </ul>
-<div class="block-h2">HIS Exemptions</div>
+<div class="block-h2">home improvement salesperson Exemptions</div>
 <ul class="block-ul">
-<li class="block-li">Persons who ONLY contact buyers to <strong>schedule appointments</strong> for a registered HIS</li>
+<li class="block-li">Persons who ONLY contact buyers to <strong>schedule appointments</strong> for a registered home improvement salesperson</li>
 <li class="block-li">Personnel listed in CSLB's official records for the contractor (contractors, qualifiers, partners, officers, LLC members/managers)</li>
 <li class="block-li">Bona fide service/repair people whose calls are limited to the initially-requested repair</li>
 <li class="block-li">Persons who only sell goods at a fixed business establishment where goods are exhibited</li>
@@ -1049,7 +1070,7 @@ hi_changeorders:{title:'Change Orders & Fraudulent Acts', html:`
 <li class="block-li">Failure to comply with change order requirements does not prevent quantum meruit recovery</li>
 </ul>
 <div class="block-h2">Fraudulent Misrepresentation Penalties</div>
-<div class="callout red"><div class="callout-title">§7160 — Fraudulent Misrepresentation</div><div class="callout-body">
+<div class="callout red"><div class="callout-title"> — Fraudulent Misrepresentation</div><div class="callout-body">
 <div class="callout-item">Person induced by false/fraudulent representations may recover: <strong>$500 penalty + reasonable attorney's fees + actual damages</strong></div>
 <div class="callout-item">Using false/deceptive advertising to induce a contract: <strong>misdemeanor + cause for discipline</strong></div>
 <div class="callout-item">Making false promises to induce signing: <strong>misdemeanor</strong></div>
@@ -1057,14 +1078,14 @@ hi_changeorders:{title:'Change Orders & Fraudulent Acts', html:`
 </div></div>
 <div class="block-h2">Contract Contingent on Buyer's Loan</div>
 <ul class="block-ul">
-<li class="block-li">If obtaining a loan is a condition of the HI contract: contract is NOT enforceable until (1) lender agrees to the loan, (2) buyer accepts the loan, AND (3) buyer does not rescind during the applicable rescission period</li>
+<li class="block-li">If obtaining a loan is a condition of the home improvement contract: contract is NOT enforceable until (1) lender agrees to the loan, (2) buyer accepts the loan, AND (3) buyer does not rescind during the applicable rescission period</li>
 <li class="block-li">If the contract becomes unenforceable: contractor must <strong>immediately and without condition return ALL money and consideration</strong> given by the buyer</li>
 <li class="block-li">Emergency repair waiver: buyer may waive these protections for emergency repairs — must be in a dated written statement (not a printed form), describing the emergency, signed by each property owner</li>
 </ul>
-<div class="block-h2">Waivers of HI Protections Are Void</div>
+<div class="block-h2">Waivers of Home Improvement Protections Are Void</div>
 <div class="callout red"><div class="callout-title">Public Policy Rule</div><div class="callout-body">
-<div class="callout-item">Any provision in a home improvement contract <strong>waiving the buyer's HI protections</strong> is <strong>contrary to public policy</strong> and is <strong>void and unenforceable</strong></div>
-<div class="callout-item">A clause that says "buyer cannot sue the contractor" or "buyer waives all HIC rights" cannot be enforced</div>
+<div class="callout-item">Any provision in a home improvement contract <strong>waiving the buyer's home improvement protections</strong> is <strong>contrary to public policy</strong> and is <strong>void and unenforceable</strong></div>
+<div class="callout-item">A clause that says "buyer cannot sue the contractor" or "buyer waives all home improvement contract rights" cannot be enforced</div>
 <div class="callout-item">The <strong>only exception</strong> is the narrow emergency repair waiver above — and it must meet all of those strict formal requirements</div>
 </div></div>`},
 
@@ -1284,7 +1305,7 @@ biz_operations:{title:'Operations Management & Cost Control', html:`
 <div class="block-h2">Records You Must Keep</div>
 <ul class="block-ul">
 <li class="block-li">State and federal agencies require records for <strong>audits and tax reporting</strong></li>
-<li class="block-li">Records specifically required by Contractors State License Law are listed in <strong>B&P §7111</strong></li>
+<li class="block-li">Contractors State License Law lists the specific records you are required to keep</li>
 <li class="block-li">Records must be kept for at least <strong>5 years</strong> after project completion and available to the registrar (see also disciplinary rules)</li>
 </ul>`},
 
@@ -1335,6 +1356,595 @@ biz_risk:{title:'Risk Management & Insurance', html:`
 <div class="callout-item">Lack of knowledge about business practices</div>
 <div class="callout-item nobullet"><em>"Statistics show that a significant percentage of bankruptcies and business closures result from poor management."</em></div>
 </div></div>`},
+
+qr_abbrev:{title:'Abbreviations Explained', html:`
+<div class="block-p">Short forms used in this guide and on the job. The exam itself normally spells terms out, so learn the idea behind each one rather than the letters.</div>
+<div class="block-h2">Agencies and Organizations</div>
+<table class="block-table"><thead><tr><th>Short Form</th><th>What It Stands For</th></tr></thead><tbody>
+<tr><td><strong>CSLB</strong></td><td>Contractors State License Board — licenses and disciplines California contractors</td></tr>
+<tr><td><strong>DIR</strong></td><td>Department of Industrial Relations — oversees wages, public works, and workplace safety</td></tr>
+<tr><td><strong>OSHA</strong></td><td>Occupational Safety and Health Administration — workplace safety rules. California runs its own version.</td></tr>
+<tr><td><strong>IRS</strong></td><td>Internal Revenue Service — federal taxes</td></tr>
+<tr><td><strong>SBA</strong></td><td>Small Business Administration — federal small business loan programs</td></tr>
+<tr><td><strong>WCAB</strong></td><td>Workers' Compensation Appeals Board — decides disputed injury claims</td></tr>
+</tbody></table>
+<div class="block-h2">Business and Contracting Terms</div>
+<table class="block-table"><thead><tr><th>Short Form</th><th>What It Stands For</th></tr></thead><tbody>
+<tr><td><strong>LLC</strong></td><td>Limited liability company — a business form that shields owners' personal assets</td></tr>
+<tr><td><strong>PACE</strong></td><td>Property Assessed Clean Energy — financing repaid through the property tax bill</td></tr>
+<tr><td><strong>CPM</strong></td><td>Critical path method — scheduling technique identifying the tasks that control the finish date</td></tr>
+</tbody></table>
+<div class="block-h2">Public Contracting Participation Goals</div>
+<table class="block-table"><thead><tr><th>Short Form</th><th>What It Stands For</th></tr></thead><tbody>
+<tr><td><strong>MBE</strong></td><td>Minority business enterprise</td></tr>
+<tr><td><strong>WBE</strong></td><td>Women business enterprise</td></tr>
+<tr><td><strong>DVBE</strong></td><td>Disabled veteran business enterprise</td></tr>
+</tbody></table>
+<div class="callout blue"><div class="callout-title">Terms Worth Knowing in Full</div><div class="callout-body">
+<div class="callout-item"><strong>Qualifying individual</strong> — the person whose experience and exam results qualify the license. They are responsible for the company's work whether or not they knew about a violation.</div>
+<div class="callout-item"><strong>Home improvement salesperson</strong> — anyone who sells home improvement contracts away from the contractor's fixed place of business. Must register separately.</div>
+<div class="callout-item"><strong>Underground Service Alert</strong> — the notification service you must call before digging so utilities can be marked.</div>
+</div></div>`},
+
+qr_recent:{title:'Recent Rule Changes', html:`
+<div class="block-p">These are recent changes to California contractor law, stated as the rule you now follow. The exam tests what the rule <em>is</em> — not which bill created it or when it took effect, so learn the substance and skip the bill numbers.</div>
+<div class="block-h2">Home Improvement Contracts</div>
+<ul class="block-ul">
+<li class="block-li">The contract must include the contractor's <strong>email address</strong></li>
+<li class="block-li">The buyer must be permitted to <strong>cancel by email</strong></li>
+<li class="block-li">The contract must include a telephone number the buyer can use to locate and complete the cancellation notice</li>
+<li class="block-li">If the cancellation notice is missing from the contract, the buyer may <strong>file a complaint with the licensing board</strong></li>
+</ul>
+<div class="block-h2">Subcontractor Disclosure</div>
+<ul class="block-ul">
+<li class="block-li">On request from the consumer, you must disclose each subcontractor's <strong>name, contact information, license number, and classification</strong></li>
+<li class="block-li">Keep this information organized — the request can come at any time</li>
+<li class="block-li">The prime contractor remains responsible for the project, but that does <strong>not</strong> shield a subcontractor or home improvement salesperson from discipline for their own violations</li>
+</ul>
+<div class="block-h2">Murals and Licensing</div>
+<ul class="block-ul">
+<li class="block-li">An artist who draws, paints, executes, restores, or conserves a <strong>mural</strong> under an authorized agreement is <strong>exempt</strong> from contractor licensing</li>
+<li class="block-li">A mural is a unique work of fine art applied by hand to walls, ceilings, or fixtures</li>
+<li class="block-li">A <strong>painted wall sign is not a mural</strong> — advertising signage does not qualify for the exemption</li>
+</ul>
+<div class="block-h2">Workers' Compensation</div>
+<ul class="block-ul">
+<li class="block-li">Civil penalties for coverage violations have increased significantly</li>
+<li class="block-li">A license <strong>cannot be renewed or reinstated</strong> while in violation until a current, valid certificate of coverage is provided</li>
+</ul>
+<div class="block-h2">Civil Penalties</div>
+<table class="block-table"><thead><tr><th>Violation Type</th><th>Penalty Range</th></tr></thead><tbody>
+<tr><td>Unlicensed contracting — minimum</td><td><strong>$1,500</strong> (raised from $200)</td></tr>
+<tr><td>Standard violations</td><td><strong>$500 – $8,000</strong></td></tr>
+<tr><td>Most serious — safety violations, aiding an unlicensed person, acting under the wrong name</td><td><strong>$1,500 – $30,000</strong></td></tr>
+</tbody></table>
+<div class="block-h2">Wage Enforcement and Bond Deposits</div>
+<ul class="block-ul">
+<li class="block-li">The Attorney General may bring a civil action to <strong>suspend, revoke, or deny</strong> a license when a contractor fails to pay workers or ignores a wage judgment</li>
+<li class="block-li">Where a contractor files a cash deposit with the board instead of a license bond, the <strong>board is not liable for attorney fees</strong> in civil claims against that deposit — the contractor remains responsible</li>
+</ul>`},
+
+biz_cash:{title:'Cash Management & Budgeting', html:`
+<div class="callout red"><div class="callout-title">The Most Important Idea in Contracting Finance</div><div class="callout-body">
+<div class="callout-item"><strong>Profit is not cash.</strong> A job can be profitable on paper while the company runs out of money to make payroll.</div>
+<div class="callout-item">Profit is what you earned. Cash is what you actually have in the bank <em>right now</em>.</div>
+<div class="callout-item">More contractors fail from running out of cash than from unprofitable work. Growth makes it worse — you pay for labor and materials long before the customer pays you.</div>
+</div></div>
+<div class="block-h2">Why Cash Runs Short</div>
+<ul class="block-ul">
+<li class="block-li">You buy materials and pay the crew weekly, but bill monthly and get paid 30 days after that</li>
+<li class="block-li">The owner holds back <strong>retention</strong> on every payment until the job is accepted</li>
+<li class="block-li">A change order gets built before it is approved, so it cannot be billed yet</li>
+<li class="block-li">Taking on a bigger job ties up more cash before any of it comes back</li>
+</ul>
+<div class="block-h2">The Cash Flow Forecast</div>
+<div class="block-p">A cash flow forecast lists expected cash coming in and going out, week by week or month by month, so you can see a shortfall before it arrives. It is the single most useful management report a contractor keeps — more useful day to day than the income statement, because it predicts the problem instead of reporting it.</div>
+<table class="block-table"><thead><tr><th>Term</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><strong>Working capital</strong></td><td>Current assets minus current liabilities — the cushion available to run the business</td></tr>
+<tr><td><strong>Accounts receivable</strong></td><td>Money customers owe you. It is an asset, but it does not pay bills until collected.</td></tr>
+<tr><td><strong>Accounts payable</strong></td><td>Money you owe suppliers and subcontractors</td></tr>
+<tr><td><strong>Retention</strong></td><td>A percentage the owner holds back from each payment until completion</td></tr>
+<tr><td><strong>Over-billing</strong></td><td>Billing ahead of work completed — improves cash now, but the work still has to be done</td></tr>
+<tr><td><strong>Under-billing</strong></td><td>Work completed but not yet billed — a hidden drain on cash</td></tr>
+</tbody></table>
+<div class="block-h2">Improving Cash Position</div>
+<ul class="block-ul">
+<li class="block-li">Bill promptly and on a schedule — invoices sitting in a truck earn nothing</li>
+<li class="block-li">Ask for a deposit or mobilization payment where the contract allows it</li>
+<li class="block-li">Get change orders <strong>approved in writing before</strong> doing the work so they are billable</li>
+<li class="block-li">Negotiate supplier terms that roughly match when your customer pays you</li>
+<li class="block-li">Follow up on receivables the day they go past due, not a month later</li>
+<li class="block-li">Keep a line of credit open for timing gaps — arrange it before you need it</li>
+</ul>
+<div class="block-h2">Where Costs Belong</div>
+<div class="block-p">Classifying a cost correctly is what makes job profitability meaningful — and it is a frequent exam question.</div>
+<table class="block-table"><thead><tr><th>Category</th><th>What Goes Here</th></tr></thead><tbody>
+<tr><td><strong>Direct job costs</strong></td><td>Traceable to one specific job — that job's labor, materials, equipment rental, and subcontractors</td></tr>
+<tr><td><strong>Indirect or overhead costs</strong></td><td>Support production but span several jobs — supervision, trucks, tools, jobsite trailers, and shop expenses</td></tr>
+<tr><td><strong>General and administrative costs</strong></td><td>Running the company regardless of jobs — office rent, office staff, accounting, advertising, insurance, and depreciation on vehicles used for general company purposes rather than production</td></tr>
+</tbody></table>
+<div class="callout gold"><div class="callout-title">Classic Question Pattern</div><div class="callout-body">
+<div class="callout-item">A company car for the <strong>sales staff</strong> is not tied to producing any job — its depreciation is a <strong>general and administrative</strong> cost.</div>
+<div class="callout-item">A truck hauling material to one specific job is a <strong>direct job cost</strong>.</div>
+<div class="callout-item">Ask yourself: can I trace this to one job? If not, it is overhead or administrative.</div>
+</div></div>
+<div class="block-h2">Budgeting and Break-Even</div>
+<ul class="block-ul">
+<li class="block-li"><strong>Fixed costs</strong> stay the same whether you work or not — rent, insurance, salaried staff</li>
+<li class="block-li"><strong>Variable costs</strong> rise and fall with volume — materials and field labor</li>
+<li class="block-li"><strong>Break-even</strong> is the sales volume where total revenue exactly covers total costs. Below it you lose money; above it you profit.</li>
+<li class="block-li">Every job must carry a share of overhead. Bidding at direct cost plus a thin margin and ignoring overhead is how contractors "stay busy" while going broke.</li>
+<li class="block-li">Compare budget to actual monthly and investigate the differences while you can still act on them</li>
+</ul>`},
+
+biz_taxes:{title:'Business Taxes', html:`
+<div class="block-h2">How Your Business Form Is Taxed</div>
+<table class="block-table"><thead><tr><th>Form</th><th>How Profit Is Taxed</th></tr></thead><tbody>
+<tr><td><strong>Sole proprietor</strong></td><td>Profit is reported on the owner's personal return. The owner also pays self-employment tax covering both halves of Social Security and Medicare.</td></tr>
+<tr><td><strong>Partnership</strong></td><td>The partnership files an information return but pays no income tax itself. Profit passes through to the partners' personal returns.</td></tr>
+<tr><td><strong>Corporation</strong></td><td>The corporation is taxed on its own profit. Money paid out to owners as dividends is taxed again on their returns — commonly called <strong>double taxation</strong>.</td></tr>
+<tr><td><strong>Limited liability company</strong></td><td>Profit normally passes through to the members' returns. California also charges an annual fee based on gross receipts.</td></tr>
+</tbody></table>
+<div class="callout gold"><div class="callout-title">The Minimum Franchise Tax</div><div class="callout-body">
+<div class="callout-item">California charges corporations and limited liability companies a minimum of <strong>$800 per year</strong> just to exist.</div>
+<div class="callout-item">It is owed <strong>whether or not the business made any money</strong>.</div>
+<div class="callout-item">Sole proprietors do not pay it.</div>
+</div></div>
+<div class="block-h2">Estimated Tax Payments</div>
+<ul class="block-ul">
+<li class="block-li">No one withholds tax from an owner's business profit, so you pay it in <strong>quarterly estimated payments</strong></li>
+<li class="block-li">Due in <strong>April, June, September, and January</strong></li>
+<li class="block-li">Underpaying triggers a penalty even if you settle up fully at year end</li>
+<li class="block-li">Set the money aside as it comes in — a common failure is spending tax money on operations and being short in April</li>
+</ul>
+<div class="block-h2">Sales and Use Tax on Materials</div>
+<div class="block-p">This trips up contractors constantly. In most situations a contractor is treated as the <strong>consumer</strong> of the materials they install, not a reseller.</div>
+<ul class="block-ul">
+<li class="block-li">You pay sales tax when you <strong>buy</strong> materials such as lumber, paint, concrete, and wire</li>
+<li class="block-li">You do not separately charge the customer sales tax on those materials — the tax is part of your cost, which you build into the price</li>
+<li class="block-li">Buying from an out-of-state supplier that charges no California tax means you owe <strong>use tax</strong> directly to the state on that purchase</li>
+<li class="block-li">Items that stay removable, such as appliances and free-standing equipment, may be treated as a sale to the customer instead — those follow different rules</li>
+</ul>
+<div class="block-h2">Deductions and Depreciation</div>
+<ul class="block-ul">
+<li class="block-li">Ordinary and necessary business expenses reduce taxable profit — materials, wages, rent, insurance, vehicle costs, licenses, and bonds</li>
+<li class="block-li">Equipment lasting more than a year is generally <strong>depreciated</strong> — deducted a portion at a time across its useful life rather than all at once</li>
+<li class="block-li">Depreciation is a real expense on the income statement but moves no cash in the period you record it</li>
+<li class="block-li">Entertainment is generally not deductible; meals are limited</li>
+<li class="block-li">Fines and penalties are never deductible</li>
+</ul>
+<div class="callout blue"><div class="callout-title">Recordkeeping</div><div class="callout-body">
+<div class="callout-item">Keep records supporting a tax return for at least <strong>4 years</strong></div>
+<div class="callout-item">Keep business and personal accounts strictly separate — mixing them undermines the liability protection of a corporation or limited liability company</div>
+<div class="callout-item">A deduction you cannot document is a deduction you will lose in an audit</div>
+</div></div>`},
+
+emp_hiring:{title:'Hiring a New Employee', html:`
+<div class="block-p">The moment you hire your first worker you become an employer, and a fixed list of paperwork, notices, and deadlines kicks in. The exam tests the list and the deadlines, not the form names — but the forms are listed here so you recognize them.</div>
+<div class="block-h2">Paperwork at Hire</div>
+<table class="block-table"><thead><tr><th>What</th><th>Deadline</th></tr></thead><tbody>
+<tr><td><strong>Employment eligibility verification</strong> — proves the worker may legally work in the United States</td><td>Worker completes their part <strong>on or before the first day</strong>; you check their documents within <strong>3 business days</strong> of the start date</td></tr>
+<tr><td><strong>Federal withholding certificate</strong> — tells you how much federal income tax to hold back</td><td>Before the first paycheck. If the worker never turns one in, withhold at the highest rate (single, no adjustments)</td></tr>
+<tr><td><strong>State withholding certificate</strong> — same idea for California income tax</td><td>Before the first paycheck</td></tr>
+<tr><td><strong>Report the new hire to the state</strong></td><td><strong>Within 20 calendar days</strong> of the first day of work</td></tr>
+<tr><td><strong>Report an independent contractor</strong> you pay $600 or more, or sign a contract for $600 or more</td><td><strong>Within 20 calendar days</strong> of whichever happens first</td></tr>
+<tr><td><strong>Written pay notice</strong> — pay rate, overtime rate, regular payday, and your business contact information</td><td>At the time of hiring</td></tr>
+<tr><td><strong>Workers' compensation rights notice</strong></td><td>At hiring, or by the end of the first pay period</td></tr>
+</tbody></table>
+<div class="callout gold"><div class="callout-title">Numbers to Memorize</div><div class="callout-body">
+<div class="callout-item"><strong>3 business days</strong> — to verify work-eligibility documents</div>
+<div class="callout-item"><strong>20 calendar days</strong> — to report a new hire to the state</div>
+<div class="callout-item"><strong>60 days</strong> — a worker rehired after this long a gap counts as a new hire and must be reported again</div>
+</div></div>
+<div class="block-h2">Handouts the Worker Must Receive</div>
+<ul class="block-ul">
+<li class="block-li">State disability insurance benefits — what it is and how to claim it</li>
+<li class="block-li">Paid family leave benefits</li>
+<li class="block-li">Rights and remedies regarding harassment and discrimination</li>
+<li class="block-li">Workers' compensation rights and how to report an injury</li>
+<li class="block-li">Rights of victims of domestic violence, sexual assault, and stalking</li>
+</ul>
+<div class="block-h2">Posters You Must Display</div>
+<div class="block-p">Posters go where employees normally gather — a break room, near the time clock, or the job trailer. On a jobsite with no fixed office, post them in the trailer or another spot workers pass through.</div>
+<ul class="block-ul">
+<li class="block-li">Minimum wage, payday schedule, and wage order for your industry</li>
+<li class="block-li">Safety and health protections notice</li>
+<li class="block-li">Workers' compensation carrier and how to get care — <strong>failing to post this is a misdemeanor</strong></li>
+<li class="block-li">Discrimination and harassment notice</li>
+<li class="block-li">Emergency phone numbers and the whistleblower notice</li>
+</ul>
+<div class="callout blue"><div class="callout-title">Before You Hire Anyone</div><div class="callout-body">
+<div class="callout-item">Get a federal employer identification number from the tax authorities</div>
+<div class="callout-item">Register as an employer with the state within <strong>15 days</strong> of paying more than <strong>$100</strong> in wages in a calendar quarter</div>
+<div class="callout-item">Have workers' compensation insurance in place <strong>before</strong> the first worker starts — not after</div>
+<div class="callout-item">Set up a written injury and illness prevention program (covered under Training)</div>
+</div></div>
+<div class="block-h2">What You May Not Ask</div>
+<ul class="block-ul">
+<li class="block-li">Salary history — you may not ask, and you must give the pay range for the job if the applicant asks</li>
+<li class="block-li">Criminal history before a conditional job offer is made</li>
+<li class="block-li">Age, marital status, religion, national origin, disability, or medical condition</li>
+<li class="block-li">Whether the applicant has filed a workers' compensation claim before</li>
+</ul>`},
+
+emp_payroll:{title:'Payroll & Payroll Taxes', html:`
+<div class="block-p">Payroll is the single most heavily tested employment topic. You need to know who pays which tax, how often you deposit, and what determines that schedule.</div>
+<div class="block-h2">The Payroll Taxes — Who Pays What</div>
+<table class="block-table"><thead><tr><th>Tax</th><th>Who Pays</th><th>Notes</th></tr></thead><tbody>
+<tr><td>Federal income tax</td><td><strong>Employee</strong> (you withhold it)</td><td>Amount set by their withholding certificate</td></tr>
+<tr><td>State income tax</td><td><strong>Employee</strong> (you withhold it)</td><td>California personal income tax</td></tr>
+<tr><td>Social Security and Medicare</td><td><strong>Split evenly</strong></td><td>You withhold the worker's half and <strong>match it dollar for dollar</strong> out of your own pocket</td></tr>
+<tr><td>State disability insurance</td><td><strong>Employee</strong> (you withhold it)</td><td>Funds disability and paid family leave</td></tr>
+<tr><td>Federal unemployment tax</td><td><strong>Employer only</strong></td><td>Never withheld from the worker</td></tr>
+<tr><td>State unemployment insurance</td><td><strong>Employer only</strong></td><td>Charged on roughly the first $7,000 of each worker's yearly wages</td></tr>
+<tr><td>Employment training tax</td><td><strong>Employer only</strong></td><td>Small percentage on the same first $7,000</td></tr>
+</tbody></table>
+<div class="callout red"><div class="callout-title">The Classic Exam Question</div><div class="callout-body">
+<div class="callout-item"><strong>What determines how often you deposit payroll taxes?</strong></div>
+<div class="callout-item">The answer is <strong>the amount of your payroll tax liability</strong> — how much tax you owe.</div>
+<div class="callout-item">It is <em>not</em> the number of employees, not how long you have been in business, and not your salaried-to-hourly ratio. Bigger liability means more frequent deposits.</div>
+</div></div>
+<div class="block-h2">Deposit Schedules</div>
+<ul class="block-ul">
+<li class="block-li">Your <strong>federal</strong> schedule is set by looking back at what you owed over a prior 12-month window. Smaller liability means <strong>monthly</strong> deposits, larger liability means <strong>semiweekly</strong>.</li>
+<li class="block-li">Under the federal rule, accumulating <strong>$100,000 or more</strong> on any single day requires a deposit by the <strong>next business day</strong></li>
+<li class="block-li">California sets its own due dates for withheld state income tax and disability insurance, driven by your federal schedule <em>and</em> how much state income tax you have accumulated</li>
+<li class="block-li">Deposits are made electronically — not by mailing a check with the return</li>
+</ul>
+<div class="block-h2">California Deposit Thresholds</div>
+<table class="block-table"><thead><tr><th>Accumulated State Income Tax Withheld</th><th>When You Deposit</th></tr></thead><tbody>
+<tr><td>Less than <strong>$350</strong></td><td><strong>Quarterly</strong>, with the rest of your payroll taxes</td></tr>
+<tr><td><strong>$350 or more</strong></td><td><strong>Monthly or more often</strong>, depending on your federal schedule</td></tr>
+<tr><td>More than <strong>$400</strong> and you are on a federal next-day schedule</td><td><strong>Next business day</strong></td></tr>
+</tbody></table>
+<ul class="block-ul">
+<li class="block-li">State unemployment insurance and the training tax are always paid <strong>quarterly</strong></li>
+<li class="block-li">Late payroll tax payments carry a penalty of <strong>15 percent plus interest</strong></li>
+</ul>
+<div class="block-h2">Returns and Year-End</div>
+<table class="block-table"><thead><tr><th>Filing</th><th>How Often</th></tr></thead><tbody>
+<tr><td>Federal payroll tax return</td><td><strong>Quarterly</strong></td></tr>
+<tr><td>State wage report and contribution return</td><td><strong>Quarterly</strong></td></tr>
+<tr><td>Federal unemployment tax return</td><td><strong>Annually</strong></td></tr>
+<tr><td>Wage and tax statement to each worker (the year-end earnings summary)</td><td>By <strong>January 31</strong>, moving to the next business day when that date falls on a weekend</td></tr>
+<tr><td>Payment summary to anyone you paid as a non-employee</td><td>By <strong>January 31</strong></td></tr>
+</tbody></table>
+<div class="callout gold"><div class="callout-title">Trust Fund Money — Why This Is Serious</div><div class="callout-body">
+<div class="callout-item">Taxes you withhold from a worker's check are <strong>not your money</strong>. You are holding them in trust for the government.</div>
+<div class="callout-item">Spending withheld payroll taxes on operating costs is one of the fastest ways to lose a contracting business.</div>
+<div class="callout-item">Owners and officers can be held <strong>personally liable</strong> for unpaid withheld taxes even when the business is a corporation.</div>
+</div></div>
+<div class="block-h2">Gross Pay vs. Your Real Cost</div>
+<div class="block-p">A worker's wage is never your true labor cost. Burden includes your half of Social Security and Medicare, both unemployment taxes, the training tax, workers' compensation premium, and any benefits. Burden commonly adds <strong>25% to 40%</strong> on top of the base wage — estimate with the burdened rate, never the raw hourly rate.</div>`},
+
+emp_wagehour:{title:'Wage & Hour Rules', html:`
+<div class="block-h2">Minimum Wage</div>
+<ul class="block-ul">
+<li class="block-li">The California minimum wage is <strong>$16.90 per hour</strong> as of January 1, 2026</li>
+<li class="block-li">Many cities and counties set a <strong>higher</strong> local minimum — when they differ you must pay the <strong>higher</strong> rate</li>
+<li class="block-li">You may not average a worker's pay across weeks to reach minimum wage</li>
+</ul>
+<div class="block-h2">Overtime — The Daily and Weekly Triggers</div>
+<table class="block-table"><thead><tr><th>Situation</th><th>Rate</th></tr></thead><tbody>
+<tr><td>Over <strong>8 hours</strong> in a workday</td><td>1½ times regular pay</td></tr>
+<tr><td>Over <strong>40 hours</strong> in a workweek</td><td>1½ times regular pay</td></tr>
+<tr><td>Over <strong>12 hours</strong> in a workday</td><td><strong>Double</strong> regular pay</td></tr>
+<tr><td>First 8 hours on the <strong>7th straight workday</strong> in one week</td><td>1½ times regular pay</td></tr>
+<tr><td>Beyond 8 hours on the <strong>7th straight workday</strong></td><td><strong>Double</strong> regular pay</td></tr>
+</tbody></table>
+<div class="callout blue"><div class="callout-title">California Is a Daily Overtime State</div><div class="callout-body">
+<div class="callout-item">Federal rules only trigger overtime past 40 hours in a week. California adds the <strong>daily</strong> 8-hour trigger.</div>
+<div class="callout-item">A worker who puts in 10 hours Monday and takes Friday off still earns 2 hours of overtime — even though the week totals only 32 hours.</div>
+<div class="callout-item">When federal and state rules disagree, follow the one that is <strong>better for the worker</strong>.</div>
+</div></div>
+<div class="block-h2">Meal Periods and Rest Breaks</div>
+<table class="block-table"><thead><tr><th>Break</th><th>Rule</th></tr></thead><tbody>
+<tr><td><strong>Meal period</strong></td><td><strong>30 minutes, unpaid</strong>, starting before the end of the <strong>5th hour</strong> of work. The worker must be free of all duty — otherwise it is paid time.</td></tr>
+<tr><td><strong>Second meal period</strong></td><td>Another 30 minutes when the shift runs past <strong>10 hours</strong></td></tr>
+<tr><td><strong>Rest break</strong></td><td><strong>10 minutes, paid</strong>, for every 4 hours worked or major fraction of it. Roughly one per half-shift.</td></tr>
+</tbody></table>
+<div class="callout red"><div class="callout-title">Missed Break Penalty</div><div class="callout-body">
+<div class="callout-item">Miss a meal period and you owe <strong>one extra hour</strong> of pay at the regular rate for that day.</div>
+<div class="callout-item">Miss a rest break and you owe <strong>another separate hour</strong> — the two penalties stack.</div>
+<div class="callout-item">These add up fast across a crew and are a common target in wage claims.</div>
+</div></div>
+<div class="block-h2">Paydays and Pay Stubs</div>
+<ul class="block-ul">
+<li class="block-li">Workers must be paid at least <strong>twice a month</strong> on regular paydays you post in advance</li>
+<li class="block-li">Every payment needs an itemized statement showing gross wages, total hours, all deductions, net pay, the pay period dates, hourly rates, the worker's name with the last four digits of their identification number, and your legal business name and address</li>
+<li class="block-li">Overtime earned in a pay period may be paid on the <strong>next</strong> regular payday</li>
+</ul>
+<div class="block-h2">Final Paycheck</div>
+<table class="block-table"><thead><tr><th>How Employment Ended</th><th>When Final Pay Is Due</th></tr></thead><tbody>
+<tr><td>You fire or lay off the worker</td><td><strong>Immediately</strong>, at the time and place of termination</td></tr>
+<tr><td>Worker quits with at least <strong>72 hours</strong> notice</td><td>On their <strong>last day</strong></td></tr>
+<tr><td>Worker quits with no notice</td><td>Within <strong>72 hours</strong></td></tr>
+</tbody></table>
+<div class="callout gold"><div class="callout-title">Waiting Time Penalty</div><div class="callout-body">
+<div class="callout-item">Pay the final check late and the worker keeps earning their daily wage as a penalty — up to <strong>30 calendar days</strong>.</div>
+<div class="callout-item">Accrued unused vacation is <strong>wages</strong> and must be paid out in the final check. Sick leave generally is not.</div>
+</div></div>`},
+
+emp_classify:{title:'Employee or Independent Contractor?', html:`
+<div class="block-p">Calling a worker an independent contractor does not make them one. The law starts by assuming <strong>everyone is an employee</strong>, and the burden is on you to prove otherwise. Getting this wrong is one of the most expensive mistakes a contractor can make.</div>
+<div class="block-h2">The Three-Part Test</div>
+<div class="block-p">A worker is an employee unless you can show <strong>all three</strong> of the following. Failing even one makes them an employee.</div>
+<table class="block-table"><thead><tr><th>Part</th><th>What It Means</th></tr></thead><tbody>
+<tr><td><strong>Free from control</strong></td><td>The worker is free from your direction over how the work gets done — not just the result, but the method, the hours, and the sequence</td></tr>
+<tr><td><strong>Outside your usual business</strong></td><td>The work falls outside the normal course of what your company does. A painting company hiring a painter fails this part.</td></tr>
+<tr><td><strong>Independently established</strong></td><td>The worker genuinely runs their own trade or business of the same kind — their own license, own tools, own insurance, own customers, own advertising</td></tr>
+</tbody></table>
+<div class="callout red"><div class="callout-title">The Rule That Catches Contractors</div><div class="callout-body">
+<div class="callout-item">If you hire an <strong>unlicensed</strong> person to do work that requires a license, that person is your <strong>employee</strong> by law — no matter what your paperwork says.</div>
+<div class="callout-item">That makes you responsible for their payroll taxes, their workers' compensation coverage, and their injuries.</div>
+<div class="callout-item">Hiring a properly licensed subcontractor is what keeps them a subcontractor. <strong>Always verify the license is active before work begins.</strong></div>
+</div></div>
+<div class="block-h2">Signs You Actually Have an Employee</div>
+<ul class="block-ul">
+<li class="block-li">You set their hours and tell them when to show up</li>
+<li class="block-li">You supply the tools, materials, and vehicle</li>
+<li class="block-li">You train them on how you want the work done</li>
+<li class="block-li">They work only for you and have no other customers</li>
+<li class="block-li">You pay them hourly rather than by the job or by contract</li>
+<li class="block-li">They cannot hire their own helpers or send a substitute</li>
+<li class="block-li">You can fire them at will rather than terminate for breach of a contract</li>
+</ul>
+<div class="block-h2">What Misclassification Costs You</div>
+<ul class="block-ul">
+<li class="block-li">Back payroll taxes plus interest and penalties for every misclassified worker</li>
+<li class="block-li">Substantial civil penalties per violation, higher when the pattern is willful</li>
+<li class="block-li">Full exposure for a workplace injury with no workers' compensation coverage to absorb it</li>
+<li class="block-li">Unpaid overtime, missed break penalties, and waiting time penalties</li>
+<li class="block-li">Discipline against your contractor license</li>
+</ul>
+<div class="callout blue"><div class="callout-title">Practical Protection</div><div class="callout-body">
+<div class="callout-item">Verify every subcontractor's license number and status <strong>before</strong> they start, and again at renewal</div>
+<div class="callout-item">Collect a certificate of insurance showing their own liability and workers' compensation coverage</div>
+<div class="callout-item">Use a written subcontract that defines the scope and result, not the daily method</div>
+<div class="callout-item">Keep copies — if a subcontractor turns out to be unlicensed, their injured worker becomes your problem</div>
+</div></div>`},
+
+emp_training:{title:'Supervising & Training Employees', html:`
+<div class="block-h2">The Written Safety Program</div>
+<div class="block-p">Every California employer must have a <strong>written injury and illness prevention program</strong>. It is not optional, and inspectors ask for it first. A missing program is one of the most commonly cited violations in construction.</div>
+<table class="block-table"><thead><tr><th>Required Element</th><th>What It Means</th></tr></thead><tbody>
+<tr><td>Named person responsible</td><td>One person by name who owns the program</td></tr>
+<tr><td>System for ensuring compliance</td><td>How you get workers to follow safe practices, including recognition and discipline</td></tr>
+<tr><td>Communication system</td><td>How safety information flows both ways, in language workers understand</td></tr>
+<tr><td>Hazard identification</td><td>Scheduled inspections, plus new inspections when conditions or equipment change</td></tr>
+<tr><td>Accident investigation</td><td>A procedure for finding out what actually caused an injury</td></tr>
+<tr><td>Hazard correction</td><td>Fixing what you find, on a timeline based on severity</td></tr>
+<tr><td>Training</td><td>At hire, on new assignments, when new hazards appear, and when you learn of an unrecognized hazard</td></tr>
+<tr><td>Recordkeeping</td><td>Documentation of inspections and training</td></tr>
+</tbody></table>
+<div class="block-h2">Harassment Prevention Training</div>
+<ul class="block-ul">
+<li class="block-li">Required once you have <strong>5 or more employees</strong> — temporary and seasonal workers count</li>
+<li class="block-li"><strong>2 hours</strong> for supervisors, <strong>1 hour</strong> for everyone else</li>
+<li class="block-li">Within <strong>6 months</strong> of hire or promotion into a supervisory role</li>
+<li class="block-li">Repeated <strong>every 2 years</strong></li>
+</ul>
+<div class="block-h2">Heat Illness Prevention — Outdoor Work</div>
+<table class="block-table"><thead><tr><th>Trigger</th><th>What You Must Provide</th></tr></thead><tbody>
+<tr><td>All outdoor work</td><td>Fresh drinking water, free, enough for <strong>1 quart per worker per hour</strong>; training for workers and supervisors; a written plan</td></tr>
+<tr><td>At <strong>80°F</strong></td><td>Shade that is open to the air and big enough for everyone on a break, plus cool-down rests of at least <strong>5 minutes</strong> whenever a worker asks</td></tr>
+<tr><td>At <strong>95°F</strong></td><td>High-heat procedures: closer observation of the crew, pre-shift meetings, and a reliable way to call for emergency help</td></tr>
+</tbody></table>
+<div class="callout gold"><div class="callout-title">Acclimatization</div><div class="callout-body">
+<div class="callout-item">New workers and workers returning after time away are the most likely to suffer heat illness.</div>
+<div class="callout-item">Watch new crew closely for their <strong>first 14 days</strong> and ease them into full workload.</div>
+</div></div>
+<div class="block-h2">Other Training You Owe Workers</div>
+<ul class="block-ul">
+<li class="block-li">Hazard communication — what chemicals are on site, where the safety data sheets are kept, and how to read a label</li>
+<li class="block-li">Equipment-specific training before a worker operates a tool, lift, or machine</li>
+<li class="block-li">Fall protection whenever work happens at height</li>
+<li class="block-li">Respirator training and fit testing before a respirator is worn</li>
+<li class="block-li">Emergency action and evacuation procedures for the site</li>
+</ul>
+<div class="block-h2">Supervising Effectively</div>
+<ul class="block-ul">
+<li class="block-li">Give instructions in a language and at a literacy level the worker actually understands</li>
+<li class="block-li">Match the assignment to the worker's demonstrated skill, not their claimed experience</li>
+<li class="block-li">Correct unsafe behavior immediately and consistently — inconsistent enforcement undermines the whole program</li>
+<li class="block-li">Document toolbox talks and safety meetings with the date, topic, and who attended</li>
+<li class="block-li">Delegating a task never transfers your responsibility for the outcome</li>
+</ul>`},
+
+emp_records:{title:'Records, Reviews & Ending Employment', html:`
+<div class="block-h2">How Long to Keep Records</div>
+<table class="block-table"><thead><tr><th>Record</th><th>Keep For</th></tr></thead><tbody>
+<tr><td>Payroll records — hours, rates, deductions</td><td><strong>3 years</strong> minimum</td></tr>
+<tr><td>Tax records supporting your returns</td><td><strong>4 years</strong></td></tr>
+<tr><td>Work-eligibility verification</td><td><strong>3 years after hire</strong> or <strong>1 year after termination</strong>, whichever is later</td></tr>
+<tr><td>Injury and illness log</td><td><strong>5 years</strong></td></tr>
+<tr><td>Personnel files and hiring records</td><td><strong>4 years</strong> from creation or from the employment action</td></tr>
+<tr><td>Records of exposure to hazardous substances</td><td><strong>30 years</strong></td></tr>
+</tbody></table>
+<div class="callout gold"><div class="callout-title">Worker Access to Their Own Records</div><div class="callout-body">
+<div class="callout-item">A worker asking for their <strong>payroll records</strong> must get them within <strong>21 calendar days</strong></div>
+<div class="callout-item">A worker asking for their <strong>personnel file</strong> must get it within <strong>30 calendar days</strong></div>
+<div class="callout-item">Missing these deadlines carries a penalty per request — and you may charge only the actual cost of copying</div>
+</div></div>
+<div class="block-h2">Performance Evaluation</div>
+<ul class="block-ul">
+<li class="block-li">Measure against <strong>job-related</strong> standards the worker knew about in advance</li>
+<li class="block-li">Base ratings on observed work and documented incidents, never on personality or protected characteristics</li>
+<li class="block-li">Give feedback close to the event — a surprise at the annual review is a management failure</li>
+<li class="block-li">Have the worker sign to acknowledge receipt; a signature means they saw it, not that they agree</li>
+<li class="block-li">Written evaluations are your primary defense if a termination is ever challenged</li>
+</ul>
+<div class="block-h2">Progressive Discipline</div>
+<div class="block-p">The usual ladder runs verbal warning, written warning, final written warning or suspension, then termination. Serious misconduct — theft, violence, or a willful safety violation that endangers others — can justify skipping straight to termination. Document each step with the date, what happened, what you said, and what must change.</div>
+<div class="block-h2">Ending Employment</div>
+<table class="block-table"><thead><tr><th>Obligation</th><th>Detail</th></tr></thead><tbody>
+<tr><td>Final paycheck</td><td>Immediately if you terminate; within 72 hours if they quit without notice</td></tr>
+<tr><td>Unemployment benefits pamphlet</td><td>Give it at the time of separation</td></tr>
+<tr><td>Written notice of the change in relationship</td><td>Given on the separation date</td></tr>
+<tr><td>Health coverage continuation notice</td><td>If you offer a group health plan</td></tr>
+<tr><td>Accrued vacation</td><td>Paid out as wages in the final check</td></tr>
+</tbody></table>
+<div class="callout blue"><div class="callout-title">At-Will Employment and Its Limits</div><div class="callout-body">
+<div class="callout-item">California employment is <strong>at will</strong> — either side can end it at any time, with or without reason.</div>
+<div class="callout-item">But you may never terminate for an <strong>illegal</strong> reason: a protected characteristic, filing a workers' compensation claim, reporting a safety hazard, discussing wages, or taking legally protected leave.</div>
+<div class="callout-item">Firing a worker shortly after they report a hazard or file a claim looks like retaliation regardless of your actual motive — which is exactly why contemporaneous documentation matters.</div>
+</div></div>
+<div class="block-h2">Layoffs</div>
+<div class="block-p">A layoff is a separation for lack of work rather than performance. Select by objective criteria such as skill, seniority, or the needs of remaining work, and write down why each person was chosen. Large employers closing a site or laying off a substantial share of the workforce at once owe <strong>60 days</strong> of advance written notice.</div>`},
+
+pw_what:{title:'What Counts as Public Works', html:`
+<div class="block-p">Public works is only about 5% of the exam, but it is heavily rule-driven and the questions are usually straightforward if you know the thresholds.</div>
+<div class="block-h2">The Definition</div>
+<ul class="block-ul">
+<li class="block-li">Construction, alteration, demolition, installation, repair, or maintenance work</li>
+<li class="block-li">Paid for <strong>in whole or in part</strong> out of public funds</li>
+<li class="block-li">Partial public funding is enough — a mostly private project with a public subsidy can still be public works</li>
+</ul>
+<div class="block-h2">Dollar Thresholds</div>
+<table class="block-table"><thead><tr><th>Threshold</th><th>Effect</th></tr></thead><tbody>
+<tr><td><strong>$1,000</strong></td><td>Prevailing wage requirements apply to public works projects at or above this amount</td></tr>
+<tr><td><strong>$15,000</strong></td><td>Maintenance projects over this amount require registration to bid</td></tr>
+<tr><td><strong>$25,000</strong></td><td>Construction projects over this amount require registration to bid</td></tr>
+</tbody></table>
+<div class="callout red"><div class="callout-title">Registration Comes First</div><div class="callout-body">
+<div class="callout-item">You must be <strong>registered with the state as a public works contractor</strong> before you may bid on or be listed on a covered public job.</div>
+<div class="callout-item">Registration is annual and requires a fee.</div>
+<div class="callout-item">An unregistered contractor's bid can be thrown out, and using an unregistered subcontractor exposes the prime contractor to penalties.</div>
+</div></div>
+<div class="block-h2">Competitive Bidding on Public Jobs</div>
+<ul class="block-ul">
+<li class="block-li">Public agencies generally must advertise and award to the <strong>lowest responsible responsive bidder</strong></li>
+<li class="block-li"><strong>Responsive</strong> means the bid follows the instructions exactly; <strong>responsible</strong> means the bidder has the capacity, experience, and financial strength to perform</li>
+<li class="block-li">Low price alone does not win if the bidder is not responsible</li>
+<li class="block-li">The prime must list each subcontractor performing more than a small percentage of the work in the bid — swapping a listed subcontractor afterward requires the agency's permission</li>
+</ul>`},
+
+pw_wage:{title:'Prevailing Wage — How It Works', html:`
+<div class="block-p">Prevailing wage is the single most important public works concept. It means you pay the locally determined rate for the craft, not whatever you negotiated with your worker.</div>
+<div class="block-h2">The Core Rule</div>
+<ul class="block-ul">
+<li class="block-li">The state sets a required wage rate for each <strong>craft, classification, and locality</strong></li>
+<li class="block-li">You must pay <strong>at least</strong> that rate to every worker on a covered public job</li>
+<li class="block-li">The rate is based on the <strong>type of work being performed</strong>, not the worker's job title or your company's pay scale</li>
+<li class="block-li">A worker who does two crafts in a day is paid each craft's rate for the hours spent in it</li>
+<li class="block-li">A worker cannot agree to accept less — a waiver is void</li>
+</ul>
+<div class="block-h2">What the Rate Includes</div>
+<table class="block-table"><thead><tr><th>Component</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><strong>Basic hourly rate</strong></td><td>Cash wages paid directly to the worker</td></tr>
+<tr><td><strong>Fringe benefits</strong></td><td>Health, pension, vacation, and training contributions</td></tr>
+<tr><td><strong>Total package</strong></td><td>Basic rate plus fringes — this is the number you must meet</td></tr>
+</tbody></table>
+<div class="callout gold"><div class="callout-title">Paying the Fringe Portion</div><div class="callout-body">
+<div class="callout-item">You may satisfy the fringe portion by making actual benefit contributions, or by <strong>paying the difference in cash</strong> as additional wages.</div>
+<div class="callout-item">What you may not do is pay only the basic rate and ignore the fringe — the total package is what counts.</div>
+<div class="callout-item">You also may <strong>not reduce the basic hourly rate</strong> itself. If the determination sets a $25.00 basic rate and $15.00 in benefits, you may pay $40.00 all in wages, or $25.00 in wages plus $15.00 in benefits, or any mix — so long as wages never drop below <strong>$25.00</strong> and the total reaches <strong>$40.00</strong>.</div>
+</div></div>
+<div class="block-h2">Overtime on Public Works</div>
+<ul class="block-ul">
+<li class="block-li">Overtime is owed past <strong>8 hours in a day</strong> and <strong>40 hours in a week</strong></li>
+<li class="block-li">Saturday, Sunday, and holiday work may carry premium rates set by the wage determination</li>
+</ul>
+<div class="block-h2">Penalties</div>
+<table class="block-table"><thead><tr><th>Violation</th><th>Consequence</th></tr></thead><tbody>
+<tr><td>Underpaying prevailing wage</td><td>Pay the shortfall to the worker, plus up to <strong>$200 per worker for each calendar day</strong> of underpayment</td></tr>
+<tr><td>Failing to pay overtime properly</td><td>A separate fixed penalty of <strong>$25 per worker for each calendar day</strong> the worker went over 8 hours in a day or 40 in a week</td></tr>
+<tr><td>Apprenticeship violations</td><td>Up to <strong>$100 per day</strong>, rising to <strong>$300 per day</strong> for a second violation within three years</td></tr>
+<tr><td>Repeated or willful violation</td><td><strong>Debarment</strong> — barred from bidding public work for 1 to 3 years</td></tr>
+</tbody></table>
+<div class="callout blue"><div class="callout-title">Who Is on the Hook</div><div class="callout-body">
+<div class="callout-item">The awarding agency withholds money from the contract to cover unpaid wages and penalties.</div>
+<div class="callout-item">The <strong>prime contractor is responsible for its subcontractors' prevailing wage violations</strong> — even without knowing about them.</div>
+<div class="callout-item">That is why primes verify registration and collect payroll records from every sub.</div>
+</div></div>`},
+
+pw_payroll:{title:'Certified Payroll Records', html:`
+<div class="block-h2">What a Certified Payroll Is</div>
+<div class="block-p">A certified payroll is your ordinary payroll record plus a signed statement swearing it is true and that everyone was paid at least the required rate. Falsifying one is perjury, not a paperwork error.</div>
+<div class="block-h2">What Each Record Must Show</div>
+<ul class="block-ul">
+<li class="block-li">Each worker's name, address, and identifying number</li>
+<li class="block-li">Their <strong>craft classification</strong> — the trade determines the required rate</li>
+<li class="block-li">Hours worked each day and the total for the week</li>
+<li class="block-li">The rate actually paid, including how fringe benefits were satisfied</li>
+<li class="block-li">All deductions taken and net pay</li>
+<li class="block-li">A signed statement certifying the record is accurate</li>
+</ul>
+<div class="block-h2">Deadlines</div>
+<table class="block-table"><thead><tr><th>Obligation</th><th>Timing</th></tr></thead><tbody>
+<tr><td>Keep certified payroll records</td><td>Made <strong>weekly</strong> and kept for at least <strong>3 years</strong> after the project ends</td></tr>
+<tr><td>Submit to the state electronically</td><td><strong>Monthly</strong>, or more often if the project requires it</td></tr>
+<tr><td>Respond to a written request for records</td><td>Within <strong>10 days</strong> — miss it and penalties accrue for each day late</td></tr>
+</tbody></table>
+<div class="callout red"><div class="callout-title">Where Contractors Get Caught</div><div class="callout-body">
+<div class="callout-item">Listing a worker in a <strong>lower-paid classification</strong> than the work they actually performed</div>
+<div class="callout-item">Recording fewer hours than were worked so the average rate appears compliant</div>
+<div class="callout-item">Paying the correct amount and then demanding a cash <strong>kickback</strong> — a criminal offense</div>
+<div class="callout-item">Treating an apprentice rate as available without being in an approved apprenticeship program</div>
+</div></div>
+<div class="block-h2">Site Requirements</div>
+<ul class="block-ul">
+<li class="block-li">Post the applicable wage rates at the jobsite where workers can see them</li>
+<li class="block-li">Public works projects are subject to inspection and worker interviews at any time</li>
+<li class="block-li">Larger projects may be assigned a labor compliance program that audits payrolls directly</li>
+</ul>`},
+
+pw_bonds:{title:'Bonds & Insurance on Public Jobs', html:`
+<div class="block-h2">Why Public Jobs Use Bonds</div>
+<div class="block-p">You cannot place a mechanics lien against public property. Bonds and stop payment notices exist to give subcontractors and suppliers a way to get paid, since foreclosing on a school or a highway is not an option.</div>
+<div class="block-h2">The Three Bonds</div>
+<table class="block-table"><thead><tr><th>Bond</th><th>Purpose</th><th>Typical Amount</th></tr></thead><tbody>
+<tr><td><strong>Bid bond</strong></td><td>Guarantees that if you win, you will sign the contract and provide the other bonds. Submitted with the bid.</td><td>Around <strong>10%</strong> of the bid</td></tr>
+<tr><td><strong>Performance bond</strong></td><td>Guarantees the work gets completed if you default. Protects the <strong>public agency</strong>.</td><td>Up to <strong>100%</strong> of the contract</td></tr>
+<tr><td><strong>Payment bond</strong></td><td>Guarantees subcontractors, workers, and suppliers get paid. Protects <strong>them</strong>, not the agency.</td><td>Commonly <strong>100%</strong> of the contract</td></tr>
+</tbody></table>
+<div class="callout gold"><div class="callout-title">Know the Difference</div><div class="callout-body">
+<div class="callout-item">A <strong>performance</strong> bond protects the owner from you not finishing.</div>
+<div class="callout-item">A <strong>payment</strong> bond protects the people below you from not getting paid.</div>
+<div class="callout-item">A payment bond is required on public jobs above a modest dollar threshold, and it is what a subcontractor makes a claim against instead of filing a lien.</div>
+</div></div>
+<div class="block-h2">Three Parties to Every Bond</div>
+<ul class="block-ul">
+<li class="block-li"><strong>Principal</strong> — the contractor who must perform</li>
+<li class="block-li"><strong>Obligee</strong> — the party protected, usually the public agency</li>
+<li class="block-li"><strong>Surety</strong> — the company that pays out if the principal fails</li>
+</ul>
+<div class="block-p">A bond is <strong>not insurance</strong>. When a surety pays a claim it comes after the contractor to be reimbursed in full. Insurance absorbs the loss; a bond only advances the money.</div>
+<div class="block-h2">Insurance on Public Jobs</div>
+<ul class="block-ul">
+<li class="block-li">General liability at limits set by the agency, usually higher than private work</li>
+<li class="block-li">Workers' compensation for every worker, with no exemption available</li>
+<li class="block-li">Commercial auto coverage for vehicles used on the project</li>
+<li class="block-li">The agency named as an <strong>additional insured</strong>, with certificates filed before work starts</li>
+</ul>
+<div class="block-h2">Retention and Getting Paid</div>
+<ul class="block-ul">
+<li class="block-li">Agencies commonly hold back a percentage of each progress payment as <strong>retention</strong> until the work is accepted</li>
+<li class="block-li">A contractor may substitute securities in place of retention being withheld</li>
+<li class="block-li">A subcontractor unpaid on a public job serves a <strong>stop payment notice</strong> on the agency, which freezes contract funds, or claims against the payment bond</li>
+</ul>`},
+
+pw_apprentice:{title:'Apprentices on Public Jobs', html:`
+<div class="block-h2">The Requirement</div>
+<ul class="block-ul">
+<li class="block-li">Public works contracts at or above a set dollar threshold must employ apprentices</li>
+<li class="block-li">The standard ratio is <strong>1 hour of apprentice work for every 5 hours of journeyman work</strong></li>
+<li class="block-li">You must request apprentices from an approved program in the project's area</li>
+<li class="block-li">You must contribute training fund money for every hour worked — either to the approved program or to the state training fund</li>
+</ul>
+<div class="callout gold"><div class="callout-title">Why It Matters for Payroll</div><div class="callout-body">
+<div class="callout-item">An apprentice may lawfully be paid <strong>less than the journeyman prevailing rate</strong>, on a scale that rises as they progress.</div>
+<div class="callout-item">That reduced rate only applies if the worker is <strong>registered in an approved apprenticeship program</strong>.</div>
+<div class="callout-item">Pay an unregistered worker at apprentice rates and you owe the <strong>full journeyman prevailing wage</strong> for every hour, plus penalties.</div>
+</div></div>
+<div class="block-h2">Supervision</div>
+<ul class="block-ul">
+<li class="block-li">Apprentices work under the supervision of a journeyman in the same craft</li>
+<li class="block-li">Programs set a maximum number of apprentices per journeyman on site</li>
+<li class="block-li">Apprentices split their time between paid on-the-job training and classroom instruction</li>
+</ul>
+<div class="block-h2">Penalties</div>
+<div class="block-p">Failing to employ apprentices in the required ratio, failing to request them, or failing to pay training fund contributions carries penalties per day and can lead to <strong>debarment</strong> from public work for 1 to 3 years on a knowing violation.</div>`},
 
 lien_vs:{title:'Mechanics Lien vs. Stop Notice', html:`
 <div class="block-h2">The Key Distinction</div>
@@ -1437,7 +2047,7 @@ disc_causes:{title:'Complete List of Causes for Discipline', html:`
 <div class="block-h2">Safety & Legal Violations</div>
 <ul class="block-ul">
 <li class="block-li">Violation of Title 8 safety provisions — disciplinable <strong>even if no death or injury occurred</strong></li>
-<li class="block-li">Violation of Labor Code safety provisions resulting in death or serious injury</li>
+<li class="block-li">Violation of state safety law resulting in death or serious injury</li>
 <li class="block-li">Willful disregard of building laws, safety laws, labor laws, or compensation insurance laws</li>
 </ul>
 <div class="block-h2">Record & Compliance Violations</div>
@@ -1473,8 +2083,8 @@ disc_causes:{title:'Complete List of Causes for Discipline', html:`
 </ul>
 <div class="block-h2">Void Contract Provisions — Two Big Ones</div>
 <div class="callout red"><div class="callout-title">Cannot Be in a Construction Contract</div><div class="callout-body">
-<div class="callout-item"><strong>Indemnification for own negligence:</strong> A clause requiring one party to indemnify another against liability for the indemnitee's <strong>own negligence</strong> is <strong>void and unenforceable</strong> under Civil Code provisions on construction contracts</div>
-<div class="callout-item"><strong>Lien waiver before payment:</strong> A contractor cannot require a subcontractor, employee, or supplier to <strong>waive lien rights before payment is actually received</strong> — doing so violates the Civil Code lien-waiver protections</div>
+<div class="callout-item"><strong>Indemnification for own negligence:</strong> A clause requiring one party to indemnify another against liability for the indemnitee's <strong>own negligence</strong> is <strong>void and unenforceable</strong> under state law governing construction contracts</div>
+<div class="callout-item"><strong>Lien waiver before payment:</strong> A contractor cannot require a subcontractor, employee, or supplier to <strong>waive lien rights before payment is actually received</strong> — doing so violates state lien-waiver protections</div>
 <div class="callout-item">Inserting either provision into a construction contract = <strong>cause for disciplinary action</strong></div>
 </div></div>`},
 
@@ -1493,7 +2103,7 @@ disc_citation:{title:'Citation Process Step by Step', html:`
 <ul class="block-ul">
 <li class="block-li">Disciplinary action by another state = grounds for California disciplinary action</li>
 <li class="block-li">Expiration, cancellation, or surrender of a license does NOT deprive the registrar of jurisdiction to proceed with investigations</li>
-<li class="block-li">After receiving Labor Commissioner finding of willful Labor Code violation: registrar must initiate disciplinary action within <strong>18 months</strong></li>
+<li class="block-li">After receiving Labor Commissioner finding of willful labor law violation: registrar must initiate disciplinary action within <strong>18 months</strong></li>
 </ul>
 <div class="block-h2">Court Stay Pending Appeal</div>
 <div class="callout blue"><div class="callout-title">License Can Continue During Court Review</div><div class="callout-body">
@@ -1502,23 +2112,23 @@ disc_citation:{title:'Citation Process Step by Step', html:`
 </div></div>`},
 
 disc_penalties:{title:'Civil Penalty Ranges (2026)', html:`
-<div class="block-h2">Effective July 1, 2026 (SB 779)</div>
+<div class="block-h2">Effective July 1, 2026</div>
 <table class="block-table"><thead><tr><th>Violation Type</th><th>Penalty Range</th></tr></thead><tbody>
 <tr><td>Standard violations (general)</td><td><strong>$500 – $8,000</strong></td></tr>
 <tr><td>Serious violations (safety, aiding unlicensed persons, acting under unlicensed name)</td><td><strong>$1,500 – $30,000</strong></td></tr>
 <tr><td>Unlicensed contracting citations</td><td><strong>$1,500 – $15,000</strong> minimum</td></tr>
 </tbody></table>
-<div class="block-h2">CPI Adjustment Rule</div>
+<div class="block-h2">Consumer Price Index Adjustment Rule</div>
 <ul class="block-ul">
 <li class="block-li">CSLB may adjust minimum civil penalty amounts for inflation every <strong>5 years</strong> based on the Consumer Price Index</li>
-<li class="block-li">CPI adjustments rounded to multiples of <strong>$100</strong> for penalties under $1,000</li>
-<li class="block-li">CPI adjustments rounded to multiples of <strong>$1,000</strong> for penalties over $1,000</li>
+<li class="block-li">Consumer Price Index adjustments rounded to multiples of <strong>$100</strong> for penalties under $1,000</li>
+<li class="block-li">Consumer Price Index adjustments rounded to multiples of <strong>$1,000</strong> for penalties over $1,000</li>
 </ul>
 <div class="block-h2">Additional Penalties for Specific Violations</div>
 <ul class="block-ul">
 <li class="block-li">Late payment to subcontractor: <strong>2%/month</strong> of amount due + attorney's fees</li>
 <li class="block-li">Late payment to dump truck carrier: <strong>2%/month</strong> of amount due + attorney's fees</li>
-<li class="block-li">Fraudulent misrepresentation in HI contracts: <strong>$500 + attorney's fees + actual damages</strong></li>
+<li class="block-li">Fraudulent misrepresentation in home improvement contracts: <strong>$500 + attorney's fees + actual damages</strong></li>
 <li class="block-li">Price gouging after disaster (conviction): <strong>minimum 6-month suspension OR permanent revocation</strong></li>
 </ul>`},
 
@@ -1560,133 +2170,14 @@ disc_disclosure:{title:'Public Disclosure & Reinstatement', html:`
 <li class="block-li">Bankruptcy discharge of monetary debts: non-monetary conditions still must be met before reinstatement</li>
 </ul>`},
 
-law_ab521:{title:'AB 521 — Bond Liability (2026)', html:`
-<div class="callout gold"><div class="callout-title">AB 521 — What Changed</div><div class="callout-body">
-<div class="callout-item nobullet"><strong>CSLB is expressly NOT liable for attorney fees in civil claims involving a contractor's cash deposit filed with CSLB in lieu of a license bond.</strong></div>
-</div></div>
-<div class="block-h2">Details</div>
-<ul class="block-ul">
-<li class="block-li">Amended the contractor bonding provisions to clarify that CSLB bears no attorney fee liability in bond deposit civil claims</li>
-<li class="block-li">This was already the practice — AB 521 makes it explicit in the statute</li>
-<li class="block-li">Effective: <strong>January 1, 2026</strong></li>
-</ul>
-<div class="block-h2">What This Means for the Exam</div>
-<ul class="block-ul">
-<li class="block-li">If asked about CSLB's liability for attorney fees in bond-related civil claims: <strong>CSLB is NOT liable</strong></li>
-<li class="block-li">Legal fees cannot be charged against the bond by CSLB — also confirmed by this bill</li>
-</ul>`},
-
-law_ab1002:{title:'AB 1002 — AG Wage Actions (2026)', html:`
-<div class="callout gold"><div class="callout-title">AB 1002 — What Changed</div><div class="callout-body">
-<div class="callout-item">The <strong>Attorney General</strong> may now file a civil action to suspend, revoke, or deny a contractor license when a contractor fails to pay workers, fails to fulfill a wage judgment, or violates a wage-related court order</div>
-</div></div>
-<div class="block-h2">The Process</div>
-<ul class="block-ul">
-<li class="block-li">AG must notify CSLB at least <strong>30 days before filing</strong> the civil complaint</li>
-<li class="block-li">Failure to provide notice does NOT constitute a defense for the contractor</li>
-<li class="block-li">CSLB may <strong>intervene within 60 days</strong> of the initial complaint filing</li>
-<li class="block-li">After 60 days: intervention requires court leave upon good cause shown</li>
-<li class="block-li">If CSLB elects NOT to intervene = deemed <strong>consent to comply with any court order</strong> and to be subject to the court's jurisdiction</li>
-<li class="block-li">CSLB may still independently pursue its own disciplinary action regardless of the AG's case</li>
-</ul>
-<div class="block-h2">Key Points for the Exam</div>
-<ul class="block-ul">
-<li class="block-li">AG notification: <strong>30 days before filing</strong></li>
-<li class="block-li">CSLB intervention window: <strong>60 days from filing</strong></li>
-<li class="block-li">Grounds: failure to pay wages, unsatisfied wage judgment, OR violation of wage-related injunction/court order</li>
-</ul>`},
-
-law_ab1327:{title:'AB 1327 — HIC Email & Cancellation (2026)', html:`
-<div class="callout gold"><div class="callout-title">AB 1327 — What Changed</div><div class="callout-body">
-<div class="callout-item">Home improvement contracts must include the contractor's <strong>email address</strong></div>
-<div class="callout-item">Buyers must be allowed to <strong>cancel the contract via email</strong></div>
-<div class="callout-item">Contracts must include a <strong>telephone number</strong> to help the buyer locate and fill out the Notice of Cancellation</div>
-<div class="callout-item">If the Notice of Cancellation is <strong>missing</strong> from the HIC: buyer may file a <strong>complaint with CSLB</strong></div>
-</div></div>
-<div class="block-h2">What This Means for Contractors</div>
-<ul class="block-ul">
-<li class="block-li">All new home improvement contracts must include your business email address</li>
-<li class="block-li">Your contracts must explicitly allow cancellation by email (not just by mail or in person)</li>
-<li class="block-li">Include a phone number for the Notice of Cancellation form location</li>
-<li class="block-li">Missing Notice of Cancellation = new CSLB complaint pathway for buyers</li>
-<li class="block-li">Effective: <strong>January 1, 2026</strong></li>
-</ul>`},
-
-law_sb291:{title:"SB 291 — Workers' Comp Penalties (2026)", html:`
-<div class="callout gold"><div class="callout-title">SB 291 — What Changed</div><div class="callout-body">
-<div class="callout-item">Significantly <strong>increased civil penalties</strong> for workers' compensation violations</div>
-<div class="callout-item">CSLB <strong>cannot renew or reinstate</strong> a license until the applicant/licensee provides a current and valid WC certificate</div>
-<div class="callout-item">CSLB must report WC enforcement data to the Legislature <strong>annually</strong></div>
-<div class="callout-item">CSLB must develop evidence-based WC exemption verification process — report to Legislature by <strong>January 1, 2027</strong></div>
-</div></div>
-<div class="block-h2">Key Points for the Exam</div>
-<ul class="block-ul">
-<li class="block-li">WC violation penalties: <strong>increased</strong> (significantly)</li>
-<li class="block-li">License renewal/reinstatement: blocked until valid WC certificate is provided</li>
-<li class="block-li">Annual reporting to Legislature: required for WC enforcement data</li>
-<li class="block-li">Legislature report deadline: <strong>January 1, 2027</strong></li>
-<li class="block-li">Effective: <strong>January 1, 2026</strong></li>
-</ul>`},
-
-law_sb456:{title:'SB 456 — Mural Exemption (2026)', html:`
-<div class="callout gold"><div class="callout-title">SB 456 — What Changed</div><div class="callout-body">
-<div class="callout-item">Artists who <strong>draw, paint, apply, execute, restore, or conserve a mural</strong> pursuant to an authorized agreement are <strong>EXEMPT from contractor licensing</strong></div>
-</div></div>
-<div class="block-h2">Definition of "Mural"</div>
-<ul class="block-ul">
-<li class="block-li">A unique work of fine art <strong>protected by copyright, trademark, label, or patent</strong></li>
-<li class="block-li">Drawn or painted <strong>by hand directly</strong> onto interior or exterior walls, ceilings, fixtures, or other appurtenances of a building or structure</li>
-<li class="block-li">A mural does <strong>NOT include painted wall signs</strong></li>
-</ul>
-<div class="block-h2">Key Points for the Exam</div>
-<ul class="block-ul">
-<li class="block-li">A professional artist painting a mural on a restaurant's exterior wall: <strong>NO contractor license needed</strong></li>
-<li class="block-li">A sign painter painting a business logo on a wall: <strong>contractor license still required</strong> (painted wall signs are excluded from the exemption)</li>
-<li class="block-li">Effective: <strong>January 1, 2026</strong></li>
-</ul>`},
-
-law_sb517:{title:'SB 517 — Subcontractor Disclosure (2026)', html:`
-<div class="callout gold"><div class="callout-title">SB 517 — What Changed</div><div class="callout-body">
-<div class="callout-item">Upon <strong>consumer request</strong>, contractors must disclose each subcontractor's <strong>name, contact info, license number, and classification</strong></div>
-<div class="callout-item">Prime contractor remains <strong>responsible</strong> for the project</div>
-<div class="callout-item">Prime contractor's responsibility does <strong>NOT preclude discipline</strong> against subcontractors or HIS for their own violations</div>
-</div></div>
-<div class="block-h2">What This Means for Contractors</div>
-<ul class="block-ul">
-<li class="block-li">Keep track of all subcontractor information: name, contact info, license number, and classification</li>
-<li class="block-li">Be prepared to disclose this information when any consumer on the project requests it</li>
-<li class="block-li">The disclosure requirement is triggered by the <strong>consumer's request</strong> — not automatic</li>
-<li class="block-li">Effective: <strong>January 1, 2026</strong></li>
-</ul>`},
-
-law_sb779:{title:'SB 779 — Penalty Increases (2026)', html:`
-<div class="callout gold"><div class="callout-title">SB 779 — What Changed</div><div class="callout-body">
-<div class="callout-item">New minimum civil penalty for <strong>unlicensed contracting citations: $1,500</strong> (operative July 1, 2026 — was $200)</div>
-<div class="callout-item">Standard violations: <strong>$500–$8,000</strong> range</div>
-<div class="callout-item">Serious violations (safety, aiding unlicensed, acting under wrong name): <strong>$1,500–$30,000</strong></div>
-<div class="callout-item">CSLB may adjust minimums for inflation every <strong>5 years</strong> based on the CPI</div>
-<div class="callout-item">CSLB's revenue fund reserve cap increased from <strong>6 months to 12 months</strong></div>
-</div></div>
-<div class="block-h2">CPI Adjustment Rules</div>
-<ul class="block-ul">
-<li class="block-li">CPI adjustments rounded to multiples of <strong>$100</strong> for penalties $100–$1,000</li>
-<li class="block-li">CPI adjustments rounded to multiples of <strong>$1,000</strong> for penalties over $1,000</li>
-<li class="block-li">The unlicensed contracting citation minimum can also be adjusted every 5 years based on CPI</li>
-</ul>
-<div class="block-h2">Effective Dates</div>
-<ul class="block-ul">
-<li class="block-li">Most SB 779 provisions: <strong>January 1, 2026</strong></li>
-<li class="block-li">Minimum $1,500 for unlicensed contracting citations: <strong>July 1, 2026</strong></li>
-</ul>`},
-
-safe_usa:{title:'Underground Service Alert (USA)', html:`
+safe_usa:{title:'Underground Service Alert', html:`
 <div class="callout blue"><div class="callout-title">Call Before You Dig — Key Rules</div><div class="callout-body">
 <div class="callout-item">Who must call: <strong>ANYONE</strong> planning to excavate (dig, drill, bore, etc.)</div>
 <div class="callout-item">When to call: At least <strong>2 WORKING DAYS</strong> but no more than <strong>14 CALENDAR DAYS</strong> before excavation</div>
 <div class="callout-item">Call is <strong>FREE</strong> to the regional notification center</div>
 <div class="callout-item">Every contractor or subcontractor must obtain their <strong>OWN ticket</strong></div>
 <div class="callout-item">Ticket validity: <strong>28 CALENDAR DAYS</strong> — must be revalidated before expiration</div>
-<div class="callout-item">Excavation permit is <strong>INVALID without the USA ticket number</strong></div>
+<div class="callout-item">Excavation permit is <strong>INVALID without the Underground Service Alert ticket number</strong></div>
 </div></div>
 <div class="block-h2">Exemptions</div>
 <ul class="block-ul">
@@ -1700,7 +2191,7 @@ safe_usa:{title:'Underground Service Alert (USA)', html:`
 <li class="block-li">Willful violation of the notification requirement = cause for license disciplinary action</li>
 </ul>`},
 
-safe_usa_field:{title:'USA Field Procedure & Penalties', html:`
+safe_usa_field:{title:'Underground Service Alert Field Procedure & Penalties', html:`
 <div class="block-h2">On-Site Procedure — Step by Step</div>
 <ul class="block-ul">
 <li class="block-li">Excavator must <strong>clearly mark the boundaries</strong> of the work area, usually with <strong>white paint</strong></li>
@@ -1721,7 +2212,7 @@ safe_usa_field:{title:'USA Field Procedure & Penalties', html:`
 <tr><td><strong>Purple</strong></td><td>Reclaimed water, irrigation, slurry lines</td></tr>
 <tr><td><strong>Green</strong></td><td>Sewers and drain lines</td></tr>
 </tbody></table>
-<div class="block-h2">Civil Penalty Amounts — Government Code §§4216-4216.9</div>
+<div class="block-h2">Civil Penalty Amounts</div>
 <div class="callout red"><div class="callout-title">Tiered Fines</div><div class="callout-body">
 <div class="callout-item"><strong>Negligent</strong> violation: fine up to <strong>$10,000</strong></div>
 <div class="callout-item"><strong>Knowing & willful</strong> violation: fine up to <strong>$50,000</strong></div>
@@ -1736,9 +2227,9 @@ safe_injury:{title:'Occupational Injury Reporting', html:`
 <div class="callout-item">Any employee occupational injury or illness that results in <strong>lost time beyond the date of injury</strong>, OR</div>
 <div class="callout-item">Any injury/illness requiring <strong>medical treatment beyond first aid</strong></div>
 </div></div>
-<div class="block-h2">Deadlines (Labor Code §6409.1)</div>
+<div class="block-h2">Deadlines</div>
 <table class="block-table"><thead><tr><th>Situation</th><th>Deadline</th><th>Who To Notify</th></tr></thead><tbody>
-<tr><td>Standard occupational injury/illness</td><td>Within <strong>5 days</strong> of employer obtaining knowledge</td><td>Division of Labor Statistics & Research (DIR) — OR the WC insurer if insured</td></tr>
+<tr><td>Standard occupational injury/illness</td><td>Within <strong>5 days</strong> of employer obtaining knowledge</td><td>Division of Labor Statistics & Research (DIR) — OR the workers' compensation insurer if insured</td></tr>
 <tr><td>Serious injury, serious illness, or death</td><td><strong>IMMEDIATELY</strong> by telephone or email</td><td>Division of Occupational Safety and Health (Cal/OSHA)</td></tr>
 <tr><td>Insurance carrier doesn't get report</td><td>WCAB may issue order forcing report within <strong>5 days</strong></td><td>WCAB</td></tr>
 </tbody></table>
@@ -1750,7 +2241,7 @@ safe_injury:{title:'Occupational Injury Reporting', html:`
 </ul>
 <div class="block-h2">Willful Safety Violation Causing Death/Prolonged Impairment</div>
 <ul class="block-ul">
-<li class="block-li">Every employer, AND every employee with direction/management/control over other employees, who <strong>willfully violates an occupational safety/health standard causing death or prolonged impairment</strong> faces fine and/or imprisonment (Labor Code §6425)</li>
+<li class="block-li">Every employer, AND every employee with direction/management/control over other employees, who <strong>willfully violates an occupational safety/health standard causing death or prolonged impairment</strong> faces fine and/or imprisonment</li>
 </ul>`},
 
 safe_asbestos:{title:'Asbestos Regulations', html:`
@@ -1796,12 +2287,12 @@ safe_discipline:{title:'Safety Violations & Discipline', html:`
 <div class="block-h2">Key Rule — Safety Violations</div>
 <div class="callout red"><div class="callout-title">Critical Safety Rule</div><div class="callout-body">
 <div class="callout-item">Violation of certain Title 8 safety provisions is cause for disciplinary action <strong>WITHOUT regard to whether death or serious injury occurred</strong></div>
-<div class="callout-item">Violation of Labor Code safety provisions resulting in <strong>death or serious injury</strong> is also cause for discipline</div>
+<div class="callout-item">Violation of state safety law resulting in <strong>death or serious injury</strong> is also cause for discipline</div>
 </div></div>
 <div class="block-h2">Safety-Related Causes for Discipline</div>
 <ul class="block-ul">
 <li class="block-li">Violation of Title 8, Article 12 of the California Code of Regulations (safety provisions) — disciplinable even with no injuries</li>
-<li class="block-li">Violation of Labor Code safety provisions resulting in death or serious injury to an employee</li>
+<li class="block-li">Violation of state safety law resulting in death or serious injury to an employee</li>
 <li class="block-li">Willful disregard of safety laws or building laws</li>
 <li class="block-li">Willful violation of the Underground Service Alert notification requirements</li>
 </ul>
@@ -1816,9 +2307,9 @@ safe_discipline:{title:'Safety Violations & Discipline', html:`
 qr_numbers:{title:'Key Dollar Amounts & Numbers', html:`
 <div class="callout blue"><div class="callout-title">Memorize Every Number on This List</div><div class="callout-body"><div class="callout-item nobullet">These are the most frequently tested numbers on the CSLB exam.</div></div></div>
 <table class="block-table"><thead><tr><th>Number</th><th>What It Means</th></tr></thead><tbody>
-<tr><td><strong>$1,000 or 10%</strong></td><td>Max HI contract down payment (whichever is LESS)</td></tr>
+<tr><td><strong>$1,000 or 10%</strong></td><td>Max home improvement contract down payment (whichever is LESS)</td></tr>
 <tr><td><strong>$750</strong></td><td>Service and repair contract threshold</td></tr>
-<tr><td><strong>$25,000</strong></td><td>Standard contractor's bond; QI bond; disciplinary bond minimum</td></tr>
+<tr><td><strong>$25,000</strong></td><td>Standard contractor's bond; qualifying individual bond; disciplinary bond minimum</td></tr>
 <tr><td><strong>$100,000</strong></td><td>LLC additional surety bond</td></tr>
 <tr><td><strong>$1,000,000</strong></td><td>LLC liability insurance minimum (≤5 personnel)</td></tr>
 <tr><td><strong>$5,000,000</strong></td><td>LLC liability insurance maximum (regardless of personnel)</td></tr>
@@ -1832,7 +2323,7 @@ qr_numbers:{title:'Key Dollar Amounts & Numbers', html:`
 <tr><td><strong>&lt;$25,000</strong></td><td>CSLB mandatory arbitration threshold</td></tr>
 <tr><td><strong>$25,000–$50,000</strong></td><td>CSLB voluntary arbitration range</td></tr>
 <tr><td><strong>$500</strong></td><td>Fraudulent misrepresentation penalty (plus attorney's fees + actual damages)</td></tr>
-<tr><td><strong>$200</strong></td><td>HIS registration application fee (nonrefundable, nontransferable)</td></tr>
+<tr><td><strong>$200</strong></td><td>home improvement salesperson registration application fee (nonrefundable, nontransferable)</td></tr>
 <tr><td><strong>$5,000</strong></td><td>Max fine for first unlicensed contracting conviction</td></tr>
 <tr><td><strong>45</strong></td><td>Number of CSLB license classifications</td></tr>
 <tr><td><strong>15</strong></td><td>Number of CSLB board members</td></tr>
@@ -1845,24 +2336,24 @@ qr_numbers:{title:'Key Dollar Amounts & Numbers', html:`
 
 qr_deadlines:{title:'All Deadlines & Time Periods', html:`
 <table class="block-table"><thead><tr><th>Period</th><th>What It Applies To</th></tr></thead><tbody>
-<tr><td><strong>2 working days</strong></td><td>Minimum advance notice before excavation (USA call)</td></tr>
+<tr><td><strong>2 working days</strong></td><td>Minimum advance notice before excavation (Underground Service Alert call)</td></tr>
 <tr><td><strong>7 days</strong></td><td>Prime contractor must pay subcontractor after receiving progress payment</td></tr>
 <tr><td><strong>10 days</strong></td><td>Record Notice of Completion after project completion; post/record Notice of Non-Responsibility after discovering unauthorized work; owner must notify lien claimants after recording Notice of Completion/Cessation</td></tr>
-<tr><td><strong>14 calendar days</strong></td><td>Maximum advance notice for USA excavation call</td></tr>
+<tr><td><strong>14 calendar days</strong></td><td>Maximum advance notice for Underground Service Alert excavation call</td></tr>
 <tr><td><strong>15 working days</strong></td><td>To contest a CSLB citation or request informal conference</td></tr>
 <tr><td><strong>20 days</strong></td><td>Serve Preliminary Notice (subcontractors) from first furnishing labor/materials</td></tr>
-<tr><td><strong>28 calendar days</strong></td><td>USA excavation ticket validity</td></tr>
-<tr><td><strong>30 days</strong></td><td>Subcontractor must file Claim of Lien after Notice of Completion/Cessation recorded; appeal small claims judgment; minimum notice before AG files contractor license action; respond to letter of admonishment</td></tr>
-<tr><td><strong>60 days</strong></td><td>Prime contractor must file Claim of Lien after Notice of Completion/Cessation; CSLB may intervene in AG action</td></tr>
-<tr><td><strong>90 days</strong></td><td>Claim of Lien (no notice recorded); file Lien Foreclosure Action after recording lien; HIS address change notice; file judgment bond after CSLB notification; submit proof of surety payment</td></tr>
+<tr><td><strong>28 calendar days</strong></td><td>Underground Service Alert excavation ticket validity</td></tr>
+<tr><td><strong>30 days</strong></td><td>Subcontractor must file Claim of Lien after Notice of Completion/Cessation recorded; appeal small claims judgment; minimum notice before Attorney General files contractor license action; respond to letter of admonishment</td></tr>
+<tr><td><strong>60 days</strong></td><td>Prime contractor must file Claim of Lien after Notice of Completion/Cessation; CSLB may intervene in Attorney General action</td></tr>
+<tr><td><strong>90 days</strong></td><td>Claim of Lien (no notice recorded); file Lien Foreclosure Action after recording lien; home improvement salesperson address change notice; file judgment bond after CSLB notification; submit proof of surety payment</td></tr>
 <tr><td><strong>6 months</strong></td><td>Wage/benefit claims against bond from discovery (max 2 years from due date)</td></tr>
 <tr><td><strong>1 year</strong></td><td>Earliest reapplication after license denial; judgment bond minimum time on file</td></tr>
-<tr><td><strong>2 years</strong></td><td>HIS registration term; max period for wage claims against bond; min active license time before blanket bond; disciplinary bond min time on file</td></tr>
+<tr><td><strong>2 years</strong></td><td>home improvement salesperson registration term; max period for wage claims against bond; min active license time before blanket bond; disciplinary bond min time on file</td></tr>
 <tr><td><strong>3 years</strong></td><td>Bond deposit claim period (non-wage); contractor records retention after license period</td></tr>
 <tr><td><strong>4 years</strong></td><td>CSLB complaint jurisdiction (patent violations); unlicensed contractor criminal complaint; one alternative for citation issuance</td></tr>
-<tr><td><strong>5 years</strong></td><td>Records available for registrar inspection; citation disclosure period; CPI penalty adjustment cycle</td></tr>
+<tr><td><strong>5 years</strong></td><td>Records available for registrar inspection; citation disclosure period; Consumer Price Index penalty adjustment cycle</td></tr>
 <tr><td><strong>10 years</strong></td><td>CSLB complaint jurisdiction for latent structural defects</td></tr>
-<tr><td><strong>12 months</strong></td><td>CSLB revenue fund reserve cap (increased by SB 779)</td></tr>
+<tr><td><strong>12 months</strong></td><td>CSLB revenue fund reserve cap</td></tr>
 <tr><td><strong>18 months</strong></td><td>CSLB must initiate discipline after Labor Commissioner finding; alternative citation statute of limitations</td></tr>
 <tr><td><strong>1–5 years</strong></td><td>Waiting period to reapply after revocation for persons who participated in violations</td></tr>
 <tr><td><strong>7 years</strong></td><td>Disclosure period for suspensions/stayed revocations</td></tr>
@@ -1883,7 +2374,7 @@ qr_formulas:{title:'Formulas & Key Legal Concepts', html:`
 <tr><td><strong>License at ALL times</strong></td><td>Must be licensed from start to finish — being licensed at start but lapsing = unlicensed contracting</td></tr>
 <tr><td><strong>Unlicensed = no right to sue</strong></td><td>No contractor's license = no court action to collect, regardless of work quality</td></tr>
 <tr><td><strong>Owner can recover 100%</strong></td><td>Owner may sue to get back all money paid to an unlicensed contractor</td></tr>
-<tr><td><strong>QI responsibility</strong></td><td>QI may be disciplined for firm's violations whether or not they had knowledge or participated</td></tr>
+<tr><td><strong>qualifying individual responsibility</strong></td><td>qualifying individual may be disciplined for firm's violations whether or not they had knowledge or participated</td></tr>
 <tr><td><strong>Citation = final after 15 days</strong></td><td>If licensee doesn't contest within 15 working days, citation is a final, unappealable order</td></tr>
 <tr><td><strong>Retention exceeds profit</strong></td><td>The 10% retainage typically exceeds the contractor's profit margin — major working capital issue</td></tr>
 <tr><td><strong>Materials must be installed to lien</strong></td><td>Materials must be physically incorporated into the structure to support a mechanics lien</td></tr>
@@ -2311,6 +2802,14 @@ document.addEventListener('visibilitychange', () => {
     AUDIO.state = 'paused';
     updateAudioUI();
   }
+});
+
+// Keep the topic count on each hub card in sync with the actual section data.
+document.querySelectorAll('.cat-card').forEach(card => {
+  const m = (card.getAttribute('onclick') || '').match(/openSection\('([^']+)'\)/);
+  if (!m || !SECTIONS[m[1]]) return;
+  const el = card.querySelector('.cat-count');
+  if (el) el.textContent = SECTIONS[m[1]].topics.length + ' topics';
 });
 </script>
 <script src="/pwa.js"></script>

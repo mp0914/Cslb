@@ -107,7 +107,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <span class="cross-link-arrow">→</span>
   </a>
   <h2 class="hub-title">Choose a Topic</h2>
-  <p class="hub-sub">458 exam-style questions covering every C-33 topic area — surface prep, coatings, application, safety, estimating, and more. Select a category or take the full mixed exam.</p>
+  <p class="hub-sub"><span id="q-total">458</span> exam-style questions covering every C-33 topic area — surface prep, coatings, application, safety, estimating, and more. Select a category or take the full mixed exam.</p>
   <div class="category-grid">
     <div class="cat-card" style="--accent:#60a5fa" onclick="startQuiz('surface_prep')"><span class="cat-icon">🧹</span><div class="cat-name">Surface Preparation</div><div class="cat-desc">Substrate prep, cleaning levels, lead-safe work, moisture, repair sequencing.</div><div class="cat-count" style="color:#60a5fa">55 questions</div></div>
     <div class="cat-card" style="--accent:#a78bfa" onclick="startQuiz('coatings')"><span class="cat-icon">🪣</span><div class="cat-name">Coatings & Primers</div><div class="cat-desc">Acrylic, alkyd, epoxy, urethane, elastomeric, primer selection, two-component products.</div><div class="cat-count" style="color:#a78bfa">50 questions</div></div>
@@ -763,6 +763,13 @@ document.querySelectorAll('.cat-card').forEach(card=>{
   const el=card.querySelector('.cat-count');
   if(el)el.textContent=Q[m[1]].length+' questions';
 });
+
+// Keep the headline question total in sync with the actual banks.
+(function(){
+  const el=document.getElementById('q-total');
+  if(!el)return;
+  el.textContent=Object.values(Q).reduce((n,a)=>n+a.length,0);
+})();
 </script>
 <script src="/pwa.js"></script>
 </body>

@@ -2565,6 +2565,132 @@ const PAUSE = {
   sub: 180       // between sentence splits within a long chunk
 };
 
+// ─── SPEECH NORMALIZER ──────────────────────────────────────────────────────
+// Rewrites symbols, ranges, units and shorthand into words before text is
+// handed to the speech engine. Only affects what is spoken - the page text is
+// never changed. Every rule preserves meaning; ambiguous cases are made
+// neutral (a pause) rather than guessed.
+let SPEAK_WORDS = null;
+function speakWords() {
+  if (SPEAK_WORDS) return SPEAK_WORDS;
+  SPEAK_WORDS = new Set();
+  Object.values(CONTENT).forEach(c => {
+    const t = (c.html || '').replace(/<[^>]+>/g, ' ');
+    (t.match(/\b[a-z][a-z'-]+\b/g) || []).forEach(w => SPEAK_WORDS.add(w));
+  });
+  return SPEAK_WORDS;
+}
+function speakUnit(n, one, many) { return n + ' ' + (n === '1' ? one : many); }
+function speakify(s) {
+  if (!s) return s;
+  const hasMath = /[×÷]/.test(s);
+  const arrows = (s.match(/→/g) || []).length;
+
+  // phone numbers are left exactly as written
+  const keep = [];
+  s = s.replace(/\(\d{3}\)\s?\d{3}-\d{4}|\b\d{3}-\d{3}-\d{4}\b|\b\d{3}-\d{4}\b/g,
+    m => { keep.push(m); return '\u0000' + (keep.length - 1) + '\u0000'; });
+
+  // fraction characters
+  s = s.replace(/(\d)¼/g, '$1 and a quarter').replace(/(\d)½/g, '$1 and a half')
+       .replace(/(\d)¾/g, '$1 and three quarters')
+       .replace(/¼/g, 'one quarter').replace(/½/g, 'one half').replace(/¾/g, 'three quarters');
+
+  // inch and foot marks written after a number
+  s = s.replace(/(\d)'(\d{1,2})["″]/g, '$1 feet $2 inches');
+  s = s.replace(/(\d)\s?in\s*(?=±)/g, '$1 inches ');
+  s = s.replace(/(\d)["″]\+/g, '$1 inches or more');
+  s = s.replace(/(\d[\d,.\/]*)\s?["″](?=[\s),.;:\-–—]|$)/g,
+    (m, n) => n + (n === '1' || n.includes('/') ? ' inch' : ' inches'));
+  s = s.replace(/(\d)\s?[′](?![A-Za-z])/g, '$1 feet');
+
+  // common fractions (otherwise often read as calendar dates)
+  const FR = {'1/2':'one half','1/3':'one third','2/3':'two thirds','1/4':'one quarter',
+              '3/4':'three quarters','1/8':'one eighth','3/8':'three eighths','5/8':'five eighths',
+              '7/8':'seven eighths','1/16':'one sixteenth','3/16':'three sixteenths','1/10':'one tenth'};
+  s = s.replace(/\b\d{1,2}\/\d{1,2}\b/g, m => FR[m] || m);
+
+  // units
+  s = s.replace(/µg\/m[³3]/g, 'micrograms per cubic meter')
+       .replace(/\bmg\/m[³3]/g, 'milligrams per cubic meter')
+       .replace(/°\s?F\b/g, ' degrees Fahrenheit').replace(/°\s?C\b/g, ' degrees Celsius')
+       .replace(/°/g, ' degrees')
+       .replace(/\bsq\.?\s?ft\.?(?![a-z])|\bsqft\b|\bft²/gi, 'square feet')
+       .replace(/\bsq\.?\s?in\.?(?![a-z])|\bin²/gi, 'square inches')
+       .replace(/\bcu\.?\s?ft\.?(?![a-z])|\bft³/gi, 'cubic feet')
+       .replace(/²/g, ' squared').replace(/³/g, ' cubed')
+       .replace(/\bg\/L\b/g, 'grams per liter')
+       .replace(/\blbs?\/gal\b/gi, 'pounds per gallon')
+       .replace(/\/gal\b/gi, ' per gallon')
+       .replace(/\bhrs?\/day\b/gi, 'hours per day')
+       .replace(/(\d)-hrs?\b/gi, '$1-hour')
+       .replace(/\b(\d[\d,.]*)\s?hrs?\b/gi, (m, n) => speakUnit(n, 'hour', 'hours'))
+       .replace(/\b(\d[\d,.]*)\s?lbs?\b/gi, (m, n) => speakUnit(n, 'pound', 'pounds'))
+       .replace(/\b(\d[\d,.]*)\s?psi\b/gi, '$1 P S I')
+       .replace(/\b(\d[\d,.]*)\s?mph\b/gi, '$1 miles per hour')
+       .replace(/\b(\d[\d,.]*)\s?fl\.?\s?oz\b/gi, (m, n) => speakUnit(n, 'fluid ounce', 'fluid ounces'))
+       .replace(/\b(\d[\d,.]*)\s?oz\b/gi, (m, n) => speakUnit(n, 'ounce', 'ounces'))
+       .replace(/\b(\d[\d,.]*)\s?gal\b/gi, (m, n) => speakUnit(n, 'gallon', 'gallons'))
+       .replace(/\b(\d[\d,.]*)\s?ft\b/gi, (m, n) => speakUnit(n, 'foot', 'feet'))
+       .replace(/\b(\d[\d,.]*)\s?min\b/gi, (m, n) => speakUnit(n, 'minute', 'minutes'))
+       .replace(/\b(\d[\d,.]*)\s?cfm\b/gi, '$1 cubic feet per minute')
+       .replace(/\b(\d[\d,.]*)\s?gpm\b/gi, '$1 gallons per minute');
+
+  // numeric ranges: "1,000-5,000" -> "1,000 to 5,000"
+  s = s.replace(/(\$?\d[\d,]*(?:\.\d+)?)(\s?(?:%|percent|degrees(?: Fahrenheit| Celsius)?|mils?|inch|inches|feet|foot|square feet|pounds|gallons|hours|minutes|years?|days?|months?|weeks?)?)\s*[-–—]\s*(?=\$?\d)/g,
+    (m, a, u) => a + (u || '') + ' to ');
+
+  // license classification codes: "C-36" -> "C 36"
+  s = s.replace(/\b([A-D])-(\d{1,2})\b/g, '$1 $2');
+
+  // ratios: "4:1" -> "4 to 1"
+  s = s.replace(/\b(\d{1,2}):(\d{1,2})\b/g, (m, a, b) => (b.length === 2 && b[0] === '0') ? m : a + ' to ' + b);
+
+  // implied multiplication "2(14+18)" and tight sums "14+18"
+  s = s.replace(/\b(\d+)\((?=\d)/g, '$1 times (').replace(/(\d)\+(?=\d)/g, '$1 plus ');
+  s = s.replace(/\b(\d[\d,.]*)\s?LF\b/g, '$1 linear feet');
+
+  // comparison and math symbols
+  s = s.replace(/\s*≤\s*/g, ' at most ').replace(/\s*≥\s*/g, ' at least ')
+       .replace(/\s*±\s*/g, ' plus or minus ').replace(/\s*≈\s*/g, ' is about ')
+       .replace(/~\s*/g, 'about ')
+       .replace(/(feet|foot|inch|inches)\s*×\s*/g, '$1 by ')
+       .replace(/\s*×\s*/g, ' times ')
+       .replace(/\s*÷\s*/g, ' divided by ')
+       .replace(/<\s*(?=\$?\d)/g, 'less than ').replace(/>\s*(?=\$?\d)/g, 'more than ')
+       .replace(/\s*>\s*/g, ' greater than ').replace(/\s*<\s*/g, ' less than ')
+       .replace(/\s*=\s*(?=(\$|\d|about|\())/g, ' equals ')
+       .replace(/\s*=\s*/g, hasMath ? ' equals ' : ' means ')
+       .replace(/(\d+(?:st|nd|rd|th))\+/g, '$1 or later')
+       .replace(/(\$?\d[\d,]*)\+(?!\d)/g, '$1 or more')
+       .replace(/\s\+\s/g, ' plus ')
+       .replace(/\s*&\s*/g, ' and ')
+       .replace(/#(?=\d)/g, 'number ')
+       .replace(/\bcut # pattern\b/g, 'cut a grid pattern')
+       .replace(/\s*→\s*/g, arrows > 1 ? ', then ' : ', so ')
+       .replace(/\s\|\s/g, ', ');
+
+  // shorthand
+  s = s.replace(/\be\.g\.,?/gi, 'for example,').replace(/\bi\.e\.,?/gi, 'that is,')
+       .replace(/\bvs\.?(?=\s)/gi, 'versus').replace(/\bapprox\.?(?=\s)/gi, 'approximately')
+       .replace(/\betc\.?(?=[\s),]|$)/gi, 'et cetera');
+
+  // word slashes: units became "per" above; everything else gets a neutral pause
+  s = s.replace(/\bN\/A\b/g, 'not applicable')
+       .replace(/%\/(day|week|month|year)\b/g, '% per $1')
+       .replace(/\s\/\s/g, ', ');
+  s = s.replace(/\band\/or\b/gi, 'and or').replace(/\bCal\/OSHA\b/g, 'Cal OSHA')
+       .replace(/([A-Za-z]{2,})\/(?=[A-Za-z]{2,})/g, '$1, ')
+       .replace(/(\b[A-D] \d{1,2})\/(?=[A-D] \d)/g, '$1, ');
+
+  // shouted English words are lowercased so they are read, not spelled
+  const W = speakWords();
+  s = s.replace(/\b[A-Z]{2,}\b/g, w => W.has(w.toLowerCase()) ? w.toLowerCase() : w);
+
+  s = s.replace(/\u0000(\d+)\u0000/g, (m, i) => keep[+i]);
+  return s.replace(/\(\s+/g, '(').replace(/\s+\)/g, ')').replace(/\s+,/g, ',').replace(/,\s*,/g, ',').replace(/\s{2,}/g, ' ').trim();
+}
+
 function cleanText(s) {
   if (!s) return '';
   s = s.replace(/\s+/g, ' ').trim();
@@ -2597,7 +2723,7 @@ function sentenceSplit(text, basePause) {
 }
 
 function emit(chunks, text, pauseAfter) {
-  const t = cleanText(text);
+  const t = speakify(cleanText(text));
   if (!t) return;
   if (t.length <= 220) {
     chunks.push({ text: ensureEnding(t), pauseAfter });

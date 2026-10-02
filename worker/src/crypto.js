@@ -58,7 +58,7 @@ function hex(bytes) {
   return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-// Stored form is "saltHex:hashHex". Generate one with `node worker/hash-passphrase.mjs`.
+// Stored form is "saltHex:hashHex". Set it with `node worker/setup-secrets.mjs`.
 export async function hashPassphrase(passphrase, salt) {
   const s = salt || crypto.getRandomValues(new Uint8Array(16));
   const key = await crypto.subtle.importKey('raw', ENC.encode(passphrase), 'PBKDF2', false, ['deriveBits']);

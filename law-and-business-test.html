@@ -6,197 +6,71 @@
 <title>CSLB Practice Test — 2026 Edition</title>
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/icon-192.svg">
-<meta name="theme-color" content="#1a1d2e">
+<meta name="theme-color" content="#0A0A0C">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="CSLB Prep">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f1117;color:#e8eaf0;min-height:100vh}
-.header{background:linear-gradient(135deg,#1a1d2e 0%,#0f1117 100%);border-bottom:1px solid #2a2d3e;padding:20px 28px;display:flex;align-items:center;justify-content:space-between}
-.header h1{font-size:18px;font-weight:700;color:#fff}.header p{font-size:11px;color:#6b7280;margin-top:2px}
-.badge{background:#1e3a5f;color:#60a5fa;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;border:1px solid #1e40af44;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap}
-#hub{max-width:720px;margin:40px auto;padding:0 20px}
-.hub-title{font-size:26px;font-weight:800;color:#fff;margin-bottom:6px}
-.hub-sub{color:#6b7280;font-size:13px;margin-bottom:32px;line-height:1.6}
-.category-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:580px){.category-grid{grid-template-columns:1fr}}
-.cat-card{background:#161925;border:1px solid #2a2d3e;border-radius:12px;padding:20px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden}
-.cat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);opacity:0;transition:opacity .18s}
-.cat-card:hover{border-color:#3a3d50;transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.4)}
-.cat-card:hover::before{opacity:1}
-.cat-icon{font-size:24px;margin-bottom:10px;display:block}
-.cat-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:5px}
-.cat-desc{font-size:11px;color:#6b7280;line-height:1.5}
-.cat-count{margin-top:12px;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.5px}
-.full-btn{display:block;width:100%;margin-top:20px;padding:15px;background:linear-gradient(135deg,#1e3a5f,#1a2f50);border:1px solid #1e40af55;border-radius:12px;color:#60a5fa;font-size:14px;font-weight:700;cursor:pointer;text-align:center;transition:all .18s}
-.full-btn:hover{background:linear-gradient(135deg,#1e40af33,#1e3a5f);transform:translateY(-1px)}
-.study-guide-btn {
-    display: flex;
-    align-items: center;
-    background: linear-gradient(135deg, #1e3a5f 0%, #162a44 100%);
-    border: 1px solid #3b82f644;
-    border-radius: 12px;
-    padding: 18px 24px;
-    margin-bottom: 32px;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.study-guide-btn:hover {
-    transform: translateY(-2px);
-    border-color: #60a5fa;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-}
-
-.btn-icon {
-    font-size: 28px;
-    margin-right: 20px;
-}
-
-.btn-content {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.btn-title {
-    color: #fff;
-    font-size: 16px;
-    font-weight: 700;
-}
-
-.btn-subtitle {
-    color: #93c5fd;
-    font-size: 12px;
-    margin-top: 2px;
-    opacity: 0.8;
-}
-
-.btn-arrow {
-    color: #60a5fa;
-    font-size: 20px;
-    font-weight: bold;
-    margin-left: 10px;
-}
-  
-#quiz{display:none;max-width:660px;margin:32px auto;padding:0 20px 80px}
-.quiz-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
-.back-btn{background:none;border:1px solid #2a2d3e;color:#9ca3af;padding:7px 13px;border-radius:8px;cursor:pointer;font-size:12px;transition:all .15s}
-.back-btn:hover{color:#fff;border-color:#3a3d50}
-.progress-wrap{flex:1;margin:0 14px}
-.progress-label{font-size:11px;color:#6b7280;margin-bottom:5px;text-align:right}
-.progress-bar{height:3px;background:#2a2d3e;border-radius:4px;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:4px;transition:width .3s ease}
-.score-chip{background:#1e3a5f;border:1px solid #1e40af44;border-radius:8px;padding:5px 11px;font-size:11px;font-weight:700;color:#60a5fa;white-space:nowrap}
-.q-card{background:#161925;border:1px solid #2a2d3e;border-radius:14px;padding:24px;margin-bottom:16px}
-.q-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent,#60a5fa);background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.15);padding:3px 9px;border-radius:20px;margin-bottom:12px}
-.q-text{font-size:15px;font-weight:600;color:#f0f2f8;line-height:1.55;margin-bottom:20px}
-.options{display:flex;flex-direction:column;gap:9px}
-.opt{display:flex;align-items:flex-start;gap:11px;padding:12px 14px;background:#0f1117;border:1px solid #2a2d3e;border-radius:10px;cursor:pointer;transition:all .15s;text-align:left;width:100%}
-.opt:hover:not(.revealed){background:#1a1d2e;border-color:#3a3d50}
-.opt.correct{background:#052e16;border-color:#16a34a}
-.opt.wrong{background:#2a0a0a;border-color:#dc2626}
-.opt.faded{opacity:.35}
-.opt-letter{width:24px;height:24px;border-radius:50%;background:#2a2d3e;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#9ca3af;flex-shrink:0;margin-top:1px}
-.opt.correct .opt-letter{background:#16a34a;color:#fff}
-.opt.wrong .opt-letter{background:#dc2626;color:#fff}
-.opt-text{font-size:13px;color:#d1d5db;line-height:1.45}
-.opt.correct .opt-text,.opt.wrong .opt-text{color:#fff}
-.explanation{margin-top:14px;padding:13px 15px;background:#0d1f3c;border:1px solid #1e3a5f;border-radius:10px;font-size:12px;color:#93c5fd;line-height:1.55;display:none}
-.explanation strong{color:#60a5fa}
-.explanation.show{display:block}
-.next-btn{display:none;width:100%;margin-top:16px;padding:13px;background:#1e3a5f;border:1px solid #1e40af55;border-radius:10px;color:#60a5fa;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s}
-.next-btn:hover{background:#1e40af44}
-#results{display:none;max-width:580px;margin:48px auto;padding:0 20px;text-align:center}
-.result-score{font-size:68px;font-weight:900;line-height:1;margin-bottom:6px}
-.result-score.pass{color:#4ade80}.result-score.fail{color:#f87171}
-.result-label{font-size:13px;color:#6b7280;margin-bottom:28px}
-.result-card{background:#161925;border:1px solid #2a2d3e;border-radius:14px;padding:22px;margin-bottom:14px;text-align:left}
-.result-card h3{font-size:12px;font-weight:700;color:#9ca3af;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px}
-.result-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #1f2235;font-size:13px}
-.result-row:last-child{border-bottom:none}
-.result-row .label{color:#9ca3af}.result-row .val{font-weight:700;color:#fff}
-.result-row .val.correct{color:#4ade80}.result-row .val.wrong{color:#f87171}
-.restart-btn{display:block;width:100%;padding:15px;background:linear-gradient(135deg,#1e3a5f,#1a2f50);border:1px solid #1e40af55;border-radius:12px;color:#60a5fa;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;transition:all .15s}
-.restart-btn:hover{background:#1e40af33}
-.cat-btn{background:#161925;border:1px solid #2a2d3e;border-radius:12px;padding:14px;width:100%;color:#d1d5db;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px;transition:all .15s}
-.cat-btn:hover{border-color:#3a3d50;color:#fff}
-</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/theme.css">
 </head>
-<body>
-<div class="header">
-  <div><h1>Law and Business Practice Test</h1><p>California Contractors License Law & Reference Book — 2026 Edition</p></div>
-  
-  
-
-</div>
-<div id="hub">
-  <a href="index.html" class="study-guide-btn">
-    <span class="btn-icon">🏠</span>
-    <div class="btn-content">
-        <span class="btn-title">Back to Dashboard</span>
-        <span class="btn-subtitle">Choose a different topic</span>
-    </div>
-    <span class="btn-arrow">→</span>
-  </a>
-  <a href="law-and-business-study-guide.html" class="study-guide-btn">
-    <span class="btn-icon">📖</span>
-    <div class="btn-content">
-        <span class="btn-title">Exam Study Guide</span>
-        <span class="btn-subtitle">Review key concepts and 2026 law summaries</span>
-    </div>
-    <span class="btn-arrow">→</span>
-  </a>
-  
-  <h2 class="hub-title">Choose a Topic</h2>
-  <p class="hub-sub"><span id="q-total">318</span> exam-style questions written like the real CSLB test — scenario-based, no code references. Select a category or take the full mixed exam.</p>
-  <div class="category-grid">
-    <div class="cat-card" style="--accent:#60a5fa" onclick="startQuiz('licensing')"><span class="cat-icon">📋</span><div class="cat-name">Licensing Requirements</div><div class="cat-desc">Who needs a license, exemptions, classifications, penalties for unlicensed work, advertising rules.</div><div class="cat-count" style="color:#60a5fa">25 questions</div></div>
-    <div class="cat-card" style="--accent:#a78bfa" onclick="startQuiz('bonds')"><span class="cat-icon">🔐</span><div class="cat-name">Bonds & Insurance</div><div class="cat-desc">Bond amounts, beneficiaries, LLC requirements, surety liability limits, judgment bonds.</div><div class="cat-count" style="color:#a78bfa">37 questions</div></div>
-    <div class="cat-card" style="--accent:#34d399" onclick="startQuiz('home_improvement')"><span class="cat-icon">🏠</span><div class="cat-name">Home Improvement</div><div class="cat-desc">Contracts, down payments, salesperson registration, warranties, solar, service & repair.</div><div class="cat-count" style="color:#34d399">32 questions</div></div>
-    <div class="cat-card" style="--accent:#fb923c" onclick="startQuiz('business')"><span class="cat-icon">📊</span><div class="cat-name">Business Management</div><div class="cat-desc">Financial statements, ratios, business structures, bidding, lien law, risk management.</div><div class="cat-count" style="color:#fb923c">47 questions</div></div>
-    <div class="cat-card" style="--accent:#22d3ee" onclick="startQuiz('employment')"><span class="cat-icon">👷</span><div class="cat-name">Employment Requirements</div><div class="cat-desc">Hiring paperwork, payroll taxes, overtime and breaks, worker classification, training, records.</div><div class="cat-count" style="color:#22d3ee">0 questions</div></div>
-    <div class="cat-card" style="--accent:#94a3b8" onclick="startQuiz('public_works')"><span class="cat-icon">🏗️</span><div class="cat-name">Public Works</div><div class="cat-desc">Prevailing wage, certified payroll, bid/performance/payment bonds, apprentice ratios.</div><div class="cat-count" style="color:#94a3b8">0 questions</div></div>
-    <div class="cat-card" style="--accent:#f472b6" onclick="startQuiz('discipline')"><span class="cat-icon">⚖️</span><div class="cat-name">Disciplinary Actions</div><div class="cat-desc">Causes for discipline, citations, penalties, suspension, revocation, public disclosure.</div><div class="cat-count" style="color:#f472b6">34 questions</div></div>
-    <div class="cat-card" style="--accent:#38bdf8" onclick="startQuiz('construction_safety')"><span class="cat-icon">🦺</span><div class="cat-name">Construction & Safety</div><div class="cat-desc">Underground utilities, excavation rules, asbestos, safety violations, site notifications.</div><div class="cat-count" style="color:#38bdf8">30 questions</div></div>
-    <div class="cat-card" style="--accent:#f97316" onclick="startQuiz('contracts_law')"><span class="cat-icon">📜</span><div class="cat-name">Contracts & Legal</div><div class="cat-desc">Contract types, joint ventures, advertising, exemptions, arbitration, lien law.</div><div class="cat-count" style="color:#f97316">23 questions</div></div>
+<body data-view="hub">
+<header class="app-header">
+  <div class="app-header-in">
+    <a class="brand" href="index.html"><span class="brand-mark">C33</span><span class="brand-name">C-33 Prep</span></a>
+    <nav class="exam-switch" aria-label="Exam">
+      <a href="c33-trade-test.html">Trade exam</a>
+      <a href="law-and-business-test.html" class="on" aria-current="page">Law &amp; Business</a>
+    </nav>
+    <div class="hdr-space"></div>
+    <nav class="hdr-links" aria-label="Site">
+      <a href="law-and-business-study-guide.html">Study guide</a>
+      <a href="index.html">Dashboard</a>
+    </nav>
+    <div class="sync-slot" id="cslb-sync-slot"></div>
   </div>
-  <button class="full-btn" onclick="startQuiz('all')">🎯 Full Mixed Exam — 100 Questions, Weighted Like the Real Exam</button>
-</div>
-<div id="quiz">
+</header>
+<main id="hub" class="wrap"></main>
+<main id="quiz" class="wrap quiz">
+  <div class="quiz-top">
+    <button type="button" class="icon-btn" onclick="goHub()" aria-label="Leave quiz"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+    <div class="quiz-progress"><div class="progress-fill" id="prog-fill"></div></div>
+    <span class="quiz-count" id="prog-label"></span>
+  </div>
   <div class="quiz-meta">
-    <button class="back-btn" onclick="goHub()">← Back</button>
-    <div class="progress-wrap">
-      <div class="progress-label" id="prog-label">Question 1 of 39</div>
-      <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
-    </div>
-    <div class="score-chip" id="score-chip">0 / 0</div>
+    <span class="q-tag" id="q-tag"></span>
+    <span class="score-chip" id="score-chip"></span>
   </div>
-  <div class="q-card">
-    <div class="q-tag" id="q-tag">Licensing</div>
-    <div class="q-text" id="q-text"></div>
-    <div class="options" id="q-options"></div>
+  <h1 class="q-text" id="q-text"></h1>
+  <div class="options" id="q-options"></div>
+  <div class="answer-panel" id="q-panel">
     <div class="explanation" id="q-explanation"></div>
+    <button type="button" class="btn btn-lime btn-lg btn-block" id="next-btn" onclick="nextQuestion()"></button>
   </div>
-  <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next Question →</button>
-</div>
-<div id="results">
-  <div class="result-score" id="res-score"></div>
-  <div class="result-label" id="res-label"></div>
-  <div class="result-card">
-    <h3>Summary</h3>
-    <div class="result-row"><span class="label">Correct</span><span class="val correct" id="res-correct"></span></div>
-    <div class="result-row"><span class="label">Incorrect</span><span class="val wrong" id="res-wrong"></span></div>
-    <div class="result-row"><span class="label">Total Questions</span><span class="val" id="res-total"></span></div>
-    <div class="result-row"><span class="label">Passing Score</span><span class="val">70%</span></div>
+</main>
+<main id="results" class="wrap results">
+  <div class="card result-card">
+    <span class="eyebrow">Quiz complete</span>
+    <div class="result-score" id="res-score"></div>
+    <div class="result-label" id="res-label"></div>
+    <div class="result-stats">
+      <div><span class="val good" id="res-correct"></span><span class="lbl">Correct</span></div>
+      <div><span class="val low" id="res-wrong"></span><span class="lbl">Missed</span></div>
+      <div><span class="val" id="res-total"></span><span class="lbl">Questions</span></div>
+      <div><span class="val">70%</span><span class="lbl">To pass</span></div>
+    </div>
   </div>
-  <button class="restart-btn" id="res-retry">🔄 Retry This Section</button>
-  <button class="cat-btn" onclick="goHub()">← Choose Another Topic</button>
-</div>
+  <button type="button" class="btn btn-lime btn-lg btn-block" id="res-retry">Retry this section</button>
+  <button type="button" class="btn btn-ghost btn-lg btn-block" onclick="goHub()">Back to topics</button>
+</main>
+<nav class="bottom-nav" aria-label="Sections">
+  <button type="button" class="nav-practice" onclick="goHub()"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Practice</span></button>
+  <button type="button" class="nav-review" id="nav-review"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg><span>Review</span><em id="nav-review-count" style="display:none"></em></button>
+  <a href="law-and-business-study-guide.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5V21h16v-4"/></svg><span>Guide</span></a>
+  <a href="index.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M10 21v-6h4v6"/></svg><span>Dashboard</span></a>
+</nav>
 <script src="/progress.js"></script>
 <script>
 const Q={
@@ -540,8 +414,28 @@ contracts_law:[
 ]
 };
 
-const TC={licensing:'#60a5fa',bonds:'#a78bfa',home_improvement:'#34d399',business:'#fb923c',employment:'#22d3ee',public_works:'#94a3b8',discipline:'#f472b6',construction_safety:'#38bdf8',contracts_law:'#f97316'};
+const TC={licensing:'#7DA2FF',bonds:'#A78BFA',home_improvement:'#4FD1A5',business:'#FB9A4B',employment:'#34D3D3',public_works:'#D6A77A',discipline:'#F58BC8',construction_safety:'#F5C451',contracts_law:'#F97366'};
 const TL={licensing:'Licensing',bonds:'Bonds & Insurance',home_improvement:'Home Improvement',business:'Business Management',employment:'Employment Requirements',public_works:'Public Works',discipline:'Disciplinary Actions',construction_safety:'Construction & Safety',contracts_law:'Contracts & Legal'};
+
+// Line icons for each topic card (inner SVG paths, 24x24 stroke).
+const TI={
+  licensing:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M15 8h2"/><path d="M15 12h2"/><path d="M7 16h10"/>',
+  bonds:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+  home_improvement:'<path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M10 21v-6h4v6"/>',
+  business:'<path d="M3 3v18h18"/><path d="M8 17v-5"/><path d="M13 17V8"/><path d="M18 17v-3"/>',
+  employment:'<circle cx="9" cy="8" r="4"/><path d="M2 21v-1a7 7 0 0 1 14 0v1"/><path d="M16 4a4 4 0 0 1 0 8"/><path d="M22 21v-1a7 7 0 0 0-4-6.3"/>',
+  public_works:'<path d="M3 22h18"/><path d="M6 18v-7"/><path d="M10 18v-7"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M12 2 21 7H3z"/>',
+  discipline:'<path d="M12 3v18"/><path d="M7 21h10"/><path d="M5 7h14"/><path d="m5 7-3 7a3 3 0 0 0 6 0z"/><path d="m19 7-3 7a3 3 0 0 0 6 0z"/>',
+  construction_safety:'<path d="M2 18h20v-2a10 10 0 0 0-20 0z"/><path d="M10 6v6"/><path d="M14 6v6"/><path d="M10 6a2 2 0 0 1 4 0"/>',
+  contracts_law:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h6"/>'
+};
+
+const ICON_CHECK='<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+const ICON_X='<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
+const ICON_ARROW='<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+
+// theme.css keys the bottom bar and phone spacing off this.
+function setView(v){document.body.setAttribute('data-view',v);}
 
 let cat='',pool=[],idx=0,score=0,answered=false,retryFn=null;
 
@@ -588,6 +482,7 @@ function startQuiz(c){
   document.getElementById('hub').style.display='none';
   document.getElementById('results').style.display='none';
   document.getElementById('quiz').style.display='block';
+  setView('quiz');window.scrollTo(0,0);
   retryFn=()=>startQuiz(c);
   render();
 }
@@ -595,26 +490,25 @@ function startQuiz(c){
 function render(){
   answered=false;
   const q=pool[idx],total=pool.length;
-  document.getElementById('prog-label').textContent=`Question ${idx+1} of ${total}`;
+  document.getElementById('prog-label').textContent=`${idx+1}/${total}`;
   document.getElementById('prog-fill').style.width=`${(idx/total)*100}%`;
-  document.getElementById('score-chip').textContent=`${score} / ${idx}`;
+  document.getElementById('score-chip').innerHTML=`<b>${score}</b> of ${idx} right`;
   const qcat=q.cat||cat;
   const tag=document.getElementById('q-tag');
-  tag.textContent=TL[qcat]||qcat;tag.style.color=TC[qcat]||'#60a5fa';
-  tag.style.background=(TC[qcat]||'#60a5fa')+'14';tag.style.borderColor=(TC[qcat]||'#60a5fa')+'28';
+  tag.textContent=TL[qcat]||qcat;tag.style.color=TC[qcat]||'#7DA2FF';
+  tag.style.background=(TC[qcat]||'#7DA2FF')+'1a';
   document.getElementById('q-text').textContent=q.q;
   const opts=document.getElementById('q-options');
   opts.innerHTML='';
   ['A','B','C','D'].forEach((l,i)=>{
     const btn=document.createElement('button');
-    btn.className='opt';
+    btn.type='button';btn.className='opt';
     btn.innerHTML=`<span class="opt-letter">${l}</span><span class="opt-text">${q.opts[i]}</span>`;
     btn.onclick=()=>pick(i);
     opts.appendChild(btn);
   });
   document.getElementById('q-explanation').textContent='';
-  document.getElementById('q-explanation').className='explanation';
-  document.getElementById('next-btn').style.display='none';
+  document.getElementById('q-panel').classList.remove('show');
 }
 
 function pick(chosen){
@@ -623,17 +517,20 @@ function pick(chosen){
   const q=pool[idx];
   document.querySelectorAll('.opt').forEach((btn,i)=>{
     btn.classList.add('revealed');
-    if(i===q.ans)btn.classList.add('correct');
-    else if(i===chosen&&chosen!==q.ans)btn.classList.add('wrong');
+    const l=btn.querySelector('.opt-letter');
+    if(i===q.ans){btn.classList.add('correct');l.innerHTML=ICON_CHECK;}
+    else if(i===chosen){btn.classList.add('wrong');l.innerHTML=ICON_X;}
     else btn.classList.add('faded');
   });
   if(chosen===q.ans)score++;
   CSLB.record(q.__qid,q.cat||cat,chosen===q.ans);
   const exp=document.getElementById('q-explanation');
-  exp.innerHTML=`<strong>Explanation:</strong> ${q.exp}`;exp.classList.add('show');
-  const nb=document.getElementById('next-btn');nb.style.display='block';
-  nb.textContent=idx===pool.length-1?'See Results →':'Next Question →';
-  document.getElementById('score-chip').textContent=`${score} / ${idx+1}`;
+  exp.innerHTML=`<strong>Why</strong>${q.exp}`;
+  const panel=document.getElementById('q-panel');panel.classList.add('show');
+  document.getElementById('next-btn').innerHTML=(idx===pool.length-1?'See results':'Next question')+ICON_ARROW;
+  document.getElementById('score-chip').innerHTML=`<b>${score}</b> of ${idx+1} right`;
+  // On a phone the panel lands below the fold; bring it up.
+  if(window.innerWidth<=760)panel.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
 function nextQuestion(){idx++;if(idx>=pool.length)showResults();else render();}
@@ -641,10 +538,11 @@ function nextQuestion(){idx++;if(idx>=pool.length)showResults();else render();}
 function showResults(){
   document.getElementById('quiz').style.display='none';
   document.getElementById('results').style.display='block';
+  setView('results');window.scrollTo(0,0);
   const total=pool.length,pct=Math.round((score/total)*100),pass=pct>=70;
   CSLB.recordAttempt(cat,total,score);
   const s=document.getElementById('res-score');s.textContent=`${pct}%`;s.className='result-score '+(pass?'pass':'fail');
-  document.getElementById('res-label').textContent=pass?'✅ Passing Score — Great work!':'❌ Below 70% — Keep studying!';
+  document.getElementById('res-label').textContent=pass?'Passing score. Nice work.':'Below 70%. Keep going.';
   document.getElementById('res-correct').textContent=score;
   document.getElementById('res-wrong').textContent=total-score;
   document.getElementById('res-total').textContent=total;
@@ -655,32 +553,22 @@ function goHub(){
   document.getElementById('quiz').style.display='none';
   document.getElementById('results').style.display='none';
   document.getElementById('hub').style.display='block';
+  setView('hub');
   CSLB.onHub();
 }
 
-// Keep the count on each category card in sync with the actual bank size.
-document.querySelectorAll('.cat-card').forEach(card=>{
-  const m=(card.getAttribute('onclick')||'').match(/startQuiz\('([^']+)'\)/);
-  if(!m||!Q[m[1]])return;
-  const el=card.querySelector('.cat-count');
-  if(el)el.textContent=Q[m[1]].length+' questions';
-});
-
-// Keep the headline question total in sync with the actual banks.
-(function(){
-  const el=document.getElementById('q-total');
-  if(!el)return;
-  el.textContent=Object.values(Q).reduce((n,a)=>n+a.length,0);
-})();
-
-// Hand the bank to progress.js, which owns the tracking, the "what to study"
-// panel, the missed-question review, and the sync to D1.
+// Hand the bank to progress.js, which owns the tracking, the topic page, the
+// missed-question review, and the sync to D1.
 CSLB.init({
   exam:'lawbiz',
   bank:Q,
   labels:TL,
   colors:TC,
+  icons:TI,
   passMark:70,
+  examName:'Law & Business',
+  fullCount:100,
+  onStart:c=>startQuiz(c),
   onRetest:c=>startQuiz(c?'retest:'+c:'retest')
 });
 </script>

@@ -197,6 +197,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <button class="restart-btn" id="res-retry">🔄 Retry This Section</button>
   <button class="cat-btn" onclick="goHub()">← Choose Another Topic</button>
 </div>
+<script src="/progress.js"></script>
 <script>
 const Q={
 licensing:[
@@ -572,7 +573,11 @@ function blueprintExam(n){
 function startQuiz(c){
   cat=c;
   if(c==='all'){pool=blueprintExam(100);}
+  // 'retest' is every question still on the missed list, worst first, so a
+  // short session hits the weakest ones. 'retest:<cat>' narrows it to one topic.
+  else if(c==='retest'||c.indexOf('retest:')===0){pool=CSLB.retestQuestions(c==='retest'?null:c.slice(7));}
   else{pool=shuffle(Q[c]).map(q=>({...q,cat:c}));}
+  if(!pool.length){goHub();return;}
   // Randomize option positions so the correct answer isn't always in the same spot
   pool=pool.map(q=>{
     const tagged=q.opts.map((text,i)=>({text,correct:i===q.ans}));
@@ -623,6 +628,7 @@ function pick(chosen){
     else btn.classList.add('faded');
   });
   if(chosen===q.ans)score++;
+  CSLB.record(q.__qid,q.cat||cat,chosen===q.ans);
   const exp=document.getElementById('q-explanation');
   exp.innerHTML=`<strong>Explanation:</strong> ${q.exp}`;exp.classList.add('show');
   const nb=document.getElementById('next-btn');nb.style.display='block';
@@ -636,6 +642,7 @@ function showResults(){
   document.getElementById('quiz').style.display='none';
   document.getElementById('results').style.display='block';
   const total=pool.length,pct=Math.round((score/total)*100),pass=pct>=70;
+  CSLB.recordAttempt(cat,total,score);
   const s=document.getElementById('res-score');s.textContent=`${pct}%`;s.className='result-score '+(pass?'pass':'fail');
   document.getElementById('res-label').textContent=pass?'✅ Passing Score — Great work!':'❌ Below 70% — Keep studying!';
   document.getElementById('res-correct').textContent=score;
@@ -648,6 +655,7 @@ function goHub(){
   document.getElementById('quiz').style.display='none';
   document.getElementById('results').style.display='none';
   document.getElementById('hub').style.display='block';
+  CSLB.onHub();
 }
 
 // Keep the count on each category card in sync with the actual bank size.
@@ -664,6 +672,17 @@ document.querySelectorAll('.cat-card').forEach(card=>{
   if(!el)return;
   el.textContent=Object.values(Q).reduce((n,a)=>n+a.length,0);
 })();
+
+// Hand the bank to progress.js, which owns the tracking, the "what to study"
+// panel, the missed-question review, and the sync to D1.
+CSLB.init({
+  exam:'lawbiz',
+  bank:Q,
+  labels:TL,
+  colors:TC,
+  passMark:70,
+  onRetest:c=>startQuiz(c?'retest:'+c:'retest')
+});
 </script>
 <script src="/pwa.js"></script>
 </body>

@@ -1,4 +1,7 @@
-const CACHE = 'cslb-v1';
+// Bump CACHE whenever the shell changes. The fetch handler below serves the
+// cached copy first and refreshes it in the background, so a new version lands
+// on the next load instead of waiting for a cache name change.
+const CACHE = 'cslb-v2';
 const ASSETS = [
   '/',
   '/index.html',
@@ -9,7 +12,8 @@ const ASSETS = [
   '/manifest.json',
   '/icon-192.svg',
   '/icon-512.svg',
-  '/pwa.js'
+  '/pwa.js',
+  '/progress.js'
 ];
 
 self.addEventListener('install', e => {
@@ -27,7 +31,27 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request))
-  );
+  const req = e.request;
+
+  // Let everything else go straight to the network: the sync API is a POST to
+  // another origin and must never be served from, or written to, this cache.
+  if (req.method !== 'GET') return;
+  if (new URL(req.url).origin !== self.location.origin) return;
+
+  e.respondWith((async () => {
+    const cache = await caches.open(CACHE);
+    const cached = await cache.match(req);
+
+    const network = fetch(req).then(res => {
+      if (res && res.ok) cache.put(req, res.clone());
+      return res;
+    });
+
+    if (cached) {
+      // Stale-while-revalidate: instant load now, fresh copy next time.
+      e.waitUntil(network.catch(() => {}));
+      return cached;
+    }
+    return network;
+  })());
 });

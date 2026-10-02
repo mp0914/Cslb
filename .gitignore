@@ -1,0 +1,13 @@
+.wrangler/
+node_modules/
+package.json
+package-lock.json
+
+# Reference PDF, 5.5 MB — kept locally, not served from the site
+Documents/
+
+# Local editor/agent config
+.claude/
+
+# Local worker test secrets
+worker/.dev.vars

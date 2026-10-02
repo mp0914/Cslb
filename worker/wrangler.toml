@@ -1,0 +1,10 @@
+name = "cslb-api"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+account_id = "13b6b0a8c5fae55db49d36f9027e5b33"
+workers_dev = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "cslb-db"
+database_id = "c6e69d47-029b-40f6-8e28-28674f1c6491"

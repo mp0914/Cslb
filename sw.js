@@ -1,7 +1,7 @@
 // Bump CACHE whenever the shell changes. The fetch handler below serves the
 // cached copy first and refreshes it in the background, so a new version lands
 // on the next load instead of waiting for a cache name change.
-const CACHE = 'cslb-v4';
+const CACHE = 'cslb-v5';
 const ASSETS = [
   '/',
   '/index.html',

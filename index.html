@@ -74,7 +74,7 @@
   var PASS = { c33: 73, lawbiz: 70 };
   var MASTERY_STREAK = 2; // matches progress.js
   var store = null;
-  try { store = JSON.parse(localStorage.getItem('cslb-progress-v1') || 'null'); } catch (e) {}
+  try { store = JSON.parse(localStorage.getItem('cslb-progress-v2') || 'null'); } catch (e) {}
   if (!store || !store.progress) return;
 
   Object.keys(PASS).forEach(function (exam) {

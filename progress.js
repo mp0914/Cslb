@@ -17,7 +17,10 @@
   'use strict';
 
   var API = 'https://cslb-api.matthew-13b.workers.dev';
-  var STORE_KEY = 'cslb-progress-v1';
+  // Bumping the key resets every device's history; old keys are deleted on load.
+  // v1 held Matt's test answers from before the site went into real use (2026-10-02).
+  var STORE_KEY = 'cslb-progress-v2';
+  var OLD_STORE_KEYS = ['cslb-progress-v1'];
   var TOKEN_KEY = 'cslb-token';
 
   // How many correct answers in a row clear a question off the missed list.
@@ -83,6 +86,7 @@
   }
 
   function loadStore() {
+    try { OLD_STORE_KEYS.forEach(function (k) { localStorage.removeItem(k); }); } catch (e) {}
     try {
       var raw = localStorage.getItem(STORE_KEY);
       if (raw) {

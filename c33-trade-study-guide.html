@@ -6,257 +6,59 @@
 <title>C-33 Study Guide — Painting & Decorating</title>
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/icon-192.svg">
-<meta name="theme-color" content="#1a1d2e">
+<meta name="theme-color" content="#0A0A0C">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="CSLB Prep">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f1117;color:#e8eaf0;min-height:100vh}
-
-/* Header */
-.header{background:linear-gradient(135deg,#1a1d2e 0%,#0f1117 100%);border-bottom:1px solid #2a2d3e;padding:20px 28px;display:flex;align-items:center;justify-content:space-between}
-.header h1{font-size:18px;font-weight:700;color:#fff}
-.header p{font-size:11px;color:#6b7280;margin-top:2px}
-.badge{background:#1e3a5f;color:#60a5fa;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;border:1px solid #1e40af44;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap}
-
-/* Hub */
-#hub{max-width:720px;margin:40px auto;padding:0 20px 60px}
-.hub-title{font-size:26px;font-weight:800;color:#fff;margin-bottom:6px}
-.hub-sub{color:#6b7280;font-size:13px;margin-bottom:32px;line-height:1.6}
-.category-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:580px){.category-grid{grid-template-columns:1fr}}
-.cat-card{background:#161925;border:1px solid #2a2d3e;border-radius:12px;padding:20px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden}
-.cat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);opacity:0;transition:opacity .18s}
-.cat-card:hover,.cat-card:active{border-color:#3a3d50;transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.4)}
-.cat-card:hover::before,.cat-card:active::before{opacity:1}
-.cat-icon{font-size:24px;margin-bottom:10px;display:block}
-.cat-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:5px}
-.cat-desc{font-size:11px;color:#6b7280;line-height:1.5}
-.cat-count{margin-top:12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-
-/* Section view */
-#section-view{display:none;max-width:680px;margin:0 auto;padding:0 20px 80px}
-.section-meta{display:flex;align-items:center;justify-content:space-between;padding:20px 0 16px}
-.back-btn{background:none;border:1px solid #2a2d3e;color:#9ca3af;padding:7px 13px;border-radius:8px;cursor:pointer;font-size:12px;transition:all .15s}
-.back-btn:hover{color:#fff;border-color:#3a3d50}
-.section-title-bar{display:flex;align-items:center;gap:10px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #2a2d3e}
-.section-icon-lg{font-size:28px}
-.section-title-text h2{font-size:18px;font-weight:800;color:#fff}
-.section-title-text p{font-size:11px;color:#6b7280;margin-top:2px}
-
-/* Topic list */
-.topic-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-.topic-btn{background:#161925;border:1px solid #2a2d3e;border-radius:10px;padding:14px 16px;cursor:pointer;text-align:left;transition:all .15s;display:flex;align-items:center;justify-content:space-between;width:100%}
-.topic-btn:hover,.topic-btn:active{border-color:var(--accent);background:#1a1d2e}
-.topic-btn-left{display:flex;align-items:center;gap:12px}
-.topic-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
-.topic-btn-name{font-size:14px;font-weight:600;color:#e8eaf0}
-.topic-arrow{font-size:12px;color:#6b7280;transition:transform .15s}
-.topic-btn:hover .topic-arrow{transform:translateX(3px);color:var(--accent)}
-
-/* Content view */
-#content-view{display:none;max-width:680px;margin:0 auto;padding:0 20px 80px}
-.content-meta{display:flex;align-items:center;justify-content:space-between;padding:20px 0 16px}
-.content-breadcrumb{font-size:11px;color:#6b7280}
-.content-breadcrumb span{color:var(--accent-current,#60a5fa)}
-.content-header{margin-bottom:20px}
-.content-header h2{font-size:20px;font-weight:800;color:#fff;line-height:1.3}
-.content-body{display:flex;flex-direction:column;gap:0}
-
-/* Content blocks */
-.block-h2{font-size:18px;font-weight:800;color:#fff;margin:28px 0 12px;padding-bottom:8px;border-bottom:1px solid #2a2d3e}
-.block-h2:first-child{margin-top:0}
-.block-h3{font-size:15px;font-weight:700;color:var(--accent-current,#60a5fa);margin:20px 0 10px}
-.block-p{font-size:15px;color:#c9ccd6;line-height:1.7;margin-bottom:12px}
-.block-ul{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;padding-left:4px}
-.block-li{font-size:15px;color:#c9ccd6;line-height:1.6;display:flex;gap:10px;align-items:flex-start}
-.block-li::before{content:'•';color:var(--accent-current,#60a5fa);flex-shrink:0;margin-top:2px;font-size:16px;line-height:1.3}
-
-/* Callouts */
-.callout{border-radius:10px;padding:16px;margin:14px 0;border-left:3px solid var(--accent-current,#60a5fa)}
-.callout.blue{background:#0d1f3c;border-color:#3b82f6}
-.callout.green{background:#052e16;border-color:#16a34a}
-.callout.red{background:#2a0a0a;border-color:#dc2626}
-.callout.gold{background:#1c1504;border-color:#ca8a04}
-.callout-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
-.callout.blue .callout-title{color:#60a5fa}
-.callout.green .callout-title{color:#4ade80}
-.callout.red .callout-title{color:#f87171}
-.callout.gold .callout-title{color:#fbbf24}
-.callout-body{display:flex;flex-direction:column;gap:4px}
-.callout-item{font-size:12px;line-height:1.55;display:flex;gap:7px;align-items:flex-start}
-.callout.blue .callout-item{color:#93c5fd}
-.callout.green .callout-item{color:#86efac}
-.callout.red .callout-item{color:#fca5a5}
-.callout.gold .callout-item{color:#fde68a}
-.callout-item::before{content:'→';flex-shrink:0;opacity:.7;margin-top:1px}
-.callout-item.nobullet::before{display:none}
-
-/* Tables */
-.block-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:12px;border-radius:8px;overflow:hidden}
-.block-table thead tr{background:#1a1d2e}
-.block-table thead th{padding:10px 12px;text-align:left;font-weight:700;color:#9ca3af;font-size:11px;text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid #2a2d3e}
-.block-table tbody tr{border-bottom:1px solid #1f2235}
-.block-table tbody tr:last-child{border-bottom:none}
-.block-table tbody tr:nth-child(even){background:#0f1117}
-.block-table tbody tr:nth-child(odd){background:#161925}
-.block-table td{padding:10px 12px;color:#c9ccd6;line-height:1.5;vertical-align:top}
-.block-table td:first-child{font-weight:600;color:#e8eaf0;white-space:nowrap}
-.block-table td strong{color:#fff;font-weight:700}
-
-/* Bottom nav */
-.content-nav{display:flex;gap:8px;margin-top:24px;padding-top:20px;border-top:1px solid #2a2d3e}
-.nav-btn{flex:1;background:#161925;border:1px solid #2a2d3e;color:#9ca3af;padding:11px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:600;transition:all .15s}
-.nav-btn:hover:not(:disabled){background:#1a1d2e;color:#fff;border-color:#3a3d50}
-.nav-btn:disabled{opacity:.4;cursor:not-allowed}
-.nav-btn.primary{background:#1e3a5f;border-color:#1e40af55;color:#60a5fa}
-.nav-btn.primary:hover{background:#1e40af44}
-
-.cross-link-btn{display:flex;align-items:center;gap:18px;width:100%;margin-bottom:32px;padding:20px;background:linear-gradient(135deg,#1e3a5f,#1a2f50);border:1px solid #1e40af55;border-radius:14px;cursor:pointer;text-decoration:none;transition:all .18s;box-sizing:border-box}
-.cross-link-btn:hover{background:linear-gradient(135deg,#1e40af33,#1e3a5f);transform:translateY(-1px);border-color:#1e40af88}
-.cross-link-icon{font-size:32px;flex-shrink:0;line-height:1}
-.cross-link-text{flex:1;min-width:0}
-.cross-link-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:4px;line-height:1.2}
-.cross-link-sub{font-size:12px;color:#93c5fd;line-height:1.4}
-.cross-link-arrow{font-size:20px;color:#60a5fa;flex-shrink:0;font-weight:700}
-
-/* ── Audio player ── */
-.audio-bar{position:sticky;bottom:16px;z-index:50;margin:24px 0 8px;background:linear-gradient(180deg,#1a1d2e,#161925);border:1px solid #2a2d3e;border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 28px rgba(0,0,0,.5)}
-.audio-btn{background:#1e3a5f;border:1px solid rgba(30,64,175,.4);color:#60a5fa;width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;font-weight:700;flex-shrink:0;transition:background .15s}
-.audio-btn:hover{background:rgba(30,64,175,.4)}
-.audio-btn.secondary{background:transparent;color:#9ca3af;border-color:#2a2d3e}
-.audio-btn.secondary:hover{color:#fff;background:#1f2235}
-.audio-btn:disabled{opacity:.35;cursor:default}
-.audio-label{flex:1;font-size:11px;color:#9ca3af;line-height:1.4;min-width:0}
-.audio-label strong{display:block;color:#e8eaf0;font-size:13px;font-weight:700;margin-bottom:2px}
-.audio-speed{background:transparent;border:1px solid #2a2d3e;color:#9ca3af;padding:8px 12px;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;transition:all .15s;min-width:54px}
-.audio-speed:hover{color:#fff;border-color:#3a3d50}
-.audio-progress{height:3px;background:#2a2d3e;border-radius:2px;margin-top:8px;overflow:hidden}
-.audio-progress-fill{height:100%;background:#60a5fa;width:0%;transition:width .3s}
-</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/theme.css">
 </head>
 <body>
-
-<div class="header">
-  <div><h1>C-33 Trade Study Guide</h1><p>Painting & Decorating Trade Exam — California CSLB</p></div>
-  <span class="badge">Trade Exam</span>
-</div>
+<header class="app-header">
+  <div class="app-header-in">
+    <a class="brand" href="index.html"><span class="brand-mark">C33</span><span class="brand-name">C-33 Prep</span></a>
+    <nav class="exam-switch" aria-label="Exam">
+      <a href="c33-trade-study-guide.html" class="on" aria-current="page">Trade exam</a>
+      <a href="law-and-business-study-guide.html">Law &amp; Business</a>
+    </nav>
+    <div class="hdr-space"></div>
+    <nav class="hdr-links" aria-label="Site">
+      <a href="c33-trade-test.html">Practice test</a>
+      <a href="index.html">Dashboard</a>
+    </nav>
+  </div>
+</header>
 
 <!-- HUB -->
-<div id="hub">
-  <a href="index.html" class="cross-link-btn">
-    <span class="cross-link-icon">🏠</span>
-    <div class="cross-link-text">
-      <div class="cross-link-title">Back to Dashboard</div>
-      <div class="cross-link-sub">Choose a different topic</div>
-    </div>
-    <span class="cross-link-arrow">→</span>
-  </a>
-  <a href="c33-trade-test.html" class="cross-link-btn">
-    <span class="cross-link-icon">📝</span>
-    <div class="cross-link-text">
-      <div class="cross-link-title">Practice Test</div>
-      <div class="cross-link-sub">473 exam-style questions across all C-33 topics</div>
-    </div>
-    <span class="cross-link-arrow">→</span>
-  </a>
-  <h2 class="hub-title">Choose a Section</h2>
-  <p class="hub-sub">Tap any section to study. Each section covers the key rules, products, techniques, and concepts you need to pass the C-33 trade exam.</p>
-  <div class="category-grid">
-
-    <div class="cat-card" style="--accent:#facc15" onclick="openSection('exam_strategy')">
-      <span class="cat-icon">🎯</span>
-      <div class="cat-name">Exam Strategy</div>
-      <div class="cat-desc">How the exam is weighted, high-yield concepts, study plan, and time management.</div>
-      <div class="cat-count" style="color:#facc15">6 topics</div>
-    </div>
-
-    <div class="cat-card" style="--accent:#60a5fa" onclick="openSection('surface_prep')">
-      <span class="cat-icon">🧹</span>
-      <div class="cat-name">Surface Preparation</div>
-      <div class="cat-desc">Cleaning, repair, surface cleaning levels, moisture, profile, lead-safe practices.</div>
-      <div class="cat-count" style="color:#60a5fa">7 topics</div>
-    </div>
-
-    <div class="cat-card" style="--accent:#a78bfa" onclick="openSection('coatings')">
-      <span class="cat-icon">🪣</span>
-      <div class="cat-name">Coatings & Primers</div>
-      <div class="cat-desc">Acrylic, alkyd, epoxy, urethane, elastomeric, primer selection logic.</div>
-      <div class="cat-count" style="color:#a78bfa">6 topics</div>
-    </div>
-
-    <div class="cat-card" style="--accent:#34d399" onclick="openSection('spray')">
-      <span class="cat-icon">🌬️</span>
-      <div class="cat-name">Spray Application</div>
-      <div class="cat-desc">Airless tips, HVLP, technique, defects, back-rolling, equipment.</div>
-      <div class="cat-count" style="color:#34d399">5 topics</div>
-    </div>
-
-    <div class="cat-card" style="--accent:#fb923c" onclick="openSection('brush_roller')">
-      <span class="cat-icon">🖌️</span>
-      <div class="cat-name">Brush & Roller</div>
-      <div class="cat-desc">Brush types, nap selection, cutting in, wet edge, technique.</div>
-      <div class="cat-count" style="color:#fb923c">4 topics</div>
-    </div>
-    <div class="cat-card" style="--accent:#f472b6" onclick="openSection('wallcoverings')">
-      <span class="cat-icon">🧻</span>
-      <div class="cat-name">Wallcoverings</div>
-      <div class="cat-desc">Types and weights, wall prep and sizing, booking and seams, removal, and failures.</div>
-      <div class="cat-count" style="color:#f472b6">5 topics</div>
-    </div>
-
-
-    <div class="cat-card" style="--accent:#f472b6" onclick="openSection('safety_falls')">
-      <span class="cat-icon">🪜</span>
-      <div class="cat-name">Falls, Ladders & Scaffolds</div>
-      <div class="cat-desc">Cal/OSHA fall protection, ladder rules, scaffold standards, harnesses.</div>
-      <div class="cat-count" style="color:#f472b6">5 topics</div>
-    </div>
-
-    <div class="cat-card" style="--accent:#facc15" onclick="openSection('safety_resp')">
-      <span class="cat-icon">😷</span>
-      <div class="cat-name">Respirators & Lead-Safe Work</div>
-      <div class="cat-desc">P100, supplied air, fit testing, lead-safe renovation rules, silica, confined space.</div>
-      <div class="cat-count" style="color:#facc15">5 topics</div>
-    </div>
-
-    <div class="cat-card" style="--accent:#38bdf8" onclick="openSection('estimating')">
-      <span class="cat-icon">🧮</span>
-      <div class="cat-name">Estimating & Math</div>
-      <div class="cat-desc">Area, coverage, mil math, theoretical coverage, labor and cost.</div>
-      <div class="cat-count" style="color:#38bdf8">4 topics</div>
-    </div>
-
-    <div class="cat-card" style="--accent:#f97316" onclick="openSection('failures')">
-      <span class="cat-icon">⚠️</span>
-      <div class="cat-name">Coating Failures</div>
-      <div class="cat-desc">Diagnosing peeling, blistering, alligatoring, saponification, fish eyes.</div>
-      <div class="cat-count" style="color:#f97316">4 topics</div>
-    </div>
-
-    <div class="cat-card" style="--accent:#ef4444" onclick="openSection('environmental')">
-      <span class="cat-icon">🌎</span>
-      <div class="cat-name">Environmental & PM</div>
-      <div class="cat-desc">VOC limits, waste disposal, plans, specs, change orders, contracts.</div>
-      <div class="cat-count" style="color:#ef4444">4 topics</div>
-    </div>
-
-    <div class="cat-card" style="--accent:#c084fc" onclick="openSection('quickref')">
-      <span class="cat-icon">⚡</span>
-      <div class="cat-name">Quick Reference</div>
-      <div class="cat-desc">Numbers, formulas, traps, checklists — drill before exam day.</div>
-      <div class="cat-count" style="color:#c084fc">3 topics</div>
-    </div>
-
+<main id="hub" class="wrap">
+  <div class="page-head">
+    <span class="eyebrow">Trade exam</span>
+    <h1>Study guide</h1>
+    <p>Tap any section to study. Each section covers the key rules, products, techniques, and concepts you need to pass the C-33 trade exam.</p>
   </div>
-</div>
+  <div class="guide-grid">
+    <button type="button" class="guide-card" style="--c:#C5F25A" onclick="openSection('exam_strategy')"><span class="t-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span><span class="gc-name">Exam Strategy</span><span class="gc-desc">How the exam is weighted, high-yield concepts, study plan, and time management.</span><span class="gc-count">6 topics</span></button>
+    <button type="button" class="guide-card" style="--c:#7DA2FF" onclick="openSection('surface_prep')"><span class="t-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></span><span class="gc-name">Surface Preparation</span><span class="gc-desc">Cleaning, repair, surface cleaning levels, moisture, profile, lead-safe practices.</span><span class="gc-count">7 topics</span></button>
+    <button type="button" class="guide-card" style="--c:#A78BFA" onclick="openSection('coatings')"><span class="t-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg></span><span class="gc-name">Coatings & Primers</span><span class="gc-desc">Acrylic, alkyd, epoxy, urethane, elastomeric, primer selection logic.</span><span class="gc-count">6 topics</span></button>
+    <button type="button" class="guide-card" style="--c:#34D3D3" onclick="openSection('spray')"><span class="t-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h.01M7 5h.01M11 7h.01M3 7h.01M7 9h.01M3 11h.01"/><rect x="15" y="5" width="4" height="4"/><path d="m19 9 2 2v10c0 .6-.4 1-1 1h-6c-.6 0-1-.4-1-1V11l2-2"/><path d="m13 14 8-2"/><path d="m13 19 8-2"/></svg></span><span class="gc-name">Spray Application</span><span class="gc-desc">Airless tips, HVLP, technique, defects, back-rolling, equipment.</span><span class="gc-count">5 topics</span></button>
+    <button type="button" class="guide-card" style="--c:#FB9A4B" onclick="openSection('brush_roller')"><span class="t-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.37 2.63 14 7l-1.59-1.59a2 2 0 0 0-2.82 0L8 7l9 9 1.59-1.59a2 2 0 0 0 0-2.82L17 10l4.37-4.37a2.12 2.12 0 1 0-3-3Z"/><path d="M9 8c-2 3-4 3.5-7 4l8 10c2-1 6-5 6-7"/></svg></span><span class="gc-name">Brush & Roller</span><span class="gc-desc">Brush types, nap selection, cutting in, wet edge, technique.</span><span class="gc-count">4 topics</span></button>
+    <button type="button" class="guide-card" style="--c:#D6A77A" onclick="openSection('wallcoverings')"><span class="t-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/></svg></span><span class="gc-name">Wallcoverings</span><span class="gc-desc">Types and weights, wall prep and sizing, booking and seams, removal, and failures.</span><span class="gc-count">5 topics</span></button>
+    <button type="button" class="guide-card" style="--c:#F58BC8" onclick="openSection('safety_falls')"><span class="t-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2v20"/><path d="M17 2v20"/><path d="M7 6h10"/><path d="M7 11h10"/><path d="M7 16h10"/></svg></span><span class="gc-name">Falls, Ladders & Scaffolds</span><span class="gc-desc">Cal/OSHA fall protection, ladder rules, scaffold standards, harnesses.</span><span class="gc-count">5 topics</span></button>
+    <button type="button" class="guide-card" style="--c:#F5C451" onclick="openSection('safety_resp')"><span class="t-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><span class="gc-name">Respirators & Lead-Safe Work</span><span class="gc-desc">P100, supplied air, fit testing, lead-safe renovation rules, silica, confined space.</span><span class="gc-count">5 topics</span></button>
+    <button type="button" class="guide-card" style="--c:#5AB8F5" onclick="openSection('estimating')"><span class="t-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"/><path d="M16 14v4"/></svg></span><span class="gc-name">Estimating & Math</span><span class="gc-desc">Area, coverage, mil math, theoretical coverage, labor and cost.</span><span class="gc-count">4 topics</span></button>
+    <button type="button" class="guide-card" style="--c:#F97366" onclick="openSection('failures')"><span class="t-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><span class="gc-name">Coating Failures</span><span class="gc-desc">Diagnosing peeling, blistering, alligatoring, saponification, fish eyes.</span><span class="gc-count">4 topics</span></button>
+    <button type="button" class="guide-card" style="--c:#4FD1A5" onclick="openSection('environmental')"><span class="t-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span><span class="gc-name">Environmental & PM</span><span class="gc-desc">VOC limits, waste disposal, plans, specs, change orders, contracts.</span><span class="gc-count">4 topics</span></button>
+    <button type="button" class="guide-card" style="--c:#C4B5FD" onclick="openSection('quickref')"><span class="t-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><span class="gc-name">Quick Reference</span><span class="gc-desc">Numbers, formulas, traps, checklists — drill before exam day.</span><span class="gc-count">3 topics</span></button>
+  </div>
+</main>
 
 <!-- SECTION VIEW -->
-<div id="section-view">
-  <div class="section-meta">
-    <button class="back-btn" onclick="goHub()">← Back</button>
+<main id="section-view" class="wrap">
+  <div class="view-top">
+    <button type="button" class="icon-btn" onclick="goHub()" aria-label="Back to sections"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
   </div>
   <div class="section-title-bar">
     <span class="section-icon-lg" id="sv-icon"></span>
@@ -266,12 +68,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
   </div>
   <div class="topic-list" id="sv-topics"></div>
-</div>
+</main>
 
 <!-- CONTENT VIEW -->
-<div id="content-view">
-  <div class="content-meta">
-    <button class="back-btn" id="cv-back">← Back</button>
+<main id="content-view" class="wrap">
+  <div class="view-top">
+    <button type="button" class="icon-btn" id="cv-back" aria-label="Back to topics"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
     <div class="content-breadcrumb" id="cv-breadcrumb"></div>
   </div>
   <div class="content-header">
@@ -279,29 +81,35 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
   <div class="content-body" id="cv-body"></div>
   <div class="audio-bar" id="audio-bar">
-    <button class="audio-btn" id="audio-play" onclick="audioToggle()" aria-label="Play or pause">▶</button>
-    <button class="audio-btn secondary" id="audio-stop" onclick="audioStop()" aria-label="Stop">■</button>
+    <button type="button" class="audio-btn" id="audio-play" onclick="audioToggle()" aria-label="Play or pause"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></button>
+    <button type="button" class="audio-btn secondary" id="audio-stop" onclick="audioStop()" aria-label="Stop"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg></button>
     <div class="audio-label" id="audio-label">
       <strong>Listen to this section</strong>
       Tap play to hear it read aloud
       <div class="audio-progress"><div class="audio-progress-fill" id="audio-progress-fill"></div></div>
     </div>
-    <button class="audio-speed" id="audio-speed" onclick="audioSpeedCycle()" aria-label="Change speed">1.0×</button>
+    <button type="button" class="audio-speed" id="audio-speed" onclick="audioSpeedCycle()" aria-label="Change speed">1.0×</button>
   </div>
   <div class="content-nav">
-    <button class="nav-btn" id="cv-prev" onclick="navTopic(-1)">← Prev</button>
-    <button class="nav-btn" onclick="backToSection()">All Topics</button>
-    <button class="nav-btn primary" id="cv-next" onclick="navTopic(1)">Next →</button>
+    <button type="button" class="btn btn-ghost" id="cv-prev" onclick="navTopic(-1)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg><span>Prev</span></button>
+    <button type="button" class="btn btn-ghost" onclick="backToSection()">All topics</button>
+    <button type="button" class="btn btn-lime" id="cv-next" onclick="navTopic(1)"></button>
   </div>
-</div>
+</main>
+
+<nav class="bottom-nav three" aria-label="Sections">
+  <a href="c33-trade-test.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Practice</span></a>
+  <button type="button" class="on" onclick="goHub()"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5V21h16v-4"/></svg><span>Guide</span></button>
+  <a href="index.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M10 21v-6h4v6"/></svg><span>Dashboard</span></a>
+</nav>
 
 <script>
 // ─── SECTIONS DEFINITION ──────────────────────────────────────────────────
 const SECTIONS = {
 
 exam_strategy:{
-  icon:'🎯', title:'Exam Strategy', subtitle:'How to study, what to prioritize, how to take the exam',
-  accent:'#10b981',
+  icon:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>', title:'Exam Strategy', subtitle:'How to study, what to prioritize, how to take the exam',
+  accent:'#C5F25A',
   topics:[
     {name:'Topic Weighting on the Exam', id:'st_weighting'},
     {name:'Top 25 High-Yield Concepts', id:'st_top25'},
@@ -313,8 +121,8 @@ exam_strategy:{
 },
 
 surface_prep:{
-  icon:'🧹', title:'Surface Preparation', subtitle:'The single largest exam category — master this first',
-  accent:'#60a5fa',
+  icon:'<path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/>', title:'Surface Preparation', subtitle:'The single largest exam category — master this first',
+  accent:'#7DA2FF',
   topics:[
     {name:'Why Prep Is Everything', id:'sp_why'},
     {name:'The Universal Prep Sequence', id:'sp_sequence'},
@@ -328,8 +136,8 @@ surface_prep:{
 },
 
 coatings:{
-  icon:'🪣', title:'Coatings & Primers', subtitle:'Right product for the substrate and environment',
-  accent:'#a78bfa',
+  icon:'<path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/>', title:'Coatings & Primers', subtitle:'Right product for the substrate and environment',
+  accent:'#A78BFA',
   topics:[
     {name:'Anatomy of a Paint', id:'co_anatomy'},
     {name:'Binder Types & Their Properties', id:'co_binders'},
@@ -342,8 +150,8 @@ coatings:{
 },
 
 spray:{
-  icon:'🌬️', title:'Spray Application', subtitle:'Airless, HVLP, technique, and troubleshooting',
-  accent:'#34d399',
+  icon:'<path d="M3 3h.01M7 5h.01M11 7h.01M3 7h.01M7 9h.01M3 11h.01"/><rect x="15" y="5" width="4" height="4"/><path d="m19 9 2 2v10c0 .6-.4 1-1 1h-6c-.6 0-1-.4-1-1V11l2-2"/><path d="m13 14 8-2"/><path d="m13 19 8-2"/>', title:'Spray Application', subtitle:'Airless, HVLP, technique, and troubleshooting',
+  accent:'#34D3D3',
   topics:[
     {name:'Three Spray Systems Compared', id:'sp2_systems'},
     {name:'Airless Tip Numbering — The Math', id:'sp2_tips'},
@@ -354,8 +162,8 @@ spray:{
 },
 
 brush_roller:{
-  icon:'🖌️', title:'Brush & Roller', subtitle:'Brush types, roller naps, and proper technique',
-  accent:'#fb923c',
+  icon:'<path d="M18.37 2.63 14 7l-1.59-1.59a2 2 0 0 0-2.82 0L8 7l9 9 1.59-1.59a2 2 0 0 0 0-2.82L17 10l4.37-4.37a2.12 2.12 0 1 0-3-3Z"/><path d="M9 8c-2 3-4 3.5-7 4l8 10c2-1 6-5 6-7"/>', title:'Brush & Roller', subtitle:'Brush types, roller naps, and proper technique',
+  accent:'#FB9A4B',
   topics:[
     {name:'Brush Selection by Paint Type', id:'br_brushes'},
     {name:'Roller Nap to Surface Texture', id:'br_naps'},
@@ -365,8 +173,8 @@ brush_roller:{
 },
 
 wallcoverings:{
-  icon:'🧻', title:'Wallcoverings', subtitle:'Types, wall prep, hanging, removal, and the problems that follow',
-  accent:'#f472b6',
+  icon:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/>', title:'Wallcoverings', subtitle:'Types, wall prep, hanging, removal, and the problems that follow',
+  accent:'#D6A77A',
   topics:[
     {name:'Types of Wallcovering', id:'wc_types'},
     {name:'Preparing Walls for Wallcovering', id:'wc_prep'},
@@ -376,8 +184,8 @@ wallcoverings:{
   ]
 },
 safety_falls:{
-  icon:'🪜', title:'Falls, Ladders & Scaffolds', subtitle:'Cal/OSHA fall protection and access equipment',
-  accent:'#f472b6',
+  icon:'<path d="M7 2v20"/><path d="M17 2v20"/><path d="M7 6h10"/><path d="M7 11h10"/><path d="M7 16h10"/>', title:'Falls, Ladders & Scaffolds', subtitle:'Cal/OSHA fall protection and access equipment',
+  accent:'#F58BC8',
   topics:[
     {name:'Cal/OSHA Fall Protection Triggers', id:'sf_triggers'},
     {name:'Ladder Safety Rules', id:'sf_ladders'},
@@ -388,8 +196,8 @@ safety_falls:{
 },
 
 safety_resp:{
-  icon:'😷', title:'Respirators & Lead-Safe Work', subtitle:'Respiratory protection, lead-safe work, hazardous exposures',
-  accent:'#facc15',
+  icon:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>', title:'Respirators & Lead-Safe Work', subtitle:'Respiratory protection, lead-safe work, hazardous exposures',
+  accent:'#F5C451',
   topics:[
     {name:'Respirator Types & Filter Ratings', id:'sr_respirators'},
     {name:'Lead-Based Paint Rules', id:'sr_rrp'},
@@ -400,8 +208,8 @@ safety_resp:{
 },
 
 estimating:{
-  icon:'🧮', title:'Estimating & Math', subtitle:'Area, coverage, mils, labor, materials',
-  accent:'#38bdf8',
+  icon:'<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"/><path d="M16 14v4"/>', title:'Estimating & Math', subtitle:'Area, coverage, mils, labor, materials',
+  accent:'#5AB8F5',
   topics:[
     {name:'Area Calculations', id:'es_area'},
     {name:'Coverage & Gallons Math', id:'es_coverage'},
@@ -411,8 +219,8 @@ estimating:{
 },
 
 failures:{
-  icon:'⚠️', title:'Coating Failures', subtitle:'Diagnosing problems and identifying root causes',
-  accent:'#f97316',
+  icon:'<path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/>', title:'Coating Failures', subtitle:'Diagnosing problems and identifying root causes',
+  accent:'#F97366',
   topics:[
     {name:'The Diagnostic Mindset', id:'fa_diagnostic'},
     {name:'Adhesion Failures (Peeling, Lifting)', id:'fa_adhesion'},
@@ -422,8 +230,8 @@ failures:{
 },
 
 environmental:{
-  icon:'🌎', title:'Environmental & PM', subtitle:'VOC rules, waste, contracts, and project workflow',
-  accent:'#ef4444',
+  icon:'<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>', title:'Environmental & PM', subtitle:'VOC rules, waste, contracts, and project workflow',
+  accent:'#4FD1A5',
   topics:[
     {name:'VOC Limits & Air Districts', id:'en_voc'},
     {name:'Hazardous Waste & Disposal', id:'en_waste'},
@@ -434,8 +242,8 @@ environmental:{
 },
 
 quickref:{
-  icon:'⚡', title:'Quick Reference', subtitle:'Numbers, formulas, and exam traps to drill last',
-  accent:'#c084fc',
+  icon:'<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>', title:'Quick Reference', subtitle:'Numbers, formulas, and exam traps to drill last',
+  accent:'#C4B5FD',
   topics:[
     {name:'Every Number You Must Memorize', id:'qr_numbers'},
     {name:'Math Formulas Cheat Sheet', id:'qr_formulas'},
@@ -577,6 +385,13 @@ qr_traps: {title: "Exam Traps & Distractor Patterns", html: "\n<div class=\"bloc
 
 };
 
+// Line icons the views draw (inner SVG paths, 24x24 stroke).
+function svgIcon(p){return '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">'+p+'</svg>';}
+const ICON_CHEVRON=svgIcon('<path d="m9 6 6 6-6 6"/>');
+const ICON_ARROW=svgIcon('<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>');
+const ICON_PLAY=svgIcon('<path d="M7 4.5v15l12-7.5z"/>');
+const ICON_PAUSE=svgIcon('<path d="M8 5v14"/><path d="M16 5v14"/>');
+
 // ─── STATE ─────────────────────────────────────────────────────────────────
 let currentSection = null;
 let currentTopicIndex = 0;
@@ -597,7 +412,7 @@ function openSection(sectionKey) {
   const sv = document.getElementById('section-view');
   sv.style.display = 'block';
 
-  document.getElementById('sv-icon').textContent = sec.icon;
+  document.getElementById('sv-icon').innerHTML = svgIcon(sec.icon);
   document.getElementById('sv-title').textContent = sec.title;
   document.getElementById('sv-subtitle').textContent = sec.subtitle;
 
@@ -612,7 +427,7 @@ function openSection(sectionKey) {
         <span class="topic-dot"></span>
         <span class="topic-btn-name">${t.name}</span>
       </div>
-      <span class="topic-arrow">›</span>`;
+      <span class="topic-arrow">${ICON_CHEVRON}</span>`;
     btn.onclick = () => openTopic(i);
     topicsEl.appendChild(btn);
   });
@@ -631,7 +446,7 @@ function openTopic(topicIndex) {
   cv.style.display = 'block';
 
   document.getElementById('cv-back').onclick = backToSection;
-  document.getElementById('cv-breadcrumb').innerHTML = `${sec.icon} <span>${sec.title}</span>`;
+  document.getElementById('cv-breadcrumb').textContent = sec.title;
   document.getElementById('cv-title').textContent = topic.name;
   document.getElementById('cv-body').innerHTML = CONTENT[topic.id]?.html || '<p class="block-p">Content coming soon.</p>';
 
@@ -639,7 +454,7 @@ function openTopic(topicIndex) {
   const nextBtn = document.getElementById('cv-next');
   prevBtn.disabled = topicIndex === 0;
   nextBtn.disabled = topicIndex === sec.topics.length - 1;
-  nextBtn.textContent = topicIndex === sec.topics.length - 1 ? 'All Topics' : 'Next →';
+  nextBtn.innerHTML = topicIndex === sec.topics.length - 1 ? 'All topics' : 'Next' + ICON_ARROW;
 
   window.scrollTo(0, 0);
 }
@@ -1058,13 +873,13 @@ function updateAudioUI() {
   const pct = total ? Math.min(100, Math.round((AUDIO.idx / total) * 100)) : 0;
   if (fill) fill.style.width = pct + '%';
   if (AUDIO.state === 'playing') {
-    btn.innerHTML = '❚❚';
+    btn.innerHTML = ICON_PAUSE;
     label.innerHTML = `<strong>Reading aloud…</strong>Part ${AUDIO.idx + 1} of ${total}<div class="audio-progress"><div class="audio-progress-fill" style="width:${pct}%"></div></div>`;
   } else if (AUDIO.state === 'paused') {
-    btn.innerHTML = '▶';
+    btn.innerHTML = ICON_PLAY;
     label.innerHTML = `<strong>Paused</strong>Part ${AUDIO.idx + 1} of ${total} — tap to resume<div class="audio-progress"><div class="audio-progress-fill" style="width:${pct}%"></div></div>`;
   } else {
-    btn.innerHTML = '▶';
+    btn.innerHTML = ICON_PLAY;
     label.innerHTML = `<strong>Listen to this section</strong>Tap play to hear it read aloud<div class="audio-progress"><div class="audio-progress-fill" style="width:0%"></div></div>`;
   }
 }
@@ -1079,10 +894,10 @@ document.addEventListener('visibilitychange', () => {
 });
 
 // Keep the topic count on each hub card in sync with the actual section data.
-document.querySelectorAll('.cat-card').forEach(card => {
+document.querySelectorAll('.guide-card').forEach(card => {
   const m = (card.getAttribute('onclick') || '').match(/openSection\('([^']+)'\)/);
   if (!m || !SECTIONS[m[1]]) return;
-  const el = card.querySelector('.cat-count');
+  const el = card.querySelector('.gc-count');
   if (el) el.textContent = SECTIONS[m[1]].topics.length + ' topics';
 });
 </script>

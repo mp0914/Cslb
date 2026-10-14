@@ -2251,7 +2251,8 @@ function goHub() {
 }
 
 // ─── AUDIO PLAYBACK ────────────────────────────────────────────────────────
-const AUDIO = { chunks: [], idx: 0, rate: 1.0, state: 'idle', voice: null };
+const AUDIO = { chunks: [], idx: 0, rate: 1.0, state: 'idle', voice: null,
+  defaultVoice: false, spoke: false, error: '' };
 const SPEEDS = [0.75, 1.0, 1.25, 1.5, 2.0];
 
 // Names that strongly hint at an English-speaking male voice
@@ -2591,17 +2592,23 @@ function speakNext() {
   const chunk = AUDIO.chunks[AUDIO.idx];
   const u = new SpeechSynthesisUtterance(chunk.text);
   u.rate = AUDIO.rate;
-  // Always force English. Prefer en-GB; fall back to en-US if no GB voice.
-  u.lang = (AUDIO.voice && /en-?gb/i.test(AUDIO.voice.lang)) ? 'en-GB'
-         : (AUDIO.voice && /en/i.test(AUDIO.voice.lang)) ? AUDIO.voice.lang
-         : 'en-GB';
-  if (!AUDIO.voice) loadVoice();
-  // Only assign a voice if we found an English one. Otherwise let the engine
-  // pick its own English voice based on u.lang (avoids falling through to a
-  // Spanish system default).
-  if (AUDIO.voice && /^en/i.test(AUDIO.voice.lang || '')) u.voice = AUDIO.voice;
+  if (AUDIO.defaultVoice) {
+    // The picked voice failed on this device; let the engine use its own English voice
+    u.lang = /^en/i.test(navigator.language || '') ? navigator.language : 'en-US';
+  } else {
+    // Always force English. Prefer en-GB; fall back to en-US if no GB voice.
+    u.lang = (AUDIO.voice && /en-?gb/i.test(AUDIO.voice.lang)) ? 'en-GB'
+           : (AUDIO.voice && /en/i.test(AUDIO.voice.lang)) ? AUDIO.voice.lang
+           : 'en-GB';
+    if (!AUDIO.voice) loadVoice();
+    // Only assign a voice if we found an English one. Otherwise let the engine
+    // pick its own English voice based on u.lang (avoids falling through to a
+    // Spanish system default).
+    if (AUDIO.voice && /^en/i.test(AUDIO.voice.lang || '')) u.voice = AUDIO.voice;
+  }
   u.onend = () => {
     if (AUDIO.state !== 'playing') return;
+    AUDIO.spoke = true;
     AUDIO.idx++;
     // Schedule next chunk after a calibrated pause (scaled by speed so faster
     // playback also tightens the gaps)
@@ -2612,11 +2619,26 @@ function speakNext() {
       if (AUDIO.state === 'playing') speakNext();
     }, delay);
   };
-  u.onerror = () => {
-    if (AUDIO.state === 'playing') {
+  u.onerror = (e) => {
+    const err = (e && e.error) || 'unknown';
+    // Our own cancel() (pause, stop, speed change) raises these; not a failure
+    if (err === 'interrupted' || err === 'canceled') return;
+    if (AUDIO.state !== 'playing') return;
+    // Retry the same part once with the engine's default voice
+    if (u.voice && !AUDIO.defaultVoice) {
+      AUDIO.defaultVoice = true;
+      speakNext();
+      return;
+    }
+    // One bad part mid-section is skipped; failing before anything was read is shown
+    if (AUDIO.spoke) {
       AUDIO.idx++;
       speakNext();
+      return;
     }
+    AUDIO.state = 'error';
+    AUDIO.error = err;
+    updateAudioUI();
   };
   speechSynthesis.speak(u);
   updateAudioUI();
@@ -2645,6 +2667,7 @@ function audioToggle() {
   // Idle — start fresh
   AUDIO.chunks = buildChunks();
   AUDIO.idx = 0;
+  AUDIO.spoke = false;
   AUDIO.state = 'playing';
   speakNext();
 }
@@ -2682,6 +2705,9 @@ function updateAudioUI() {
   } else if (AUDIO.state === 'paused') {
     btn.innerHTML = ICON_PLAY;
     label.innerHTML = `<strong>Paused</strong>Part ${AUDIO.idx + 1} of ${total} — tap to resume<div class="audio-progress"><div class="audio-progress-fill" style="width:${pct}%"></div></div>`;
+  } else if (AUDIO.state === 'error') {
+    btn.innerHTML = ICON_PLAY;
+    label.innerHTML = `<strong>Couldn't read aloud</strong>Error: ${AUDIO.error} — tap play to try again<div class="audio-progress"><div class="audio-progress-fill" style="width:0%"></div></div>`;
   } else {
     btn.innerHTML = ICON_PLAY;
     label.innerHTML = `<strong>Listen to this section</strong>Tap play to hear it read aloud<div class="audio-progress"><div class="audio-progress-fill" style="width:0%"></div></div>`;
